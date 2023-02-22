@@ -19,11 +19,10 @@ import interactions.Interactions;
 
 /** A {@link GameEntity} that the player controls to interact with the game. */
 public class Cook extends GameEntity {
-
     /** The cook's current sprite. */
     private Sprite sprite;
     /** The control arrow sprite. */
-    private Sprite controlSprite;
+    private Sprite controlSprite; // Inline Test Comment
     private GameSprites gameSprites;
     private CookInteractor cookInteractor;
     // private GameScreen gameScreen;
