@@ -8,12 +8,12 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/ENG1" />
-        <option name="gradleJvm" value="17 (2)" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/ENG1" />
             <option value="$PROJECT_DIR$/ENG1/core" />
             <option value="$PROJECT_DIR$/ENG1/desktop" />
+            <option value="$PROJECT_DIR$/ENG1/tests" />
           </set>
         </option>
       </GradleProjectSettings>
