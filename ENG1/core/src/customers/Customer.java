@@ -17,7 +17,7 @@ import helper.Constants;
 public class Customer {
 
     /** The position of the Customer. */
-    public Vector2 position;
+    public Vector2 position; // TestUPDATE
     /** The {@link Sprite} of the {@link Customer}. */
     public Sprite sprite;
     /** The name of the {@link Recipe} that the {@link Customer}
