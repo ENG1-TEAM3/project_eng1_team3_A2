@@ -40,7 +40,7 @@ jobs:
         arguments: build jacocoTestReport
         build-root-directory: ENG1
     - name: Generate jar file
-      run: ./ENG1/gradlew desktop:dist
+      run: [cd ENG1, ./gradlew desktop:dist]
 
     - name: Upload JaCoCo coverage report as a workflow artifact
       uses: actions/upload-artifact@v3.1.1
