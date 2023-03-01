@@ -38,6 +38,11 @@ allprojects {
     }
 }
 
+plugins{
+    id 'java-library'
+    id 'jacoco'
+}
+
 
 project(":core") {
     apply plugin: "java-library"

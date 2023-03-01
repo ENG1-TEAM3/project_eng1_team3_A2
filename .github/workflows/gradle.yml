@@ -33,6 +33,7 @@ jobs:
       # uses: gradle/gradle-build-action@3fbe033aaae657f011f88f29be9e65ed26bd29ef
       uses: gradle/gradle-build-action@v2.3.3
       with:
+        arguments: build jacocoTestReport
         # Gradle version to use
         # gradle-version: # optional
         # When 'true', all caching is disabled. No entries will be written to or read from the cache.
@@ -65,3 +66,8 @@ jobs:
         # workflow-job-context: # optional, default is ${{ toJSON(matrix) }}
         # When 'true', the action will attempt to remove any stale/unused entries from the Gradle User Home prior to saving to the GitHub Actions cache.
         # gradle-home-cache-cleanup: # optional
+    - name: Upload JaCoCo coverage report as a workflow artifact
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: jacoco-report
+        path: ENG1/core/build/reports/test/html
