@@ -34,12 +34,14 @@ jobs:
       # You may pin to the exact commit or the version.
       uses: gradle/gradle-build-action@3fbe033aaae657f011f88f29be9e65ed26bd29ef
 
-    - name: Generate jar file
-      run: ./gradlew desktop:dist
+
 
       with:
         arguments: build jacocoTestReport
         build-root-directory: ENG1
+    - name: Generate jar file
+      run: ./gradlew desktop:dist
+
     - name: Upload JaCoCo coverage report as a workflow artifact
       uses: actions/upload-artifact@v3.1.1
       with:
