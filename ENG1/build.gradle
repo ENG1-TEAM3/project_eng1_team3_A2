@@ -1,7 +1,4 @@
-plugins {
-    id 'java-library'
-    id 'jacoco'
-}
+
 
 buildscript {
     repositories {
@@ -15,7 +12,13 @@ buildscript {
 
 
     }
+    plugins {
+        id 'java-library'
+        id 'jacoco'
+    }
 }
+
+
 
 allprojects {
     apply plugin: "eclipse"
