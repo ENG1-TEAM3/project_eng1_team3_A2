@@ -36,12 +36,14 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://jitpack.io" }
     }
+
+    plugins {
+        id 'java-library'
+        id 'jacoco'
+    }
 }
 
-plugins{
-    id 'java-library'
-    id 'jacoco'
-}
+
 
 
 project(":core") {
