@@ -341,4 +341,7 @@ public class Cook extends GameEntity {
             dir = possibleNext;
         }
     }
+    public static int testTest(int x){
+        return x+1;
+    }
 }

@@ -10,15 +10,9 @@ buildscript {
     }
 }
 
-plugins {
-    id 'java-library'
-    id 'jacoco'
-}
-
-
-
 allprojects {
     apply plugin: "eclipse"
+    apply plugin: "jacoco"
     version = '1.0'
     ext {
         appName = "UnderCooked"
@@ -79,11 +73,9 @@ project(":desktop") {
 
 project(":tests") {
     apply plugin: "java"
-
     sourceSets.test.java.srcDirs = ["src/"]
 
     dependencies {
-
         implementation project(":core")
 
         implementation "junit:junit:4.+"
@@ -99,4 +91,13 @@ project(":tests") {
         testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
         testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
+
+    jacocoTestReport{
+        def sourceDirs = ["${project.rootDir}\\core\\src\\"]
+        def classDirs = ["${project.rootDir}\\core\\build\\classes\\"]
+        additionalSourceDirs.from = files(sourceDirs)
+        additionalClassDirs.from = files(classDirs)
+    }
 }
+
+
