@@ -11,4 +11,8 @@ public class FirstTest {
     public void firstTest(){
         assertTrue("This test checks whether a file exists", Gdx.files.internal("cooks/control.png").exists());
     }
+    @Test
+    public void secondTest(){
+        assertTrue("This test checks whether a second file exists", Gdx.files.internal("cooks/hold left.png").exists());
+    }
 }

@@ -43,7 +43,7 @@ jobs:
       uses: actions/upload-artifact@v3.1.1
       with:
         name: jacoco-report
-        path: ENG1/tests/build/reports/tests/test/
+        path: ENG1/tests/build/reports/jacoco/test/html
 
     - name: Generate jar file
       run: | 

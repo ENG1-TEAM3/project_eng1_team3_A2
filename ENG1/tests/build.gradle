@@ -1,5 +1,5 @@
 apply plugin: "java"
-
+apply plugin: "jacoco"
 sourceCompatibility = 1.7 // This was 1.6 in the original example
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
@@ -10,3 +10,8 @@ project.ext.assetsDir = new File("../assets")
 eclipse.project {
     name = appName + "-tests"
 }
+
+test {
+    finalizedBy jacocoTestReport
+}
+
