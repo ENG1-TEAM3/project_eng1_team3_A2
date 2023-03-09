@@ -92,6 +92,8 @@ project(":tests") {
         testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
 
+    tasks.named("jacocoTestReport").configure {dependsOn(project(":core").tasks["compileTestJava"])}
+
     jacocoTestReport{
         def sourceDirs = ["${project.rootDir}\\core\\src\\"]
         def classDirs = ["${project.rootDir}\\core\\build\\classes\\"]
