@@ -42,8 +42,8 @@ jobs:
     - name: Upload JaCoCo coverage report as a workflow artifact
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: jacoco-report-${{ matrix.os }}
-        path: ENG1/tests/build/reports/tests/test/index.html
+        name: jacoco-report
+        path: ENG1/tests/build/reports/tests/test/
 
     - name: Generate jar file
       run: | 
