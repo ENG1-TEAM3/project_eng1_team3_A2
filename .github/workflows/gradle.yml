@@ -34,7 +34,13 @@ jobs:
         arguments: build jacocoTestReport
         build-root-directory: ENG1
 
-    - name: Generate testReport
+    - name: Upload testStatusReport
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: test-status-report
+        path: ENG1/tests/build/tests/test
+
+    - name: Generate testCoverageReport
       run : |
         cd ENG1
         ./gradlew test jacocoTestReport
@@ -42,7 +48,7 @@ jobs:
     - name: Upload JaCoCo coverage report as a workflow artifact
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: jacoco-report
+        name: jacoco-code-coverage-report
         path: ENG1/tests/build/reports/jacoco/test/html
 
     - name: Generate jar file
