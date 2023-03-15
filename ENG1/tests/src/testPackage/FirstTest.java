@@ -22,10 +22,10 @@ public class FirstTest {
     }
     @Test
     public void fourthTest(){
-        assertTrue("This test should fail", Gdx.files.internal("poop.png").exists());
+        assertTrue("This test shouldnt fail", Gdx.files.internal("cooks/normal left.png").exists());
     }
     @Test
     public void fifthTest(){
-        assertTrue("This test should also fail", Gdx.files.internal("egg.png").exists());
+        assertTrue("This test shouldnt also fail", Gdx.files.internal("cooks/normal right.png").exists());
     }
 }
