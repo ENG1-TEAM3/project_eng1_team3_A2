@@ -20,9 +20,11 @@ public class FirstTest {
     public void thirdTest(){
         assertEquals(Cook.testTest(1), 2);
     }
+    @Test
     public void fourthTest(){
         assertTrue("This test should fail", Gdx.files.internal("poop.png").exists());
     }
+    @Test
     public void fifthTest(){
         assertTrue("This test should also fail", Gdx.files.internal("egg.png").exists());
     }
