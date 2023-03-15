@@ -35,7 +35,7 @@ jobs:
         build-root-directory: ENG1
 
     - name: Get current date
-      id: version
+      id: datetime
       run: |
         echo "date=$(date +'%Y-%m-%d=%H=%M=%S')" >> $GITHUB_OUTPUT
 
@@ -47,13 +47,13 @@ jobs:
     - name: Upload testCoverageReport
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: jacoco-code-coverage-report-${{steps.version.date}}
+        name: jacoco-code-coverage-report-${{steps.version.outputs.date}}
         path: ENG1/tests/build/reports/jacoco/test/html
 
     - name: Upload testStatusReport
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: test-status-report-${{steps.version.date}}
+        name: test-status-report-${{steps.version.outputs.date}}
         path: ENG1/tests/build/reports/tests/test
 
     - name: Generate jar file
