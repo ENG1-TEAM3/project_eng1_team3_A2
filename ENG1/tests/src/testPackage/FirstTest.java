@@ -23,4 +23,7 @@ public class FirstTest {
     public void fourthTest(){
         assertTrue("This test should fail", Gdx.files.internal("poop.png").exists());
     }
+    public void fifthTest(){
+        assertTrue("This test should also fail", Gdx.files.internal("egg.png").exists());
+    }
 }

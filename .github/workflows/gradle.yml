@@ -31,25 +31,25 @@ jobs:
       # You may pin to the exact commit or the version.
       uses: gradle/gradle-build-action@3fbe033aaae657f011f88f29be9e65ed26bd29ef
       with:
-        arguments: build jacocoTestReport
+        arguments: build
         build-root-directory: ENG1
-
-    - name: Upload testStatusReport
-      uses: actions/upload-artifact@v3.1.1
-      with:
-        name: test-status-report
-        path: ENG1/tests/build/tests/test
 
     - name: Generate testCoverageReport
       run : |
         cd ENG1
         ./gradlew test jacocoTestReport
 
-    - name: Upload JaCoCo coverage report as a workflow artifact
+    - name: Upload testCoverageReport
       uses: actions/upload-artifact@v3.1.1
       with:
         name: jacoco-code-coverage-report
         path: ENG1/tests/build/reports/jacoco/test/html
+
+    - name: Upload testStatusReport
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: test-status-report
+        path: ENG1/tests/build/reports/tests/test
 
     - name: Generate jar file
       run: | 
