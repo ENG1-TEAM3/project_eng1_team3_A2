@@ -55,9 +55,9 @@ public class Boot extends Game {
         this.spriteBatch = new SpriteBatch();
         this.shapeRenderer = new ShapeRenderer();
         this.shapeRenderer.setAutoShapeType(true);
-        gamePort = new FitViewport(Constants.V_Width, Constants.V_Height, orthographicCamera);
+        this.gamePort = new FitViewport(Constants.V_Width, Constants.V_Height, orthographicCamera);
         this.screenController = new ScreenController(this, orthographicCamera);
-        setScreen(new MenuScreen(screenController, orthographicCamera));
+        this.screenController.setScreen(ScreenController.ScreenID.MENU);
     }
 
     public void resize(int width, int height)

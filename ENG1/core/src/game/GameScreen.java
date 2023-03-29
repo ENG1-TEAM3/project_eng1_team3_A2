@@ -231,8 +231,7 @@ public class GameScreen extends ScreenAdapter {
      * If it is positive, then the right entity is higher.
      * If it is 0, then both are at the same height.
      */
-    public class DrawQueueComparator implements Comparator<GameEntity> {
-
+    public static class DrawQueueComparator implements Comparator<GameEntity> {
         @Override
         public int compare(GameEntity o1, GameEntity o2) {
             float o1Y = o1.getY(),

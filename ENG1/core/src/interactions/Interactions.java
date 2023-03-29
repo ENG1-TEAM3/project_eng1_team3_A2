@@ -156,7 +156,9 @@ public class Interactions {
     public static void updateKeys() {
         resetKeys();
         for (InputID inputID : InputID.values()) {
-            for (InputKey inputKey : inputs.get(inputID)) {
+            for (InputKey inputKey : new Array.ArrayIterator<>(inputs.get(inputID))) {
+                // ^ The new ... stuff was added to remove warnings. RHS is the same as inputs.get(inputID)
+                // LibGDX doesn't like nested iteration on arrays without this.
                 if (Gdx.input.isKeyPressed(inputKey.getKey())) {
                     keysPressed.add(inputKey.getType());
                 }
@@ -168,6 +170,25 @@ public class Interactions {
     }
 
     /**
+     * This function is used to manually add key presses to the keys pressed arrays.
+     * @param inputKey The inputKey to add
+     * @param shouldResetKeys Should this method clear current key presses
+     * @param isKeyJustPressed Should this method add this key press to the once per hold key press list.
+     */
+    public static void manualAddKey(InputKey inputKey, boolean shouldResetKeys, boolean isKeyJustPressed){
+        if (shouldResetKeys){
+            resetKeys();
+        }
+        if (isKeyJustPressed){
+            keysJustPressed.add(inputKey.getType());
+        }
+        else{
+            keysPressed.add(inputKey.getType());
+        }
+
+    }
+
+    /**
      * Returns the Keys assigned to the enum constant {@link InputKey.InputTypes} as an array of strings.
      * @param inputType {@link InputKey.InputTypes} enum constant
      * @return A LibGDX Array of the string names for the keys assigned to {@link InputKey.InputTypes}
@@ -175,7 +196,9 @@ public class Interactions {
     public static Array<String> getKeyStrings(InputKey.InputTypes inputType) {
         Array<String> validKeys = new Array<>();
         for (Array<InputKey> inputKeys : inputs.values()) {
-            for (InputKey inputKey : inputKeys) {
+            for (InputKey inputKey : new Array.ArrayIterator<>(inputKeys)) {
+                // ^ The new ... stuff was added to remove warnings. RHS is the same as just inputKeys
+                // LibGDX doesn't like nested iteration on arrays without this.
                 if (inputKey.getType() == inputType) {
                     validKeys.add(getKeyString(inputKey));
                 }
