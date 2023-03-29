@@ -31,26 +31,26 @@ import java.util.Comparator;
 
 /** A {@link ScreenAdapter} containing certain elements of the game. */
 public class GameScreen extends ScreenAdapter {
-    private OrthographicCamera camera;
+    private final OrthographicCamera camera;
     private int delay;
 
     private long previousSecond = 0, lastCustomerSecond = 0, nextCustomerSecond = 0;
     private int secondsPassed = 0, minutesPassed = 0, hoursPassed = 0;
-    private GameHud gameHud;
-    private InstructionHud instructionHUD;
-    private SpriteBatch batch;
-    private ShapeRenderer shape;
-    private ScreenController screenController;
+    private final GameHud gameHud;
+    private final InstructionHud instructionHUD;
+    private final SpriteBatch batch;
+    private final ShapeRenderer shape;
+    private final ScreenController screenController;
     // private ShapeRenderer shapeRenderer;
     private World world;
     private Box2DDebugRenderer box2DDebugRenderer;
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private MapHelper mapHelper;
-    private Array<CookInteractable> interactables;
-    private CollisionHelper collisionHelper;
-    private Array<GameEntity> gameEntities;
-    private DrawQueueComparator drawQueueComparator;
+    private final Array<CookInteractable> interactables;
+    private final CollisionHelper collisionHelper;
+    private final Array<GameEntity> gameEntities;
+    private final DrawQueueComparator drawQueueComparator;
     private Array<ServingStation> servingStations;
     private int xOffset = 480;
     private int yOffset = 320;

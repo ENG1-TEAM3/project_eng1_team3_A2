@@ -146,7 +146,7 @@ public class Recipe {
 		return allCombosR(new Array<T>(), new Array<T>(Array.with(stuff)));
 	}
 	/**
-	 * Very similar to {@link #allCombos(Array, Array, Object[])}, except every combo is prepended and appended stuff.
+	 * Very similar to {@link #allCombos(Object[])}, except every combo is prepended and appended stuff.
 	 * E.g. Every Burger has a topBun and bottomBun, so topBun is in prepend, and bottomBun is in append,
 	 * while the filling is in T... stuff.
 	 * @param <T> Any type.

@@ -154,6 +154,7 @@ public class AssetExistenceTests {
                 Gdx.files.internal("Individual_Stations/TableWithChairs.png").exists());
     }
 
+    @Test
     public void testForMapsSubfolderFilesExistence(){
         assertTrue("This test asserts that StartMenuBackground.png exists",
                 Gdx.files.internal("Maps/StartMenuBackground.png").exists());
