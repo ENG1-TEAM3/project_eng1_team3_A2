@@ -32,6 +32,7 @@ public class FirstTest {
     }
     @Test
     public void sixthTest(){
+        Interactions.resetKeys();
         assertFalse(Interactions.isPressed(InputKey.InputTypes.COOK_UP));
         Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP, Input.Keys.W), false, false);
         assertTrue(Interactions.isPressed(InputKey.InputTypes.COOK_UP));

@@ -128,6 +128,35 @@ public class Interactions {
         }));
     }
 
+    private static final HashMap<InputID, Array<InputKey.InputTypes>> inputGroups = new HashMap<>();
+    static{
+        inputGroups.put(InputID.MENU, new Array<>(new InputKey.InputTypes[]{
+                InputKey.InputTypes.INSTRUCTIONS,
+                InputKey.InputTypes.RESET_GAME,
+                InputKey.InputTypes.START_GAME,
+                InputKey.InputTypes.PAUSE,
+                InputKey.InputTypes.UNPAUSE,
+                InputKey.InputTypes.CREDITS,
+                InputKey.InputTypes.QUIT
+        }));
+        inputGroups.put(InputID.COOK_MOVEMENT, new Array<>(new InputKey.InputTypes[] {
+                InputKey.InputTypes.COOK_UP,
+                InputKey.InputTypes.COOK_LEFT,
+                InputKey.InputTypes.COOK_DOWN,
+                InputKey.InputTypes.COOK_RIGHT,
+        }));
+        inputGroups.put(InputID.COOK_INTERACT, new Array<>(new InputKey.InputTypes[]{
+                InputKey.InputTypes.USE,
+                InputKey.InputTypes.PICK_UP,
+                InputKey.InputTypes.PUT_DOWN
+        }));
+        inputGroups.put(InputID.COOK_MISC, new Array<>(new InputKey.InputTypes[] {
+                InputKey.InputTypes.COOK_SWAP
+        }));
+    }
+
+
+
     /** A list of all keys that were being pressed when {@link #updateKeys()} was called.*/
     public static Array<InputKey.InputTypes> keysPressed = new Array<>();
     /** A list of all keys that were pressed the same frame that {@link #updateKeys()} was called.*/
@@ -141,6 +170,11 @@ public class Interactions {
     public static Array<InputKey> getInputKeys(InputID inputID) {
         return inputs.get(inputID);
     }
+
+    public static Array<InputKey.InputTypes> getInputTypes(InputID inputID){
+        return inputGroups.get(inputID);
+    }
+
 
     /** Remove all current keyPressed info.*/
     public static void resetKeys() {

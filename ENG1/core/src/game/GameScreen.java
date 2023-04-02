@@ -18,10 +18,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import cooks.Cook;
 import cooks.GameEntity;
 import customers.CustomerController;
-import helper.CollisionHelper;
-import helper.GameHud;
-import helper.InstructionHud;
-import helper.MapHelper;
+import helper.*;
 import interactions.InputKey;
 import interactions.Interactions;
 import stations.CookInteractable;
@@ -180,6 +177,7 @@ public class GameScreen extends ScreenAdapter {
 
         renderGame(delta);
 
+
         if(customersToServe <= customerController.getCustomersServed())
         {
             screenController.setScreen((ScreenController.ScreenID.GAMEOVER));
@@ -198,7 +196,6 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         orthogonalTiledMapRenderer.render();
         batch.begin();
-
         gameEntities.sort(drawQueueComparator);
 
         for (GameEntity entity : gameEntities) {
@@ -214,11 +211,11 @@ public class GameScreen extends ScreenAdapter {
 
         for (GameEntity entity : gameEntities) {
             entity.renderShape(shape);
-            // entity.renderShapeDebug(shape);
+            //entity.renderShapeDebug(shape);
         }
 
         shape.end();
-        //box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        //box2DDebugRenderer.render(world, camera.combined.scl(Constants.PPM));
         gameHud.render();
         instructionHUD.render();
 

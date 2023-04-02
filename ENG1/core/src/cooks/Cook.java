@@ -37,7 +37,7 @@ public class Cook extends GameEntity {
     private Array<Facing> inputs;
 
     /** All possible directions the cook can be facing. */
-    enum Facing {
+    public enum Facing {
         RIGHT,
         LEFT,
         UP,
@@ -118,9 +118,9 @@ public class Cook extends GameEntity {
 
         setDir();
 
-        for (InputKey inputKey : Interactions.getInputKeys(Interactions.InputID.COOK_INTERACT)) {
-            if (Gdx.input.isKeyJustPressed(inputKey.getKey())) {
-                cookInteractor.checkCollisions(this, inputKey.getType());
+        for (InputKey.InputTypes inputKeyType : Interactions.getInputTypes(Interactions.InputID.COOK_INTERACT)) {
+            if (Interactions.isJustPressed(inputKeyType)){
+                cookInteractor.checkCollisions(this, inputKeyType);
             }
         }
 
@@ -323,6 +323,7 @@ public class Cook extends GameEntity {
         Facing possibleNext = inputs.get(inputs.size-1);
         Facing possibleOpp = opposite(possibleNext);
         // If there is the opposite input...
+
         if (inputs.contains(possibleOpp, true)) {
             // Now check that the same does not apply to the other directions.
             boolean hasPossibleRotated = inputs.contains(rotate90c(possibleNext), true),
@@ -343,5 +344,9 @@ public class Cook extends GameEntity {
     }
     public static int testTest(int x){
         return x+1;
+    }
+
+    public Facing getDir(){
+        return dir;
     }
 }
