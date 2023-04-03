@@ -38,13 +38,6 @@ public class GameOverScreen extends ScreenAdapter {
      */
     public GameOverScreen(ScreenController screenController, OrthographicCamera orthographicCamera) {
 
-        this.screenController = screenController;
-        this.camera = orthographicCamera;
-        this.batch = screenController.getSpriteBatch();
-
-        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
-        stage = new Stage(viewport, batch);
-
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
         Table table = new Table();
         table.center();
@@ -72,7 +65,19 @@ public class GameOverScreen extends ScreenAdapter {
         quitText.setFontScale(1);
         table.add(quitText);
 
-        stage.addActor(table);
+        this.screenController = screenController;
+        this.camera = orthographicCamera;
+        this.batch = screenController.getSpriteBatch();
+
+        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
+
+        if(this.batch != null) {
+            stage = new Stage(viewport, batch);
+            stage.addActor(table);
+        }
+        else {
+            System.out.println("GameOverScreen entering headless mode");
+        }
 
     }
 

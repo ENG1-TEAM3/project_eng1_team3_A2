@@ -36,12 +36,6 @@ public class CreditsScreen extends ScreenAdapter {
      * @param orthographicCamera The {@link OrthographicCamera} that the game should use.
      */
     public CreditsScreen(ScreenController screenController, OrthographicCamera orthographicCamera) {
-        this.screenController = screenController;
-        this.camera = orthographicCamera;
-        this.batch = screenController.getSpriteBatch();
-
-        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
-        stage = new Stage(viewport, batch);
 
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
         Table table = new Table();
@@ -55,16 +49,16 @@ public class CreditsScreen extends ScreenAdapter {
         table.row();
 
         String[] instructions = new String[] {
-            "Credits for the sprites: (We generally edited them a little)",
-            "Creator: poloviiinkin",
-            "Link to food_graphics: https://poloviiinkin.itch.io/food",
-            "Link to other_sprites: https://poloviiinkin.itch.io/mega-pixel-art-32x32-px-icons-sprite-sheet",
-            "Link to license: https://creativecommons.org/licenses/by-sa/4.0/deed.en",
-            "",
-            "Cook forward facing: http://pixelartmaker.com/art/77e4b71a43c348d",
-            "",
-            "Program to create the texture atlases: https://github.com/crashinvaders/gdx-texture-packer-gui/releases",
-            "Program to create the map: https://www.mapeditor.org/"
+                "Credits for the sprites: (We generally edited them a little)",
+                "Creator: poloviiinkin",
+                "Link to food_graphics: https://poloviiinkin.itch.io/food",
+                "Link to other_sprites: https://poloviiinkin.itch.io/mega-pixel-art-32x32-px-icons-sprite-sheet",
+                "Link to license: https://creativecommons.org/licenses/by-sa/4.0/deed.en",
+                "",
+                "Cook forward facing: http://pixelartmaker.com/art/77e4b71a43c348d",
+                "",
+                "Program to create the texture atlases: https://github.com/crashinvaders/gdx-texture-packer-gui/releases",
+                "Program to create the map: https://www.mapeditor.org/"
         };
 
         for (String instruction : instructions) {
@@ -77,7 +71,19 @@ public class CreditsScreen extends ScreenAdapter {
         extraText.setFontScale(1.5F);
         table.add(extraText);
 
-        stage.addActor(table);
+        this.screenController = screenController;
+        this.camera = orthographicCamera;
+        this.batch = screenController.getSpriteBatch();
+
+        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
+
+        if (this.batch != null) {
+            stage = new Stage(viewport, batch);
+            stage.addActor(table);
+        }
+        else {
+            System.out.println("CreditsScreen entering headless mode");
+        }
     }
 
     /**

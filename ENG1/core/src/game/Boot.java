@@ -62,6 +62,18 @@ public class Boot extends Game {
         this.screenController.setScreen(ScreenController.ScreenID.MENU);
     }
 
+    /**
+     * Set up the boot instance in headless mode. This is used for testing.
+     */
+    public void createHeadless(){
+        this.orthographicCamera = new OrthographicCamera();
+        this.spriteBatch = null;
+        this.shapeRenderer = null;
+        this.gamePort = new FitViewport(Constants.V_Width, Constants.V_Height, orthographicCamera);
+        this.screenController = new ScreenController(this, orthographicCamera);
+        this.screenController.setScreen(ScreenController.ScreenID.MENU);
+    }
+
     public void resize(int width, int height)
     {
         gamePort.update(width, height);

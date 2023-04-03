@@ -23,13 +23,15 @@ public class Hud {
      */
     public Hud(SpriteBatch batch) {
         viewport = new FitViewport(Constants.V_Width, Constants.V_Height, new OrthographicCamera());
-        stage = new Stage(viewport, batch);
 
         table = new Table();
         table.top();
         table.setFillParent(true);
 
-        stage.addActor(table);
+        if (batch != null) {
+            stage = new Stage(viewport, batch);
+            stage.addActor(table);
+        }
     }
 
     /** Render this Hud.*/

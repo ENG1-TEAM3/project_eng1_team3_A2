@@ -40,28 +40,18 @@ public class PauseScreen extends ScreenAdapter {
      * @param orthographicCamera The {@link OrthographicCamera} that the game should use.
      */
     public PauseScreen(ScreenController screenController, OrthographicCamera orthographicCamera) {
-        this.screenController = screenController;
-        this.camera = orthographicCamera;
-
-        this.batch = screenController.getSpriteBatch();
-        this.gameScreen = ((GameScreen) screenController.getScreen(ScreenID.GAME));
-        this.shape = screenController.getShapeRenderer();
-        shape.setAutoShapeType(true);
-
-        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
-        stage = new Stage(viewport, batch);
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
         Table table = new Table();
         table.center();
         table.setFillParent(true);
 
         String[] strLabels = new String[] {
-            "PAUSED",
-            String.format("Press %s to continue",Interactions.getKeyString(InputKey.InputTypes.UNPAUSE)),
-            String.format("Press %s for instructions",Interactions.getKeyString(InputKey.InputTypes.INSTRUCTIONS)),
-            String.format("Press %s for credits",Interactions.getKeyString(InputKey.InputTypes.CREDITS)),
-            String.format("Press %s to reset",Interactions.getKeyString(InputKey.InputTypes.RESET_GAME)),
-            String.format("Press %s to quit",Interactions.getKeyString(InputKey.InputTypes.QUIT))
+                "PAUSED",
+                String.format("Press %s to continue",Interactions.getKeyString(InputKey.InputTypes.UNPAUSE)),
+                String.format("Press %s for instructions",Interactions.getKeyString(InputKey.InputTypes.INSTRUCTIONS)),
+                String.format("Press %s for credits",Interactions.getKeyString(InputKey.InputTypes.CREDITS)),
+                String.format("Press %s to reset",Interactions.getKeyString(InputKey.InputTypes.RESET_GAME)),
+                String.format("Press %s to quit",Interactions.getKeyString(InputKey.InputTypes.QUIT))
         };
         /* OLD CODE
         Label pauseLabel = new Label("PAUSED", font);
@@ -93,7 +83,24 @@ public class PauseScreen extends ScreenAdapter {
 
         // pauseLabel.setFontScale(4);
         lblLabels[0].setFontScale(4);
-        stage.addActor(table);
+
+        this.screenController = screenController;
+        this.camera = orthographicCamera;
+        this.batch = screenController.getSpriteBatch();
+        this.shape = screenController.getShapeRenderer();
+        this.gameScreen = ((GameScreen) screenController.getScreen(ScreenID.GAME));
+        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
+
+        if (this.shape != null) {
+            shape.setAutoShapeType(true);
+        }
+        if (this.batch != null) {
+            stage = new Stage(viewport, batch);
+            stage.addActor(table);
+        }
+        else {
+            System.out.println("PauseScreen entering headless mode");
+        }
     }
 
     /**

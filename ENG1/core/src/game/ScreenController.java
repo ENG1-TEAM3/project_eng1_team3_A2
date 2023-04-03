@@ -32,6 +32,7 @@ public class ScreenController {
      */
     public ScreenController(Boot boot, OrthographicCamera camera) {
         this.boot = boot;
+
         this.gameScreen = new GameScreen(this,camera);
         this.menuScreen = new MenuScreen(this,camera);
         this.gameOverScreen = new GameOverScreen(this,camera);

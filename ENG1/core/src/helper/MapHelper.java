@@ -72,10 +72,13 @@ public class MapHelper {
      * load it into the game.
      * @return The {@link OrthogonalTiledMapRenderer} used to render the Tilemap.
      */
-    public OrthogonalTiledMapRenderer setupMap()
+    public void setupMap()
     {
         tiledMap = new TmxMapLoader().load("Maps/StationsMap.tmx");
         parseMapObjects(tiledMap.getLayers().get("Objects").getObjects());
+    }
+
+    public OrthogonalTiledMapRenderer getOrthoRenderer(){
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
 

@@ -41,12 +41,7 @@ public class MenuScreen extends ScreenAdapter {
      * @param orthographicCamera The {@link OrthographicCamera} that the game should use.
      */
     public MenuScreen(ScreenController screenController, OrthographicCamera orthographicCamera) {
-        this.screenController = screenController;
-        this.camera = orthographicCamera;
-        this.batch = screenController.getSpriteBatch();
 
-        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
-        stage = new Stage(viewport, batch);
         this.backgroundSprite = new Sprite(new Texture("Maps/StartMenuBackground.png"));
 
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
@@ -74,8 +69,19 @@ public class MenuScreen extends ScreenAdapter {
         table.add(quitLabel).expandX();
 
         welcomeLabel.setFontScale(4);
-        stage.addActor(table);
 
+        this.screenController = screenController;
+        this.camera = orthographicCamera;
+        this.batch = screenController.getSpriteBatch();
+
+        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
+        if (this.batch != null) {
+            stage = new Stage(viewport, batch);
+            stage.addActor(table);
+        }
+        else {
+            System.out.println("MenuScreen entering headless mode");
+        }
     }
 
     /**

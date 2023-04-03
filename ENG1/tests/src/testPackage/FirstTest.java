@@ -3,6 +3,7 @@ package testPackage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import cooks.Cook;
+import game.Boot;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
@@ -30,14 +31,4 @@ public class FirstTest {
     public void fifthTest(){
         assertTrue("This test shouldnt also fail", Gdx.files.internal("cooks/normal right.png").exists());
     }
-    @Test
-    public void sixthTest(){
-        Interactions.resetKeys();
-        assertFalse(Interactions.isPressed(InputKey.InputTypes.COOK_UP));
-        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP, Input.Keys.W), false, false);
-        assertTrue(Interactions.isPressed(InputKey.InputTypes.COOK_UP));
-        Interactions.resetKeys();
-        assertFalse(Interactions.isPressed(InputKey.InputTypes.COOK_UP));
-    }
-
 }

@@ -36,7 +36,7 @@ public class GameScreen extends ScreenAdapter {
     private final GameHud gameHud;
     private final InstructionHud instructionHUD;
     private final SpriteBatch batch;
-    private final ShapeRenderer shape;
+    private ShapeRenderer shape;
     private final ScreenController screenController;
     // private ShapeRenderer shapeRenderer;
     private World world;
@@ -78,18 +78,29 @@ public class GameScreen extends ScreenAdapter {
         this.camera = camera;
         this.screenController = screenController;
         this.batch = screenController.getSpriteBatch();
-        this.shape = screenController.getShapeRenderer();
+
         this.gameEntities = new Array<>();
         this.drawQueueComparator = new DrawQueueComparator();
         this.customerController = new CustomerController(this);
 
         this.world = new World(new Vector2(0,0), false);
-        this.box2DDebugRenderer = new Box2DDebugRenderer();
+
         this.mapHelper = MapHelper.getInstance();
         this.mapHelper.setGameScreen(this);
-        this.orthogonalTiledMapRenderer = mapHelper.setupMap();
+        this.mapHelper.setupMap();
+
+
         this.gameHud = new GameHud(batch, this);
         this.instructionHUD = new InstructionHud(batch);
+
+        if(this.batch != null){
+            this.shape = screenController.getShapeRenderer();
+            this.box2DDebugRenderer = new Box2DDebugRenderer();
+            this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
+        }
+        else{
+            System.out.println("GameScreen entering headless mode");
+        }
 
     }
 
@@ -377,7 +388,8 @@ public class GameScreen extends ScreenAdapter {
         mapHelper.setGameScreen(this);
         world.dispose();
         this.world = new World(new Vector2(0,0), false);
-        this.orthogonalTiledMapRenderer = mapHelper.setupMap();
+        this.mapHelper.setupMap();
+        this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
         cookIndex = -1;
     }
 
