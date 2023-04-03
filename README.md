@@ -1,32 +1,20 @@
-# UnderCooked
-ENG1 Assessment 1 game made in LibGDX, based on the game Overcooked.
+# Team TGC (Group 3) Assessment 2
+ENG1 Assessment 2 game made in LibGDX, forked from undercooked-team
 
-## Presentation:
-Do check out our presentation: it is focussed on the ***key deciding aspects*** for ***choosing your Assessment 2 project***, as stated in the assessement brief:
-> https://github.com/undercooked-team/UnderCooked/blob/main/ENG1/SUBMITTABLES/Assessment1Presentation.pdf
-
-Aspects focussed on:
-1) The overall quality of the software product.
-2) Estimates of effort remaining to complete the implementation
-3) Clarity and quality of the requirements specification, architecture and implementation.
-4) Testability
-
-There was a large focus on aspect 2 especially, meaning the presentation can likely form ***a rough guide to completing Assessment 2*** with our project.
+Its pizza time 2
 
 ## Project Page:
-To see all the tasks/issues encountered in our project, check out our ***Project Page***:
+Here's the project page from undercooked-team
 > https://github.com/orgs/undercooked-team/projects/1
 
-If you prefer to see a visual representation of our milestones met, check out the milestones for our repository:
+Here's their milestones
 > https://github.com/undercooked-team/UnderCooked/milestones
 
 ## Website:
-Check out our website for more info on ***Documentation***:
+undercooked-team's Website:
 > https://undercooked-team.github.io/UnderCooked/
 
 ---
 And finally:
 
-<img alt="Gigachad Thank You" src="https://www.meme-arsenal.com/memes/5b2a68a87e0f9de1c3a1f3e62bd994d3.jpg"  width="631" height="500">
-
-Thank you for checking out our GitHub Repository! :D
+Thank you for checking out our Epic GitHub Repository !
