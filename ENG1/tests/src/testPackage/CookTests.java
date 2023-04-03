@@ -1,31 +1,24 @@
 package testPackage;
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import game.Boot;
-import game.GameScreen;
-import game.ScreenController;
+
 import helper.BodyHelper;
 import helper.Constants;
 import interactions.InputKey;
 import interactions.Interactions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.mockito.Mockito.mock;
-import com.badlogic.gdx.graphics.GL20;
 
 import static org.junit.Assert.*;
 import cooks.Cook;
-import helper.MapHelper;
-import org.mockito.Mockito;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.util.Map;
+
 
 @RunWith(GdxTestRunner.class)
 public class CookTests {
@@ -37,20 +30,49 @@ public class CookTests {
         // gameScreen is not used, needs refactoring
         Method privateFoodRelativeX = Cook.class.getDeclaredMethod("foodRelativeX", Cook.Facing.class);
         privateFoodRelativeX.setAccessible(true);
-        assertEquals(privateFoodRelativeX.invoke(c1,Cook.Facing.RIGHT), 30F);
-        assertEquals(privateFoodRelativeX.invoke(c1,Cook.Facing.LEFT), -30F);
-        assertEquals(privateFoodRelativeX.invoke(c1,Cook.Facing.UP), 0F);
-        assertEquals(privateFoodRelativeX.invoke(c1,Cook.Facing.DOWN), 0F);
-        assertEquals(privateFoodRelativeX.invoke(c1,Cook.Facing.NONE), 0F);
+        assertEquals(30F,privateFoodRelativeX.invoke(c1,Cook.Facing.RIGHT));
+        assertEquals(-30F,privateFoodRelativeX.invoke(c1,Cook.Facing.LEFT));
+        assertEquals(0F,privateFoodRelativeX.invoke(c1,Cook.Facing.UP));
+        assertEquals(0F,privateFoodRelativeX.invoke(c1,Cook.Facing.DOWN));
+        assertEquals(0F,privateFoodRelativeX.invoke(c1,Cook.Facing.NONE));
 
         Method privateFoodRelativeY = Cook.class.getDeclaredMethod("foodRelativeY", Cook.Facing.class);
         privateFoodRelativeY.setAccessible(true);
-        assertEquals(privateFoodRelativeY.invoke(c1,Cook.Facing.UP), -14F);
-        assertEquals(privateFoodRelativeY.invoke(c1,Cook.Facing.LEFT), -24F);
-        assertEquals(privateFoodRelativeY.invoke(c1,Cook.Facing.RIGHT), -24F);
-        assertEquals(privateFoodRelativeY.invoke(c1,Cook.Facing.DOWN), -25F);
-        assertEquals(privateFoodRelativeY.invoke(c1,Cook.Facing.NONE), 0F);
+        assertEquals(-14F,privateFoodRelativeY.invoke(c1,Cook.Facing.UP));
+        assertEquals(-24F,privateFoodRelativeY.invoke(c1,Cook.Facing.LEFT));
+        assertEquals(-24F,privateFoodRelativeY.invoke(c1,Cook.Facing.RIGHT));
+        assertEquals(-25F,privateFoodRelativeY.invoke(c1,Cook.Facing.DOWN));
+        assertEquals(0F,privateFoodRelativeY.invoke(c1,Cook.Facing.NONE));
     }
+    @Test
+    public void testOpposite() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException{
+        Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
+        World w1 = new World(new Vector2(0,0), false);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1), null);
+
+        Method privateOpposite = Cook.class.getDeclaredMethod("opposite", Cook.Facing.class);
+        privateOpposite.setAccessible(true);
+        assertEquals(Cook.Facing.UP, privateOpposite.invoke(c1,Cook.Facing.DOWN));
+        assertEquals(Cook.Facing.DOWN, privateOpposite.invoke(c1,Cook.Facing.UP));
+        assertEquals(Cook.Facing.RIGHT, privateOpposite.invoke(c1,Cook.Facing.LEFT));
+        assertEquals(Cook.Facing.LEFT, privateOpposite.invoke(c1,Cook.Facing.RIGHT));
+        assertEquals(Cook.Facing.NONE, privateOpposite.invoke(c1,Cook.Facing.NONE));
+    }
+    @Test
+    public void testRotate() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException{
+        Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
+        World w1 = new World(new Vector2(0,0), false);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1), null);
+
+        Method privateRotate = Cook.class.getDeclaredMethod("rotate90c", Cook.Facing.class);
+        privateRotate.setAccessible(true);
+        assertEquals(Cook.Facing.UP, privateRotate.invoke(c1,Cook.Facing.LEFT));
+        assertEquals(Cook.Facing.DOWN, privateRotate.invoke(c1,Cook.Facing.RIGHT));
+        assertEquals(Cook.Facing.RIGHT, privateRotate.invoke(c1,Cook.Facing.UP));
+        assertEquals(Cook.Facing.LEFT, privateRotate.invoke(c1,Cook.Facing.DOWN));
+        assertEquals(Cook.Facing.NONE, privateRotate.invoke(c1,Cook.Facing.NONE));
+    }
+
     @Test
     public void testMoveDistance(){
         Interactions.resetKeys();
@@ -87,6 +109,36 @@ public class CookTests {
         Interactions.resetKeys();
 
     }
+    @Test
+    public void testUpdatePosition(){
+        Interactions.resetKeys();
+        Rectangle r1 = new Rectangle(0.0f,100.0f,42.50f,20.00f);
+        World w1 = new World(new Vector2(0,0), false);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1), null);
+
+        assertEquals("This test asserts that the X position (pixel space) is calculated correctly on initialization", 0.0f, c1.getX(), 0.001);
+        assertEquals("This test asserts that the Y position (pixel space) is calculated correctly on initialization",100.0f, c1.getY(), 0.001);
+
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP, Input.Keys.W), false, false);
+        c1.userInput();
+        w1.step(1/60f,6,2);
+        c1.update(0.01f);
+        Interactions.resetKeys();
+
+        assertEquals("This test asserts that the X position (pixel space) is calculated correctly after 1 step upwards", 0.0f, c1.getX(), 0.001);
+        assertEquals("This test asserts that the Y position (pixel space) is calculated correctly after 1 step upwards",100.0f + ((1/60f) * 10 * Constants.PPM), c1.getY(), 0.001);
+
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_RIGHT, Input.Keys.D), false, false);
+        c1.userInput();
+        w1.step(1/60f,6,2);
+        c1.update(0.01f);
+        Interactions.resetKeys();
+
+        assertEquals("This test asserts that the X position (pixel space) is calculated correctly after 1 step up and 1 right", 0.0f + ((1/60f) * 10 * Constants.PPM), c1.getX(), 0.001);
+        assertEquals("This test asserts that the Y position (pixel space) is calculated correctly after 1 step up and 1 right",100.0f + ((1/60f) * 10 * Constants.PPM), c1.getY(), 0.001);
+
+    }
+
     @Test
     public void testCookDirection(){
         Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
@@ -228,7 +280,7 @@ public class CookTests {
         Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_LEFT, Input.Keys.A), false, false);
         Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_RIGHT, Input.Keys.D), false, false);
         c1.userInput();
-        assertEquals("This test asserts that the cook will face the direction that does not have its opposite in the inputs array (opposite inputs added last)",
+        assertEquals("This test asserts that the cook will face the direction that does not have its opposite in the inputs array (WAD opposite inputs added last)",
                 Cook.Facing.UP, c1.getDir());
         Interactions.resetKeys();
 
@@ -237,10 +289,66 @@ public class CookTests {
         c1.userInput();
         Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP, Input.Keys.W), false, false);
         c1.userInput();
-        assertEquals("This test asserts that the cook will face the direction that does not have its opposite in the inputs array (opposite inputs added first)",
+        assertEquals("This test asserts that the cook will face the direction that does not have its opposite in the inputs array (ADW opposite inputs added first)",
                 Cook.Facing.UP, c1.getDir());
         Interactions.resetKeys();
-        // Could add the other 6 combinations for a more concrete test
+
+
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_DOWN, Input.Keys.S), false, false);
+        c1.userInput();
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_LEFT, Input.Keys.A), false, false);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_RIGHT, Input.Keys.D), false, false);
+        c1.userInput();
+        assertEquals("This test asserts that the cook will face the direction that does not have its opposite in the inputs array (SAD opposite inputs added last)",
+                Cook.Facing.DOWN, c1.getDir());
+        Interactions.resetKeys();
+
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_LEFT, Input.Keys.A), false, false);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_RIGHT, Input.Keys.D), false, false);
+        c1.userInput();
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_DOWN, Input.Keys.S), false, false);
+        c1.userInput();
+        assertEquals("This test asserts that the cook will face the direction that does not have its opposite in the inputs array (ADS opposite inputs added first)",
+                Cook.Facing.DOWN, c1.getDir());
+        Interactions.resetKeys();
+
+
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_LEFT, Input.Keys.A), false, false);
+        c1.userInput();
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP, Input.Keys.W), false, false);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_DOWN, Input.Keys.S), false, false);
+        c1.userInput();
+        assertEquals("This test asserts that the cook will face the direction that does not have its opposite in the inputs array (AWS opposite inputs added last)",
+                Cook.Facing.LEFT, c1.getDir());
+        Interactions.resetKeys();
+
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP, Input.Keys.W), false, false);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_DOWN, Input.Keys.S), false, false);
+        c1.userInput();
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_LEFT, Input.Keys.A), false, false);
+        c1.userInput();
+        assertEquals("This test asserts that the cook will face the direction that does not have its opposite in the inputs array (WSA opposite inputs added first)",
+                Cook.Facing.LEFT, c1.getDir());
+        Interactions.resetKeys();
+
+
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_RIGHT, Input.Keys.D), false, false);
+        c1.userInput();
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP, Input.Keys.W), false, false);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_DOWN, Input.Keys.S), false, false);
+        c1.userInput();
+        assertEquals("This test asserts that the cook will face the direction that does not have its opposite in the inputs array (DWS opposite inputs added last)",
+                Cook.Facing.RIGHT, c1.getDir());
+        Interactions.resetKeys();
+
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP, Input.Keys.W), false, false);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_DOWN, Input.Keys.S), false, false);
+        c1.userInput();
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_RIGHT, Input.Keys.D), false, false);
+        c1.userInput();
+        assertEquals("This test asserts that the cook will face the direction that does not have its opposite in the inputs array (WSD opposite inputs added first)",
+                Cook.Facing.RIGHT, c1.getDir());
+        Interactions.resetKeys();
 
         //=======================================FOUR==KEYPRESSES=======================================================
 
@@ -250,8 +358,36 @@ public class CookTests {
         Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_RIGHT,Input.Keys.S), false, false);
         Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_DOWN,Input.Keys.D), false, false);
         c1.userInput();
-        assertEquals("This test asserts that the cook will not change directions if all directional inputs are pressed",Cook.Facing.UP, c1.getDir());
-        // Could add the other 3 combinations for a more concrete test
+        assertEquals("This test asserts that the cook will not change directions if all directional inputs are pressed (W then ASD)",Cook.Facing.UP, c1.getDir());
+        Interactions.resetKeys();
+
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_LEFT,Input.Keys.A), false, false);
+        c1.userInput();
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP,Input.Keys.W), false, false);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_DOWN,Input.Keys.S), false, false);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_RIGHT,Input.Keys.D), false, false);
+        c1.userInput();
+        assertEquals("This test asserts that the cook will not change directions if all directional inputs are pressed (A then WSD)",Cook.Facing.LEFT, c1.getDir());
+        Interactions.resetKeys();
+
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_RIGHT,Input.Keys.D), false, false);
+        c1.userInput();
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_LEFT,Input.Keys.A), false, false);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_DOWN,Input.Keys.S), false, false);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP,Input.Keys.W), false, false);
+        c1.userInput();
+        assertEquals("This test asserts that the cook will not change directions if all directional inputs are pressed (D then ASW)",Cook.Facing.RIGHT, c1.getDir());
+        Interactions.resetKeys();
+
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_DOWN,Input.Keys.S), false, false);
+        c1.userInput();
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP,Input.Keys.W), false, false);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_LEFT,Input.Keys.A), false, false);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_RIGHT,Input.Keys.D), false, false);
+        c1.userInput();
+        assertEquals("This test asserts that the cook will not change directions if all directional inputs are pressed (S then WAD",Cook.Facing.DOWN, c1.getDir());
+        Interactions.resetKeys();
+
     }
 
 

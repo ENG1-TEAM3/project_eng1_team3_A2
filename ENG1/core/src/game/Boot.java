@@ -17,8 +17,10 @@ public class Boot extends Game {
 
     /** The Boot Singleton Instance. */
     public static Boot INSTANCE;
-    /** The screen width and height. */
-    // private int widthScreen, heightScreen;
+    // The screen width and height.
+
+    //private int widthScreen, heightScreen;
+
     /** The camera for the game. */
     private OrthographicCamera orthographicCamera;
     /** Boot Singleton Constructor */
