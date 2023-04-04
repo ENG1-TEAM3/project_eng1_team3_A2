@@ -1,5 +1,6 @@
 package helper;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -27,6 +28,7 @@ public class GameHud extends Hud {
     private FoodStack recipe;
     /** The {@link Customer} to have their request rendered.. */
     private Customer customer;
+    private GameScreen gs;
     // /** The time, in milliseconds, of the last recipe change. */
     // private long lastChange;
 
@@ -38,7 +40,7 @@ public class GameHud extends Hud {
     public GameHud(SpriteBatch batch, GameScreen gameScreen)
     {
         super(batch);
-
+        this.gs = gameScreen;
         timeLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         updateTime(0,0,0);
 
@@ -129,7 +131,7 @@ public class GameHud extends Hud {
      */
     public void updateTime(int hoursPassed, int minutesPassed, int secondsPassed)
     {
-        timeLabel.setText("TIMER: " + String.format(Util.formatTime(hoursPassed,minutesPassed,secondsPassed)));
+        timeLabel.setText("TIMER: " + String.format(Util.formatTime(hoursPassed,minutesPassed,secondsPassed) + " howfarin: " + gs.howfarin));
     }
 
     /**

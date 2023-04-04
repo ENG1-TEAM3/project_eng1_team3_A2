@@ -86,7 +86,7 @@ public class Interactions {
      * 1: Call the function {@link #getInputKeys(InputID)} on the ID you want, and then
      *    loop through the Array, calling the Gdx.input.isKeyPressed function you require.
      *
-     * 2: At the start of the current update of the game, use the function {@link #updateKeys()}.
+     * 2: At the start of the current update of the game, use the function {@link #updateKeys(boolean)}.
      *    This will automatically check the keys, and then store the {@link InputKey.InputTypes}
      *    that have been pressed down.
      *    You can then use the functions {@link #isPressed(InputKey.InputTypes)}
@@ -116,15 +116,12 @@ public class Interactions {
                 new InputKey(InputKey.InputTypes.COOK_RIGHT,Input.Keys.RIGHT)
         }));
         inputs.put(InputID.COOK_INTERACT, new Array<>(new InputKey[]{
-                new InputKey(InputKey.InputTypes.USE, Input.Keys.I),
-                new InputKey(InputKey.InputTypes.PICK_UP, Input.Keys.O),
-                new InputKey(InputKey.InputTypes.PUT_DOWN, Input.Keys.J),
-                new InputKey(InputKey.InputTypes.USE, Input.Keys.R),
+                new InputKey(InputKey.InputTypes.USE, Input.Keys.F),
                 new InputKey(InputKey.InputTypes.PICK_UP, Input.Keys.E),
-                new InputKey(InputKey.InputTypes.PUT_DOWN, Input.Keys.G)
+                new InputKey(InputKey.InputTypes.PUT_DOWN, Input.Keys.Q)
         }));
         inputs.put(InputID.COOK_MISC, new Array<>(new InputKey[] {
-                new InputKey(InputKey.InputTypes.COOK_SWAP, Input.Keys.SPACE)
+                new InputKey(InputKey.InputTypes.COOK_SWAP, Input.Keys.TAB)
         }));
     }
 
@@ -157,9 +154,9 @@ public class Interactions {
 
 
 
-    /** A list of all keys that were being pressed when {@link #updateKeys()} was called.*/
+    /** A list of all keys that were being pressed when {@link #updateKeys(boolean)} was called.*/
     public static Array<InputKey.InputTypes> keysPressed = new Array<>();
-    /** A list of all keys that were pressed the same frame that {@link #updateKeys()} was called.*/
+    /** A list of all keys that were pressed the same frame that {@link #updateKeys(boolean)} was called.*/
     public static Array<InputKey.InputTypes> keysJustPressed = new Array<>();
 
     /**
@@ -187,8 +184,10 @@ public class Interactions {
      *  array variables that record what {@link InputKey.InputTypes} are pressed,
      *  based on the {@link Interactions#inputs} HashMap, such as {@link Interactions#keysPressed}.
      */
-    public static void updateKeys() {
-        resetKeys();
+    public static void updateKeys(boolean shouldResetKeys) {
+        if (shouldResetKeys) {
+            resetKeys();
+        }
         for (InputID inputID : InputID.values()) {
             for (InputKey inputKey : new Array.ArrayIterator<>(inputs.get(inputID))) {
                 // ^ The new ... stuff was added to remove warnings. RHS is the same as inputs.get(inputID)
@@ -305,9 +304,8 @@ public class Interactions {
     * @return FoodID of the new ingredient, OR null if the station cannot interact with this foodID.
     */
     public static InteractionResult interaction(FoodID foodID, StationID stationID) {
-        InteractionResult newResult = interactions.get(InteractionKey(foodID, stationID));
-        return newResult;
-    };
+        return interactions.get(InteractionKey(foodID, stationID));
+    }
 
     /**
      * Creates an interaction key out of foodID and stationID.

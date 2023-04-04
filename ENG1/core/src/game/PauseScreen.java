@@ -98,17 +98,14 @@ public class PauseScreen extends ScreenAdapter {
             stage = new Stage(viewport, batch);
             stage.addActor(table);
         }
-        else {
-            System.out.println("PauseScreen entering headless mode");
-        }
     }
 
     /**
      * Check for user input every frame and act on specified inputs.
      * @param delta The time between frames as a float.
      */
-    public void update(float delta) {
-        Interactions.updateKeys();
+    public void update(float delta, boolean shouldResetKeys) {
+        Interactions.updateKeys(shouldResetKeys);
         // Check if the Unpause key was pressed.
         if (Interactions.isJustPressed(InputKey.InputTypes.UNPAUSE)) {
             screenController.playGameScreen();
@@ -158,7 +155,7 @@ public class PauseScreen extends ScreenAdapter {
 
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
-        this.update(delta);
+        this.update(delta, true);
 
     }
 }

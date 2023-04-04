@@ -81,18 +81,15 @@ public class CreditsScreen extends ScreenAdapter {
             stage = new Stage(viewport, batch);
             stage.addActor(table);
         }
-        else {
-            System.out.println("CreditsScreen entering headless mode");
-        }
     }
 
     /**
      * Check for user input every frame and act on specified inputs.
      * @param delta The time between frames as a float.
      */
-    public void update(float delta) {
+    public void update(float delta, boolean shouldResetKeys) {
         // Check for input.
-        Interactions.updateKeys();
+        Interactions.updateKeys(shouldResetKeys);
         if (Interactions.isJustPressed(InputKey.InputTypes.CREDITS)) {
             screenController.setScreen(prevScreenID);
         }
@@ -110,7 +107,7 @@ public class CreditsScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
-        this.update(delta);
+        this.update(delta, true);
     }
 
     /**

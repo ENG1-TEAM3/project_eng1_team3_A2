@@ -29,8 +29,7 @@ import java.util.Comparator;
 /** A {@link ScreenAdapter} containing certain elements of the game. */
 public class GameScreen extends ScreenAdapter {
     private final OrthographicCamera camera;
-    private int delay;
-
+    public long howfarin = 0;
     private long previousSecond = 0, lastCustomerSecond = 0, nextCustomerSecond = 0;
     private int secondsPassed = 0, minutesPassed = 0, hoursPassed = 0;
     private final GameHud gameHud;
@@ -98,24 +97,12 @@ public class GameScreen extends ScreenAdapter {
             this.box2DDebugRenderer = new Box2DDebugRenderer();
             this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
         }
-        else{
-            System.out.println("GameScreen entering headless mode");
-        }
-
     }
 
-    /**
-     * Update the game's values, {@link GameEntity}s and so on.
-     * @param delta The time between frames as a float.
-     */
-    private void update(float delta)
-    {
-
-        // First thing, update all inputs
-        Interactions.updateKeys();
-
+    public void updateTiming(){
         long diffInMillis = TimeUtils.timeSinceMillis(previousSecond);
-        if (diffInMillis >= 1000) {
+        if (diffInMillis >= (1000 - howfarin)) {
+            howfarin = diffInMillis - (1000 - howfarin);
             previousSecond += 1000;
             secondsPassed += 1;
             if (secondsPassed >= 60) {
@@ -127,12 +114,22 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         }
-
         gameHud.updateTime(hoursPassed, minutesPassed, secondsPassed);
-        cameraUpdate();
-        orthogonalTiledMapRenderer.setView(camera);
-        batch.setProjectionMatrix(camera.combined);
-        shape.setProjectionMatrix(camera.combined);
+    }
+
+
+    /**
+     * Update the game's values, {@link GameEntity}s and so on.
+     * @param delta The time between frames as a float.
+     */
+    public void update(float delta, boolean shouldResetKeys)
+    {
+
+        // First thing, update all inputs
+        Interactions.updateKeys(shouldResetKeys);
+
+        updateTiming();
+
         for (Cook thisCook : cooks) {
             thisCook.getBody().setLinearVelocity(0F,0F);
             if (thisCook == cook) {
@@ -161,7 +158,9 @@ public class GameScreen extends ScreenAdapter {
         {
             screenController.pauseGameScreen();
         }
+
         world.step(1/60f,6,2);
+
         for (GameEntity entity : gameEntities) {
             entity.update(delta);
         }
@@ -184,7 +183,7 @@ public class GameScreen extends ScreenAdapter {
     public void render(float delta)
     {
 
-        this.update(delta);
+        this.update(delta, true);
 
         renderGame(delta);
 
@@ -202,6 +201,11 @@ public class GameScreen extends ScreenAdapter {
      * @param delta The time between frames as a float.
      */
     public void renderGame(float delta) {
+
+        cameraUpdate();
+        orthogonalTiledMapRenderer.setView(camera);
+        batch.setProjectionMatrix(camera.combined);
+        shape.setProjectionMatrix(camera.combined);
 
         Gdx.gl.glClearColor(1,1,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -389,7 +393,9 @@ public class GameScreen extends ScreenAdapter {
         world.dispose();
         this.world = new World(new Vector2(0,0), false);
         this.mapHelper.setupMap();
-        this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
+        if (this.batch!= null) {
+            this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
+        }
         cookIndex = -1;
     }
 
@@ -406,6 +412,7 @@ public class GameScreen extends ScreenAdapter {
         previousSecond = TimeUtils.millis();
         lastCustomerSecond = TimeUtils.millis();
         nextCustomerSecond = TimeUtils.millis()+2000;
+        howfarin = 0;
 
         gameHud.setRecipe(null);
         customersToServe = customers;

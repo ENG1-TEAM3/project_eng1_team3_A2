@@ -79,17 +79,14 @@ public class MenuScreen extends ScreenAdapter {
             stage = new Stage(viewport, batch);
             stage.addActor(table);
         }
-        else {
-            System.out.println("MenuScreen entering headless mode");
-        }
     }
 
     /**
      * Check for user input every frame and act on specified inputs.
      * @param delta The time between frames as a float.
      */
-    public void update(float delta) {
-        Interactions.updateKeys();
+    public void update(float delta, boolean shouldResetKeys) {
+        Interactions.updateKeys(shouldResetKeys);
 
         // Set the screen to the gameplay screen
         if (Interactions.isJustPressed(InputKey.InputTypes.START_GAME)) {
@@ -125,6 +122,6 @@ public class MenuScreen extends ScreenAdapter {
         backgroundSprite.draw(batch);
         batch.end();
         stage.draw();
-        this.update(delta);
+        this.update(delta, true);
     }
 }
