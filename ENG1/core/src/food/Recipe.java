@@ -217,10 +217,10 @@ public class Recipe {
         return false;
     }
 
-    public static Array<FoodStack> getRecipeCombos(String recipeName) {
-        Array<FoodStack> recipeCombos = recipes.get(recipeName);
-        return recipeCombos;
-    }
+    //public static Array<FoodStack> getRecipeCombos(String recipeName) {
+    //    Array<FoodStack> recipeCombos = recipes.get(recipeName);
+    //    return recipeCombos;
+    //}
 
     public static String randomRecipe() {
          Random random = new Random();

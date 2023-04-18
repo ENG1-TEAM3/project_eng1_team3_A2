@@ -102,4 +102,8 @@ public class CounterStation extends Station {
             drawY += drawInc;
         }
     }
+
+    public FoodStack getFoodStack(){
+        return this.foodStack;
+    }
 }

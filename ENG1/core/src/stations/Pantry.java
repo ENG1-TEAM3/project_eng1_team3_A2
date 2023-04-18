@@ -13,7 +13,7 @@ import interactions.InputKey;
  * {@link Cook}s to take the {@link FoodItem} that is assigned
  * to the {@link Pantry}.
  */
-public class Pantry extends CookInteractable {
+public class Pantry extends Station {
 
     FoodItem.FoodID foodID;
 
@@ -67,55 +67,5 @@ public class Pantry extends CookInteractable {
             }
             cook.foodStack.addStack(addedFood);
         }
-    }
-
-    /**
-     * The function used to update the {@link Pantry}.
-     * It is unused.
-     * @param delta The time between frames as a float.
-     */
-    @Override
-    public void update(float delta) { }
-
-
-    /**
-     * The function used to render the {@link Pantry}.
-     * It is unused.
-     * @param batch The {@link SpriteBatch} used to render.
-     */
-    @Override
-    public void render(SpriteBatch batch) { }
-
-
-    /**
-     * The function used to render the {@link Pantry}'s
-     * debug visuals.
-     * It is unused.
-     * @param batch The {@link SpriteBatch} used to render.
-     */
-    @Override
-    public void renderDebug(SpriteBatch batch) {
-
-    }
-
-
-    /**
-     * The function used to render the {@link Pantry}.
-     * It is unused.
-     * @param shape The {@link ShapeRenderer} used to render.
-     */
-    @Override
-    public void renderShape(ShapeRenderer shape) { }
-
-
-    /**
-     * The function used to render the {@link Pantry}'s
-     * debug visuals.
-     * It is unused.
-     * @param shape The {@link ShapeRenderer} used to render.
-     */
-    @Override
-    public void renderShapeDebug(ShapeRenderer shape) {
-
     }
 }
