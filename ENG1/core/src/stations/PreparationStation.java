@@ -46,27 +46,30 @@ public class PreparationStation extends Station {
         if (inUse) {
             if (progress < 100) {
                 float[] steps = interaction.getSteps();
-                progress = Math.min(progress + interaction.getSpeed() * delta, 100);
+                float stopPoint;
+                if (stepNum == steps.length){
+                    stopPoint = 100;
+                }
+                else {
+                    stopPoint = steps[stepNum];
+                }
+                if (interaction.getSpeed() > 0 && progress < stopPoint) {
+                    progress = Math.min(progress + interaction.getSpeed() * delta, 100);
+                }
+
                 if (stepNum < steps.length) {
                     // -1 instant case
                     if (interaction.getSpeed() == -1) {
-                        progress = steps[stepNum];
                         state = StationState.NEED_USE;
                     } else {
                         if (progress >= steps[stepNum]) {
-                            progress = steps[stepNum];
                             state = StationState.NEED_USE;
                         } else {
                             state = StationState.PREPARING;
                         }
                     }
                 } else {
-                    if (interaction.getSpeed() == -1) {
-                        progress = 100;
-                        state = StationState.FINISHED;
-                    } else {
-                        state = StationState.PREPARING;
-                    }
+                    state = StationState.PREPARING;
                 }
             } else {
                 state = StationState.FINISHED;
@@ -212,9 +215,20 @@ public class PreparationStation extends Station {
                     if (progress >= steps[stepNum]) {
                         progress = steps[stepNum];
                         stepNum += 1;
+                        if (interaction.getSpeed() == -1) {
+                            if (stepNum < steps.length) {
+                                progress = steps[stepNum];
+                            }
+                            else{
+                                progress = 100f;
+                            }
+                        }
                     }
                 }
             }
         }
+    }
+    public float getProgress(){
+        return progress;
     }
 }

@@ -43,6 +43,7 @@ public class MenuScreen extends ScreenAdapter {
     public MenuScreen(ScreenController screenController, OrthographicCamera orthographicCamera) {
 
         this.backgroundSprite = new Sprite(new Texture("Maps/StartMenuBackground.png"));
+        backgroundSprite.setSize(Constants.V_Width, Constants.V_Height);
 
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
         Table table = new Table();

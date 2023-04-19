@@ -131,7 +131,7 @@ public class GameHud extends Hud {
      */
     public void updateTime(int hoursPassed, int minutesPassed, int secondsPassed)
     {
-        timeLabel.setText("TIMER: " + String.format(Util.formatTime(hoursPassed,minutesPassed,secondsPassed) + " howfarin: " + gs.howfarin));
+        timeLabel.setText("TIMER: " + String.format(Util.formatTime(hoursPassed,minutesPassed,secondsPassed)));
     }
 
     /**

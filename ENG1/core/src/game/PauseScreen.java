@@ -2,6 +2,7 @@ package game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -83,20 +84,16 @@ public class PauseScreen extends ScreenAdapter {
 
         // pauseLabel.setFontScale(4);
         lblLabels[0].setFontScale(4);
-
         this.screenController = screenController;
         this.camera = orthographicCamera;
         this.batch = screenController.getSpriteBatch();
-        this.shape = screenController.getShapeRenderer();
         this.gameScreen = ((GameScreen) screenController.getScreen(ScreenID.GAME));
-        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
-
-        if (this.shape != null) {
-            shape.setAutoShapeType(true);
-        }
+        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, new OrthographicCamera());
         if (this.batch != null) {
             stage = new Stage(viewport, batch);
             stage.addActor(table);
+            this.shape = new ShapeRenderer();
+            shape.setAutoShapeType(true);
         }
     }
 
