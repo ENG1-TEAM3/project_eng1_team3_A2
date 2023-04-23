@@ -61,7 +61,7 @@ public class CustomerController {
     public boolean canAddCustomer() {
         Array<ServingStation> stations = servingStations;
         for (ServingStation station : stations) {
-            if (station.getCustomer() != null) {
+            if (station.getCustomer() == null) {
                 return true;
             }
         }
@@ -196,11 +196,6 @@ public class CustomerController {
         removeCustomer(station);
         customersServed++;
         gameScreen.setCustomerHud(customersServed);
-
-        // If there are any customers left, spawn a new one.
-        if (customersLeft > 0) {
-            addCustomer();
-        }
 
         // BELOW IS CODE FOR CUSTOMER SPAWNING.
 
