@@ -1,0 +1,30 @@
+@startuml
+class FoodItem{
+enum FoodID
+{static} HashMap<FoodID, Float> FOODHEIGHTS
+}
+class FoodStack{
+FoodStack(FoodID... foods)
+Foodstack()
+Foodstack(Array<FoodID> foodstack)
+FoodID popStack()
+addStack(FoodID newFood)
+Array<FoodID> getStack()
+clearStack()
+setStack(Array<FoodID> newstack)
+int size()
+String toString()
+}
+
+
+class Recipe{
+{static}boolean matchesRecipe(Foodstack foodStack, String recipeName)
+{static}String randomRecipe()
+{static}randomRecipeOption(String recipeName)
+{static}Foodstack firstRecipeOption(String recipeName)
+}
+
+Recipe --> FoodStack : Stores instances of
+
+
+@enduml

@@ -23,6 +23,7 @@ class GameSprites{
 }
 
 Boot -down--> ScreenController : Stores instance of
+Boot --> Boot : Stores singleton instance of
 ScreenController --> Boot : Stores the instance of
 
 note "ALL CAPS means final/constant" as n1

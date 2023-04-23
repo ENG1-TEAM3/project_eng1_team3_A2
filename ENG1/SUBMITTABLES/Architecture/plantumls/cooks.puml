@@ -1,0 +1,54 @@
+@startuml
+abstract GameEntity{
+# float x
+# float y
+# float velX
+# float velY
+# float speed
+# float width
+# float height
+# Body body
+GameEntity(float width, float height, Body body)
+GameEntity(Rectangle rectangle)
+update(float delta)
+render(SpriteBatch batch)
+renderDebug(SpriteBatch batch)
+renderShape(ShapeRenderer shape)
+renderShapeDebug(ShapeRenderer shape)
+Body getBody()
+float getX()
+float getY()
+}
+
+class CookInteractor{
+# float x
+# float y
+# float size
+# Rectangle collision
+# CollisionHelper ch
+CookInteractor(float x, float y, float size)
+# updatePosition(float x, float y, Cook.Facing dir)
+checkCollisions(Cook cook, InputKey.InputTypes inputType)
+renderDebug(ShapeRenderer shape)
+}
+
+class Cook{
+FoodStack foodStack
+enum facing
+Cook(float width, float height, Body body, GameScreen gameScreen)
+userInput()
+update(float delta)
+render(SpriteBatch batch)
+renderControlArrow(SpriteBatch batch)
+renderDebug(SpriteBatch batch)
+renderShape(SpriteBatch batch)
+renderShapeDebug(SpriteBatch batch)
+renderFood(SpriteBatch batch)
+Facing getDir()
+}
+
+Cook --> CookInteractor : Stores instance of
+Cook --|> GameEntity : Is extension of
+
+
+@enduml

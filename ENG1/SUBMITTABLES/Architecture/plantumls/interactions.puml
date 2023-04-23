@@ -1,0 +1,29 @@
+@startuml
+class InputKey{
+enum InputTypes
+InputKey(InputTypes inputType, int key)
+int getKey()
+InputTypes getType()
+}
+class Interactions{
+enum InputID
+{static} Array<InputKey.InputTypes> keysPressed
+{static} Array<InputKey.InputTypes> keysJustPressed
+{static} Array<InputKey> getInputKeys(InputID inputID)
+{static} Array<InputKey.InputTypes> getInputTypes(InputID inputID)
+{static} resetKeys()
+{static} updateKeys(boolean shouldResetKeys)
+{static} manualAddKey(InputKey inputKey, boolean shouldResetKeys, boolean isKeyJustPressed)
+{static} Array<String> getKeyStrings(InputKey.InputTypes inputType)
+{Static} String getKeyString(InputKey.InputTypes inputType)
+{Static} String getKeyString(InputKey inputKey)
+{Static} boolean isPressed(InputKey.InputTypes inputType)
+{Static} boolean isJustPressed(InputKey.InputTypes inputType)
+{static} InteractionResult interaction(FoodID foodID, StationID stationID)
+
+
+}
+Interactions --> InputKey : Stores instances of
+
+
+@enduml

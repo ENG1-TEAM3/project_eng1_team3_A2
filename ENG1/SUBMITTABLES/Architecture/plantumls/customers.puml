@@ -1,0 +1,31 @@
+@startuml
+class Customer{
+Vector2 position
+Sprite sprite
+String request
+Customer(Sprite sprite)
+Customer(Sprite sprite, Vector2 position)
+String randomRecipe()
+render(SpriteBatch batch)
+float getX()
+float getY()
+String getRequestName()
+}
+class CustomerController{
+CustomerController(GameScreen gameScreen)
+boolean canAddCustomer()
+int addCustomer()
+removeCustomer(ServingStation station)
+setCustomersLeft(int customersLeft)
+int getCustomersLeft()
+setCustomersServed(int customersServed)
+int getCustomersServed()
+addServingStation(ServingStation station)
+Array<ServingStation> getServingStations()
+customerServed(ServingStation station)
+clearServingStations()
+}
+
+CustomerController --> Customer : Stores instances of
+
+@enduml

@@ -1,0 +1,67 @@
+@startuml
+abstract CookInteractable{
+# Rectangle interactRect
+CookInteractable(Rectangle rect)
+Rectangle getRectangle()
+interact(Cook cook, InputKey.InputTypes inputType)
+}
+class Station{
+enum StationID
+Station(Rectangle rectangle)
+setId(StationID stationID)
+interact(Cook cook, InputKey.InputTypes inputType)
+update(float delta)
+render(SpriteBatch batch)
+renderDebug(SpriteBatch batch)
+renderShape(ShapeRenderer shape)
+renderShapeDebug(ShapeRenderer shape)
+}
+class BinStation{
+BinStation(Rectangle rectangle)
+interact(Cook cook, InputKey.InputTypes inputType)
+}
+class CounterStation {
+CounterStation(Rectangle rectangle)
+interact(Cook cook, InputKey.InputTypes inputType)
+render(SpriteBatch batch)
+FoodStack getFoodStack()
+}
+class Pantry{
+Pantry(Rectangle rectangle)
+setItem(FoodItem.FoodID foodID)
+interact(Cook cook, InputKey.InputTypes inputType)
+}
+class PreparationStation{
+PreparationStation(Rectangle rectangle)
+update(float delta)
+render(SpriteBatch batch)
+renderShape(ShapeRenderer shape)
+interact(Cook cook, InputKey.InputTypes inputType)
+float getProgress()
+}
+class ServingStation{
+ServingStation(Rectangle rectangle)
+boolean hasCustomer()
+interact(Cook cook, InputKey.InputTypes inputType)
+render(SpriteBatch batch)
+setGameScreen(GameScreen gameScreen)
+setCustomer(Customer customer)
+Customer getCustomer()
+float getCustomerX()
+getCustomerY()
+float getX()
+float getY()
+}
+
+Station -up--|> CookInteractable
+Pantry -up--|> Station
+BinStation -up--|> Station
+CounterStation -up--|> Station
+ServingStation -up--|> Station
+PreparationStation -up--|> Station
+
+
+
+
+
+@enduml

@@ -1,0 +1,69 @@
+@startuml
+class BodyHelper{
+{static} Body createBody(float x, float y, float width, float height, boolean isStatic, World world)
+{static} boolean checkCollision(Rectangle rect1, Rectangle rect2)
+}
+class CollisionHelper{
+# GameScreen gameScreen
+{static} CollisionHelper getInstance()
+setGameScreen(GameScreen gameScreen)
+Array<CookInteractable> stationCollisions(Rectangle collision)
+CookInteractable getInteract(Cook cook, Rectangle rectangle)
+}
+CollisionHelper --> CollisionHelper : Stores Singleton instance of
+class Constants{
+{static} float PPM
+{static} int V_WIDTH
+{static} int V_HEIGHT
+{static} String MAPPATH
+{static} int MAPWIDTH
+{static} int MAPHEIGHT
+{static} Vector2 CUSTOMERSPAWN
+{static} Vector2 GAMECAMERAOFFSET
+}
+class GameHud{
+# Label timeLabel
+# Label CustomerLabel
+# Label CustomerScore
+GameHud(SpriteBatch batch, GameScreen gameScreen)
+render()
+addRecipeToRender(Integer num, FoodStack fs)
+removeRecipeToRender(Integer num)
+setServingStations(Array<ServingStation> srvs)
+updateTime(int secondsPassed)
+updateTime(int minutesPassed, int secondsPassed)
+updateTime(int hoursPassed, int minutesPassed, int secondsPassed)
+setCustomerCount(int customerCount)
+}
+class Hud{
+# Stage stage
+# Viewport viewport
+# Table table
+Hud(SpriteBatch batch)
+render()
+}
+class InstructionHud{
+# Label instructionsLabel
+InstructionHud(SpriteBatch batch)
+render()
+}
+class MapHelper{
+{static} MapHelper getInstance()
+{static} MapHelper newInstance()
+setGameScreen(GameScreen gameScreen)
+setupMap()
+createStaticBody(PolygonMapObject polygonMapObject)
+Shape createPolygonShape(PolygonMapObject polygonMapObject)
+{static} Body makeBody(Rectangle rectangle, boolean isStatic)
+parseMapObjects(MapObjects mapObjects)
+dispose()
+}
+MapHelper --> MapHelper : Stores instance of
+InstructionHud --|> Hud
+GameHud --|> Hud
+
+class Util{
+{static} float distancePoints(float x1, float y1, float x2, float y2)
+{static} String formatTime(int hours, int minutes, int seconds)
+}
+@enduml
