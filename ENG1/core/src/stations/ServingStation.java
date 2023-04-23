@@ -20,6 +20,7 @@ public class ServingStation extends Station {
     private GameScreen gameScreen;
     private float customerX, customerY;
     private CustomerController customerController;
+    private int id;
 
     /**
      * The constructor for the {@link ServingStation}.
@@ -64,23 +65,13 @@ public class ServingStation extends Station {
             // First make sure there is actually a request on this counter.
             if (hasCustomer()) {
                 // If there is a request, then compare the two.
-                if (Recipe.matchesRecipe(cook.foodStack,customer.getRequestName())) {
+                if (Recipe.matchesRecipe(cook.foodStack, customer.getRequestName())) {
                     // If it's correct, then the customer will take the food and leave.
                     request = null;
                     cook.foodStack.clearStack();
-                    if (gameScreen.getGameHud().getCustomer() == this.customer) {
-                        gameScreen.getGameHud().setRecipe(null);
-                    }
                     customerController.customerServed(this);
-                } else {
-                    // If not, then display the customer's request.
-                    gameScreen.getGameHud().setRecipe(customer);
+
                 }
-            }
-        } else {
-            if (hasCustomer()) {
-                // Display the customer's request.
-                gameScreen.getGameHud().setRecipe(customer);
             }
         }
     }
@@ -116,6 +107,7 @@ public class ServingStation extends Station {
     {
         this.customer = customer;
     }
+
 
     /**
      * Getter for the {@link Customer} that is tied to

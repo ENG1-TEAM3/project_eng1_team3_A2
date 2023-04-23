@@ -6,12 +6,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Array;
 import customers.Customer;
 import food.FoodItem;
 import food.FoodStack;
 import food.Recipe;
 import game.GameScreen;
 import game.GameSprites;
+import stations.ServingStation;
+
+import java.util.HashMap;
 
 // import java.awt.*;
 
@@ -25,10 +29,9 @@ public class GameHud extends Hud {
     /** The {@link SpriteBatch} of the GameHud. Use for drawing {@link food.Recipe}s. */
     private SpriteBatch batch;
     /** The {@link FoodStack} that the {@link GameHud} should render. */
-    private FoodStack recipe;
-    /** The {@link Customer} to have their request rendered.. */
-    private Customer customer;
+    private HashMap<Integer, FoodStack> recipes;
     private GameScreen gs;
+    private Array<ServingStation> servingStations;
     // /** The time, in milliseconds, of the last recipe change. */
     // private long lastChange;
 
@@ -40,6 +43,7 @@ public class GameHud extends Hud {
     public GameHud(SpriteBatch batch, GameScreen gameScreen)
     {
         super(batch);
+        recipes = new HashMap<>();
         this.gs = gameScreen;
         timeLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         updateTime(0,0,0);
@@ -63,19 +67,35 @@ public class GameHud extends Hud {
         batch.begin();
         GameSprites gameSprites = GameSprites.getInstance();
         float drawX = Constants.RECIPE_X, drawY = Constants.RECIPE_Y;
-        // If there is a recipe...
-        if (recipe != null) {
-            // Loop through on the top right of the screen, and render!
-            for (FoodItem.FoodID ingredient : recipe.getStack()) {
-                Sprite foodSprite = gameSprites.getSprite(GameSprites.SpriteID.FOOD, ingredient.toString());
+        for (Integer i: recipes.keySet()) {
+            for (int i2 = (recipes.get(i).getStack().size - 1 ); i2 >= 0; i2 --) {
+                drawX = this.servingStations.get(i).getX() + Constants.gameCameraOffset.x;
+                Sprite foodSprite = gameSprites.getSprite(GameSprites.SpriteID.FOOD, recipes.get(i).getStack().get(i2).toString());
                 foodSprite.setScale(2F);
-                foodSprite.setPosition(drawX-foodSprite.getWidth()/2,drawY-foodSprite.getHeight()/2);
+                foodSprite.setPosition(drawX - foodSprite.getWidth() / 2, drawY - foodSprite.getHeight() / 2);
                 foodSprite.draw(batch);
-                drawY -= 64;
+                drawY += 32;
             }
+            drawY = Constants.RECIPE_Y;
         }
         batch.end();
     }
+
+    public void addRecipeToRender(Integer num, FoodStack fs) {
+        System.out.println("Adding recipe at " + num.toString());
+        System.out.println("The stack is " + fs.toString());
+        recipes.put(num, fs);
+    }
+
+    public void removeRecipeToRender(Integer num){
+        recipes.remove(num);
+    }
+
+    public void setServingStations(Array<ServingStation> srvs) {
+        this.servingStations = srvs;
+    }
+
+
 
     /* Removed as it was confusing to look at.
     /**
@@ -94,17 +114,24 @@ public class GameHud extends Hud {
 
     /**
      * Sets the recipe to be rendered.
-     * @param customer The {@link Customer} who is requesting the {@link #recipe}.
+     * @param cstrs The {@link Customer} who is requesting the {@link #recipes}.
      */
-    public void setRecipe(Customer customer) {
-        // this.lastChange = TimeUtils.millis();
-        this.customer = customer;
-        if (customer == null) {
-            this.recipe = null;
-            return;
-        }
-        this.recipe = Recipe.randomRecipeOption(customer.getRequestName());
-    }
+
+
+    //public void setRecipes(Array<Customer> cstrs) {
+    //    // this.lastChange = TimeUtils.millis();
+    //    this.customers = cstrs;
+    //    if (customers == null) {
+    //        this.recipes = null;
+    //        return;
+    //    }
+    //
+    //    //this.recipes = Recipe.randomRecipeOption(customer.getRequestName());
+    //    this.recipes = new Array<>();
+    //    for(Customer cs: customers){
+    //        recipes.add(Recipe.randomRecipeOption(cs.getRequestName()));
+    //    }
+    //}
 
     /**
      * Update the Timer
@@ -148,7 +175,4 @@ public class GameHud extends Hud {
      * @return {@link Customer} : The {@link Customer} having their
      *                            request shown.
      */
-    public Customer getCustomer() {
-        return customer;
-    }
 }

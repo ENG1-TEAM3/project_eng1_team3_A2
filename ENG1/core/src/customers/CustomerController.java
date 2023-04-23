@@ -30,6 +30,8 @@ public class CustomerController {
     /** The {@link game.GameScreen} to send the {@link #customersServed} to. */
     private GameScreen gameScreen;
 
+    private boolean hasAssignedIdsToServingStations = false;
+
     /**
      * Constructor for the {@link CustomerController}.
      * <br>It sets up the array that the {@link Customer}s
@@ -96,7 +98,8 @@ public class CustomerController {
         // Now that the only stations left are the ones without Customers,
         // randomly pick one and add a customer to it.
         Random random = new Random();
-        ServingStation chosenStation = emptyStations.get(random.nextInt(emptyStations.size));
+        int randomStationIndex = random.nextInt(emptyStations.size);
+        ServingStation chosenStation = emptyStations.get(randomStationIndex);
 
         Customer newCustomer = new Customer(customerSprite,
                 new Vector2(chosenStation.getCustomerX(),
@@ -105,7 +108,7 @@ public class CustomerController {
         newCustomer.randomRecipe();
         chosenStation.setCustomer(newCustomer);
         // Show the Customer's recipe
-        gameScreen.getGameHud().setRecipe(newCustomer);
+        gameScreen.getGameHud().addRecipeToRender(servingStations.indexOf(chosenStation,true), Recipe.firstRecipeOption(newCustomer.getRequestName()));
 
         customersLeft--;
         return Recipe.firstRecipeOption(newCustomer.getRequestName()).size();
@@ -123,6 +126,7 @@ public class CustomerController {
         }
         // Remove the customer from the customers array.
         customers.removeValue(station.getCustomer(),true);
+        gameScreen.getGameHud().removeRecipeToRender(servingStations.indexOf(station, true));
         // Then, if it has a customer, set the customer of the station
         // to null.
         station.setCustomer(null);

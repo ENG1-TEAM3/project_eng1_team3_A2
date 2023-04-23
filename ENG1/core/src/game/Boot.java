@@ -69,7 +69,7 @@ public class Boot extends Game {
     /**
      * Set up the boot instance in headless mode. This is used for testing.
      */
-    public void createHeadless(){
+    public void createHeadless(){ // AS2 NEW CHANGE - this method allows for a game to be created headlessly for testing.
         this.uiCamera = new OrthographicCamera();
         this.gameCamera = new OrthographicCamera();
         this.spriteBatch = null;

@@ -86,7 +86,6 @@ public class GameScreen extends ScreenAdapter {
         this.gameEntities = new Array<>();
         this.drawQueueComparator = new DrawQueueComparator();
         this.customerController = new CustomerController(this);
-
         this.world = new World(new Vector2(0,0), false);
 
         this.mapHelper = MapHelper.getInstance();
@@ -95,7 +94,10 @@ public class GameScreen extends ScreenAdapter {
 
 
         this.gameHud = new GameHud(batch, this);
+        this.gameHud.setServingStations(this.customerController.getServingStations());
         this.instructionHUD = new InstructionHud(batch);
+
+
 
         if(this.batch != null){
             this.shape = screenController.getShapeRenderer();
@@ -177,7 +179,7 @@ public class GameScreen extends ScreenAdapter {
      */
     private void cameraUpdate()
     {
-        camera.position.set(new Vector3(0 + xOffset,0+yOffset,0));
+        camera.position.set(new Vector3(Constants.gameCameraOffset.x, Constants.gameCameraOffset.y,0));
         camera.update();
     }
 
@@ -421,7 +423,6 @@ public class GameScreen extends ScreenAdapter {
         nextCustomerSecond = TimeUtils.millis()+2000;
         howfarin = 0;
 
-        gameHud.setRecipe(null);
         customersToServe = customers;
         diffculty = customers;
         customerController.setCustomersLeft(customers);
