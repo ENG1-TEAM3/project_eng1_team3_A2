@@ -51,14 +51,19 @@ public class MenuScreen extends ScreenAdapter {
     private SpriteBatch batch;
     private Viewport viewport;
 
+    /** Stage used to contain the text for the main menu */
     private Stage mainMenuStage;
 
+    /** Stage used to contain the text for the mode select screen*/
     private Stage modeSelectStage;
-
-    private menuState currentState;
-    private modeSelectionState currentSelectionType;
-    private mode currentModeSelection;
-    private difficulty currentDifficultySelection;
+    /** State used to swap screens from main menu to mode select */
+    public menuState currentState;
+    /** State used to contain the current user selection for editing in the mode select screen*/
+    public modeSelectionState currentSelectionType;
+    /** State used to contain the current mode selection (endless or scenario)*/
+    public mode currentModeSelection;
+    /** State used to contain the current difficulty selection (easy medium or hard)*/
+    public difficulty currentDifficultySelection;
     private Sprite backgroundSprite;
     private BitmapFont bitmapFont;
 
@@ -114,7 +119,6 @@ public class MenuScreen extends ScreenAdapter {
 
         // AS2 NEW CHANGE - MODE SELECT SCREEN
 
-
         Table table2 = new Table();
         table2.center();
         table2.setFillParent(true);
@@ -161,30 +165,30 @@ public class MenuScreen extends ScreenAdapter {
         if (Interactions.isJustPressed(InputKey.InputTypes.INSTRUCTIONS)) {
             screenController.setScreen(ScreenID.INSTRUCTIONS);
         }
-        else if (Interactions.isJustPressed(InputKey.InputTypes.CREDITS)) {
+        else if (Interactions.isJustPressed(InputKey.InputTypes.CREDITS)) { // Set the screen to the credits screen
             ((CreditsScreen)screenController.getScreen(ScreenID.CREDITS)).setPrevScreenID(ScreenID.MENU);
             screenController.setScreen(ScreenID.CREDITS);
         }
-        else if (Interactions.isJustPressed(InputKey.InputTypes.MODE_SELECT)) {
+        else if (Interactions.isJustPressed(InputKey.InputTypes.MODE_SELECT)) { // Set the screen to the mode select screen
             setCurrentScreenState(this.getOtherScreenState());
         }
-        else if (Interactions.isJustPressed(InputKey.InputTypes.QUIT)) {
+        else if (Interactions.isJustPressed(InputKey.InputTypes.QUIT)) { // Quit the game
             Gdx.app.exit();
         }
 
 
-        if (currentState == menuState.MODE_SELECT){
-            if (Interactions.isJustPressed(InputKey.InputTypes.COOK_LEFT)){
+        if (currentState == menuState.MODE_SELECT){ // If the game is on the mode select screen
+            if (Interactions.isJustPressed(InputKey.InputTypes.COOK_LEFT)){ // Then the left key should change the selection
                 if (currentSelectionType == modeSelectionState.SELECT_DIFFICULTY){
                     currentSelectionType = modeSelectionState.SELECT_MODE;
                 }
             }
-            if (Interactions.isJustPressed(InputKey.InputTypes.COOK_RIGHT)){
+            if (Interactions.isJustPressed(InputKey.InputTypes.COOK_RIGHT)){ // The right key should also change the selection
                 if (currentSelectionType == modeSelectionState.SELECT_MODE){
                     currentSelectionType = modeSelectionState.SELECT_DIFFICULTY;
                 }
             }
-            if (Interactions.isJustPressed(InputKey.InputTypes.COOK_UP)) {
+            if (Interactions.isJustPressed(InputKey.InputTypes.COOK_UP)) { // The up key should cycle through the options for the selection
                 if (currentSelectionType == modeSelectionState.SELECT_MODE) {
                     currentModeSelection = cycleMode();
                 }
@@ -193,7 +197,7 @@ public class MenuScreen extends ScreenAdapter {
                 }
             }
 
-            if (Interactions.isJustPressed(InputKey.InputTypes.COOK_DOWN)) {
+            if (Interactions.isJustPressed(InputKey.InputTypes.COOK_DOWN)) { // The down key should also cycle through the options for the selection
                 if (currentSelectionType == modeSelectionState.SELECT_MODE) {
                     currentModeSelection = cycleMode();
                 }
@@ -205,6 +209,7 @@ public class MenuScreen extends ScreenAdapter {
             if (Interactions.isJustPressed(InputKey.InputTypes.START_GAME)) {
                 screenController.setScreen(ScreenID.GAME);
                 ((GameScreen) screenController.getScreen(ScreenID.GAME)).startGame(5);
+                // todo make this actually change the difficulty based on the selection
                 setCurrentScreenState(menuState.MAIN_MENU);
             }
 

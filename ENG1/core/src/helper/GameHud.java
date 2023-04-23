@@ -30,6 +30,7 @@ public class GameHud extends Hud {
     private SpriteBatch batch;
     /** The {@link FoodStack} that the {@link GameHud} should render. */
     private HashMap<Integer, FoodStack> recipes;
+    /** The Hashmap that contains all recipes to be rendered. */
     private GameScreen gs;
     private Array<ServingStation> servingStations;
     // /** The time, in milliseconds, of the last recipe change. */
@@ -48,7 +49,7 @@ public class GameHud extends Hud {
         timeLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         updateTime(0,0,0);
 
-        CustomerLabel = new Label("CUSTOMERS LEFT:", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        CustomerLabel = new Label("CUSTOMERS LEFT: ", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
 
         table.add(CustomerLabel).expandX().padTop(80).padRight(60);
         table.add(timeLabel).expandX().padTop(80).padLeft(60);
@@ -66,12 +67,12 @@ public class GameHud extends Hud {
         super.render();
         batch.begin();
         GameSprites gameSprites = GameSprites.getInstance();
+        // AS2 CHANGE - Rewrote scaling code to allow for any map to render correctly in the middle of the screen.
         float drawX, drawY;
         for (Integer i: recipes.keySet()) {
             drawY = this.servingStations.get(i).getY() + (Constants.V_Height/2.0f - Constants.gameCameraOffset.y) + this.servingStations.get(i).getRectangle().getHeight();
-            for (int i2 = (recipes.get(i).getStack().size - 1 ); i2 >= 0; i2 --) {
+            for (int i2 = (recipes.get(i).getStack().size - 1 ); i2 >= 0; i2 --) { // Render from the bottom up, for consistent distance.
                 drawX = this.servingStations.get(i).getX() + (Constants.V_Width/2.0f - Constants.gameCameraOffset.x);
-
                 Sprite foodSprite = gameSprites.getSprite(GameSprites.SpriteID.FOOD, recipes.get(i).getStack().get(i2).toString());
                 foodSprite.setScale(2F);
                 foodSprite.setPosition(drawX - foodSprite.getWidth() / 2, drawY - foodSprite.getHeight() / 2);
@@ -82,57 +83,33 @@ public class GameHud extends Hud {
         batch.end();
     }
 
+    /**
+     * Adds a recipe to the rendering hashmap
+     * @param num The integer key for the recipe in the hashmap - Corresponds to the index of the serving station
+     * @param fs The FoodStack to be rendered.
+     */
     public void addRecipeToRender(Integer num, FoodStack fs) {
-        System.out.println("Adding recipe at " + num.toString());
-        System.out.println("The stack is " + fs.toString());
         recipes.put(num, fs);
     }
 
+
+    /**
+     * Removes a recipe from the rendering hashmap
+     * @param num The integer key for the recipe in the hashmap
+     */
     public void removeRecipeToRender(Integer num){
         recipes.remove(num);
     }
 
+
+    /**
+     * Gives the GameHud an array of all serving stations.
+     * @param srvs The array of serving stations
+     */
     public void setServingStations(Array<ServingStation> srvs) {
         this.servingStations = srvs;
     }
 
-
-
-    /* Removed as it was confusing to look at.
-    /**
-     * Changes the order of the {@link FoodItem}s in the recipe every second
-     * to show which {@link FoodItem}s have non-specific places in the
-     * {@link Recipe}.
-     * /
-    public void update() {
-        if (recipe != null) {
-            if (TimeUtils.timeSinceMillis(lastChange) > 1000) {
-                this.recipe = Recipe.randomRecipeOption(recipeName);
-                lastChange = TimeUtils.millis();
-            }
-        }
-    }*/
-
-    /**
-     * Sets the recipe to be rendered.
-     * @param cstrs The {@link Customer} who is requesting the {@link #recipes}.
-     */
-
-
-    //public void setRecipes(Array<Customer> cstrs) {
-    //    // this.lastChange = TimeUtils.millis();
-    //    this.customers = cstrs;
-    //    if (customers == null) {
-    //        this.recipes = null;
-    //        return;
-    //    }
-    //
-    //    //this.recipes = Recipe.randomRecipeOption(customer.getRequestName());
-    //    this.recipes = new Array<>();
-    //    for(Customer cs: customers){
-    //        recipes.add(Recipe.randomRecipeOption(cs.getRequestName()));
-    //    }
-    //}
 
     /**
      * Update the Timer
@@ -170,10 +147,4 @@ public class GameHud extends Hud {
         CustomerLabel.setText(String.format("CUSTOMERS: %d",customerCount));
     }
 
-    /**
-     * Getter for the {@link Customer} that has their
-     * request being shown.
-     * @return {@link Customer} : The {@link Customer} having their
-     *                            request shown.
-     */
 }

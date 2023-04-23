@@ -29,7 +29,7 @@ import java.util.Comparator;
 /** A {@link ScreenAdapter} containing certain elements of the game. */
 public class GameScreen extends ScreenAdapter {
     private final OrthographicCamera camera;
-    public long howfarin = 0;
+    private long msPast1s = 0;
     private long previousSecond = 0, lastCustomerSecond = 0, nextCustomerSecond = 0;
     private int secondsPassed = 0, minutesPassed = 0, hoursPassed = 0;
     private final GameHud gameHud;
@@ -48,8 +48,6 @@ public class GameScreen extends ScreenAdapter {
     private final Array<GameEntity> gameEntities;
     private final DrawQueueComparator drawQueueComparator;
     private Array<ServingStation> servingStations;
-    private int xOffset = 480;
-    private int yOffset = 320;
 
     //Objects
     private Array<Cook> cooks;
@@ -108,8 +106,8 @@ public class GameScreen extends ScreenAdapter {
 
     public void updateTiming(){
         long diffInMillis = TimeUtils.timeSinceMillis(previousSecond);
-        if (diffInMillis >= (1000 - howfarin)) {
-            howfarin = diffInMillis - (1000 - howfarin);
+        if (diffInMillis >= (1000 - msPast1s)) {
+            msPast1s = diffInMillis - (1000 - msPast1s);
             previousSecond += 1000;
             secondsPassed += 1;
             timecopy += 1;
@@ -421,7 +419,7 @@ public class GameScreen extends ScreenAdapter {
         previousSecond = TimeUtils.millis();
         lastCustomerSecond = TimeUtils.millis();
         nextCustomerSecond = TimeUtils.millis()+2000;
-        howfarin = 0;
+        msPast1s = 0;
 
         customersToServe = customers;
         diffculty = customers;

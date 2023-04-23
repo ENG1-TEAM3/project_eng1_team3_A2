@@ -1,0 +1,136 @@
+@startuml
+class Boot{
+{static} Boot INSTANCE
+{static} Boot getInstance()
+void create()
+void createHeadless()
+void resize()
+SpriteBatch getSpriteBatch()
+ShapeRenderer getShapeRenderer()
+ScreenController getScreenController()
+}
+
+
+
+class GameSprites{
+    enum SpriteID
+    {static} enum TEXTUREATLASES
+    {static} GameSprites getInstance()
+    createResources()
+    String spriteKey(SpriteID spriteID, String spriteName)
+    String getSprite(SpriteID spriteID, String spriteName)
+    dispose()
+}
+
+Boot -down--> ScreenController : Stores instance of
+ScreenController --> Boot : Stores the instance of
+
+note "ALL CAPS means final/constant" as n1
+note "Arrows go from the object that is storing to the thing that it is storing" as n2
+note "Private attributes / methods ommitted" as n3
+class ScreenController{
+enum ScreenID
+ScreenController(Boot boot, OrthographicCamera gameCam, OrthographicCamera uiCam)
+setScreen(ScreenID screenID)
+SpriteBatch getSpriteBatch
+ShapeRenderer getShapeRenderer
+ScreenAdapter getScreen(ScreenID screenID)
+resetGameScreen()
+pauseGameScreen()
+playGameScreen()
+}
+
+
+class GameScreen{
+GameScreen(ScreenController screenController, OrthographicCamera camera)
+updateTiming()
+update(float delta, boolean shouldResetKeys)
+cameraUpdate()
+render(float delta)
+renderGame(float delta)
+World getWorld()
+Cook setCook()
+int addCook()
+setCustomerHud()
+int getCustomerCount()
+long getPreviousSecond()
+setPreviousSecond()
+getNextCustomerSecond()
+setNextCustomerSecond()
+Array<CookInteractable> getInteractables()
+addGameEntity(GameEntity entity)
+addServingStation()
+reset()
+startGame(int customers)
+CustomerController getCustomerController()
+GameHud getGameHud()
+InstructionHud getInstructionHud()
+}
+
+ScreenController --> GameScreen : Stores instance of
+GameScreen --> ScreenController : Stores instance of
+class CreditsScreen{
+CreditsScreen(ScreenController screenController, OrthographicCamera camera)
+update(float delta, boolean shouldResetKeys)
+render(float delta)
+setPrevScreenID(ScreenID scID)
+}
+
+ScreenController --> CreditsScreen : Stores instance of
+CreditsScreen --> ScreenController : Stores instance of
+class GameOverScreen{
+GameOverScreen(ScreenController screenController, OrthographicCamera camera)
+update(float delta, boolean shouldResetKeys)
+render(float delta)
+setTime(int hours, int minutes, int seconds)
+}
+ScreenController --> GameOverScreen : Stores instance of
+GameOverScreen --> ScreenController : Stores instance of
+class InstructionScreen{
+InstructionScreen(ScreenController screenController, OrthographicCamera camera)
+update(float delta, boolean shouldResetKeys)
+render(float delta)
+setPrevScreenID(ScreenID scID)
+}
+ScreenController --> InstructionScreen : Stores instance of
+InstructionScreen --> ScreenController : Stores instance of
+
+class MenuScreen{
+enum menuState
+enum modeSelectionState
+enum mode
+enum difficulty
+
+menuState currentState
+modeSelectionState currentSelectionType
+mode currentModeSelection
+difficulty currentDifficultySelection
+
+MenuScreen(ScreenController screenController, OrthographicCamera camera)
+update(float delta, boolean shouldResetKeys)
+render(float delta)
+menuState getOtherScreenState()
+setCurrentScreenState(menuState ms)
+Stage getCurrentScreenStage()
+String getSelectionSTring()
+difficulty cycleDifficulty(int direction)
+mode cycleMode()
+
+}
+
+ScreenController --> MenuScreen : Stores instance of
+MenuScreen --> ScreenController : Stores instance of
+
+class PauseScreen{
+PauseScreen(ScreenController screenController, OrthographicCamera camera)
+update(float delta, boolean shouldResetKeys)
+render(float delta)
+}
+
+ScreenController --> PauseScreen : Stores instance of
+PauseScreen --> ScreenController : Stores instance of
+PauseScreen --> GameScreen : Stores instance of
+
+
+
+@enduml
