@@ -66,17 +66,18 @@ public class GameHud extends Hud {
         super.render();
         batch.begin();
         GameSprites gameSprites = GameSprites.getInstance();
-        float drawX = Constants.RECIPE_X, drawY = Constants.RECIPE_Y;
+        float drawX, drawY;
         for (Integer i: recipes.keySet()) {
+            drawY = this.servingStations.get(i).getY() + (Constants.V_Height/2.0f - Constants.gameCameraOffset.y) + this.servingStations.get(i).getRectangle().getHeight();
             for (int i2 = (recipes.get(i).getStack().size - 1 ); i2 >= 0; i2 --) {
-                drawX = this.servingStations.get(i).getX() + Constants.gameCameraOffset.x;
+                drawX = this.servingStations.get(i).getX() + (Constants.V_Width/2.0f - Constants.gameCameraOffset.x);
+
                 Sprite foodSprite = gameSprites.getSprite(GameSprites.SpriteID.FOOD, recipes.get(i).getStack().get(i2).toString());
                 foodSprite.setScale(2F);
                 foodSprite.setPosition(drawX - foodSprite.getWidth() / 2, drawY - foodSprite.getHeight() / 2);
                 foodSprite.draw(batch);
                 drawY += 32;
             }
-            drawY = Constants.RECIPE_Y;
         }
         batch.end();
     }

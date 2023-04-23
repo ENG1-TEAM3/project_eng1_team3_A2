@@ -74,7 +74,7 @@ public class MapHelper {
      */
     public void setupMap()
     {
-        tiledMap = new TmxMapLoader().load("Maps/StationsMap.tmx");
+        tiledMap = new TmxMapLoader().load(Constants.mapPath);
         parseMapObjects(tiledMap.getLayers().get("Objects").getObjects());
     }
 
