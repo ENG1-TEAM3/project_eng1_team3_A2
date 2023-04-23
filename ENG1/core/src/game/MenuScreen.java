@@ -107,7 +107,7 @@ public class MenuScreen extends ScreenAdapter {
         welcomeLabel.setFontScale(4);
 
         this.screenController = screenController;
-        this.camera = new OrthographicCamera();
+        this.camera = orthographicCamera;
         this.batch = screenController.getSpriteBatch();
 
         viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
@@ -205,6 +205,7 @@ public class MenuScreen extends ScreenAdapter {
             if (Interactions.isJustPressed(InputKey.InputTypes.START_GAME)) {
                 screenController.setScreen(ScreenID.GAME);
                 ((GameScreen) screenController.getScreen(ScreenID.GAME)).startGame(5);
+                setCurrentScreenState(menuState.MAIN_MENU);
             }
 
 
@@ -312,8 +313,4 @@ public class MenuScreen extends ScreenAdapter {
             return mode.SCENARIO;
         }
     }
-
-
-
-
 }

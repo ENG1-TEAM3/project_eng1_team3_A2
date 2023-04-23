@@ -22,7 +22,8 @@ public class Boot extends Game {
     //private int widthScreen, heightScreen;
 
     /** The camera for the game. */
-    private OrthographicCamera orthographicCamera;
+    private OrthographicCamera uiCamera;
+    private OrthographicCamera gameCamera;
     /** Boot Singleton Constructor */
     private Boot()
     {
@@ -40,6 +41,7 @@ public class Boot extends Game {
     }
 
     /** The Viewport for the game. */
+    private Viewport uiPort;
     private Viewport gamePort;
     /** The spriteBatch for the game. */
     private SpriteBatch spriteBatch;
@@ -53,12 +55,14 @@ public class Boot extends Game {
     {
         // this.widthScreen = Gdx.graphics.getWidth();
         // this.heightScreen = Gdx.graphics.getHeight();
-        this.orthographicCamera = new OrthographicCamera();
+        this.uiCamera = new OrthographicCamera();
+        this.gameCamera = new OrthographicCamera();
         this.spriteBatch = new SpriteBatch();
         this.shapeRenderer = new ShapeRenderer();
         this.shapeRenderer.setAutoShapeType(true);
-        this.gamePort = new FitViewport(Constants.V_Width, Constants.V_Height, orthographicCamera);
-        this.screenController = new ScreenController(this, orthographicCamera);
+        this.gamePort = new FitViewport(Constants.V_Width, Constants.V_Height, gameCamera);
+        this.uiPort = new FitViewport(Constants.V_Width, Constants.V_Height, uiCamera);
+        this.screenController = new ScreenController(this, gameCamera, uiCamera);
         this.screenController.setScreen(ScreenController.ScreenID.MENU);
     }
 
@@ -66,11 +70,13 @@ public class Boot extends Game {
      * Set up the boot instance in headless mode. This is used for testing.
      */
     public void createHeadless(){
-        this.orthographicCamera = new OrthographicCamera();
+        this.uiCamera = new OrthographicCamera();
+        this.gameCamera = new OrthographicCamera();
         this.spriteBatch = null;
         this.shapeRenderer = null;
-        this.gamePort = new FitViewport(Constants.V_Width, Constants.V_Height, orthographicCamera);
-        this.screenController = new ScreenController(this, orthographicCamera);
+        this.uiPort = new FitViewport(Constants.V_Width, Constants.V_Height, uiCamera);
+        this.gamePort = new FitViewport(Constants.V_Width, Constants.V_Height, gameCamera);
+        this.screenController = new ScreenController(this, gameCamera, uiCamera);
         this.screenController.setScreen(ScreenController.ScreenID.MENU);
     }
 

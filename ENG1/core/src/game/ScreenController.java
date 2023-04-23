@@ -27,17 +27,19 @@ public class ScreenController {
 
     /**
      * Screen Controller Constructor
+     * The two cameras must be different as they render different pixel spaces at different places.
      * @param boot The class responsible for initializing the first game elements
-     * @param camera A camera instance (The one that the boot class creates is fine)
+     * @param gameCam A camera instance (for viewing the game)
+     * @param uiCam A camera instance (for viewing UI elements)
      */
-    public ScreenController(Boot boot, OrthographicCamera camera) {
+    public ScreenController(Boot boot, OrthographicCamera gameCam, OrthographicCamera uiCam) {
         this.boot = boot;
 
-        this.gameScreen = new GameScreen(this,camera);
-        this.menuScreen = new MenuScreen(this,camera);
-        this.gameOverScreen = new GameOverScreen(this,camera);
-        this.instructionScreen = new InstructionScreen(this,camera);
-        this.creditsScreen = new CreditsScreen(this,camera);
+        this.gameScreen = new GameScreen(this,gameCam);
+        this.menuScreen = new MenuScreen(this,uiCam);
+        this.gameOverScreen = new GameOverScreen(this,uiCam);
+        this.instructionScreen = new InstructionScreen(this,uiCam);
+        this.creditsScreen = new CreditsScreen(this,uiCam);
 
         this.screens = new HashMap<>();
         this.screens.put(ScreenID.MENU,menuScreen);
@@ -46,7 +48,7 @@ public class ScreenController {
         this.screens.put(ScreenID.INSTRUCTIONS,instructionScreen);
         this.screens.put(ScreenID.CREDITS,creditsScreen);
 
-        this.pauseScreen = new PauseScreen(this,camera);
+        this.pauseScreen = new PauseScreen(this,uiCam);
         this.screens.put(ScreenID.PAUSE,pauseScreen);
     }
 
