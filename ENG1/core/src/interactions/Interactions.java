@@ -103,6 +103,7 @@ public class Interactions {
                 new InputKey(InputKey.InputTypes.UNPAUSE, Input.Keys.ESCAPE),
                 new InputKey(InputKey.InputTypes.CREDITS, Input.Keys.C),
                 new InputKey(InputKey.InputTypes.QUIT, Input.Keys.Q),
+                new InputKey(InputKey.InputTypes.MODE_SELECT, Input.Keys.G)
         }));
         inputs.put(InputID.COOK_MOVEMENT, new Array<>(new InputKey[] {
                 new InputKey(InputKey.InputTypes.COOK_UP,Input.Keys.W),
@@ -134,7 +135,8 @@ public class Interactions {
                 InputKey.InputTypes.PAUSE,
                 InputKey.InputTypes.UNPAUSE,
                 InputKey.InputTypes.CREDITS,
-                InputKey.InputTypes.QUIT
+                InputKey.InputTypes.QUIT,
+                InputKey.InputTypes.MODE_SELECT
         }));
         inputGroups.put(InputID.COOK_MOVEMENT, new Array<>(new InputKey.InputTypes[] {
                 InputKey.InputTypes.COOK_UP,
