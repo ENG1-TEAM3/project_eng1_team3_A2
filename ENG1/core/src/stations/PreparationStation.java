@@ -54,7 +54,7 @@ public class PreparationStation extends Station {
                     stopPoint = steps[stepNum];
                 }
                 if (interaction.getSpeed() > 0 && progress < stopPoint) {
-                    progress = Math.min(progress + interaction.getSpeed() * delta, 100);
+                    progress = Math.min(progress + interaction.getSpeed() * delta, stopPoint);
                 }
 
                 if (stepNum < steps.length) {
@@ -166,7 +166,6 @@ public class PreparationStation extends Station {
             if (newInteraction == null) {
                 return;
             }
-
             // Check to make sure the station isn't inUse.
             if (!inUse) {
                 // Set the current interaction, and put this station inUse
@@ -199,10 +198,9 @@ public class PreparationStation extends Station {
                 }
                 // Take the item from the Station, and change it to not being used
                 cook.foodStack.addStack(foodItem);
-                return; // Return as it the Station is no longer inUse
             }
             // Otherwise, check if the user is trying to use the Station.
-            if (inputType == InputKey.InputTypes.USE) {
+            else if (inputType == InputKey.InputTypes.USE) {
                 // If progress >= 100, then take the result of the preparation.
                 if (progress >= 100) {
                     inUse = false;

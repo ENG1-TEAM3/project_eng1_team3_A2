@@ -3,7 +3,6 @@ package customers;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import food.Recipe;
 import game.GameScreen;
 import game.GameSprites;
@@ -42,9 +41,9 @@ public class CustomerController {
         this.customers = new Array<>();
         this.customersLeft = 0;
         this.customersServed = 0;
-        this.customerSprite = GameSprites.getInstance().getSprite(GameSprites.SpriteID.CUSTOMER,"0");
-        this.customerSprite.setSize(42.5F,70);
-        this.servingStations = new Array<>();
+        customerSprite = GameSprites.getInstance().getSprite(GameSprites.SpriteID.CUSTOMER,"0");
+        customerSprite.setSize(42.5F,70);
+        servingStations = new Array<>();
         this.gameScreen = gameScreen;
     }
 

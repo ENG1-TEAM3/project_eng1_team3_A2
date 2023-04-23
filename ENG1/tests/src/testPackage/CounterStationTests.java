@@ -4,8 +4,6 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import cooks.Cook;
 import food.FoodItem;
 import game.Boot;
@@ -15,9 +13,6 @@ import helper.BodyHelper;
 import helper.MapHelper;
 import interactions.InputKey;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import stations.BinStation;
-import stations.Pantry;
 import stations.CounterStation;
 
 @RunWith(GdxTestRunner.class)
