@@ -149,6 +149,9 @@ public class ScreenTests {
                 "CreditsScreen", b1.getScreen().getClass().getSimpleName());
 
         b1.getScreenController().setScreen(ScreenController.ScreenID.MENU);
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.MODE_SELECT, Input.Keys.G), true, true);
+        ms1.update(0.001f, false);
+        Interactions.resetKeys();
         Interactions.manualAddKey(new InputKey(InputKey.InputTypes.START_GAME, Input.Keys.ENTER), true, true);
         ms1.update(0.001f, false);
         assertEquals("This test asserts that the menu screen swaps to the game screen",
