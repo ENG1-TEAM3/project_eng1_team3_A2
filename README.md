@@ -11,8 +11,8 @@ Here's their milestones
 > https://github.com/undercooked-team/UnderCooked/milestones
 
 ## Website:
-undercooked-team's Website:
-> https://undercooked-team.github.io/UnderCooked/
+Our updated Website - Cloned from undercooked-team and added to
+> https://eng1-team3.github.io/project_eng1_team3_A2/
 
 ---
 And finally:
