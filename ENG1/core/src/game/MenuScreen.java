@@ -185,7 +185,7 @@ public class MenuScreen extends ScreenAdapter {
                     currentSelectionType = modeSelectionState.SELECT_MODE;
                 }
             }
-            if (Interactions.isJustPressed(InputKey.InputTypes.COOK_RIGHT)){ // The right key should also change the selection
+            if (Interactions.isJustPressed(InputKey.InputTypes.COOK_RIGHT) && currentModeSelection == mode.SCENARIO){ // The right key should also change the selection
                 if (currentSelectionType == modeSelectionState.SELECT_MODE){
                     currentSelectionType = modeSelectionState.SELECT_DIFFICULTY;
                 }
@@ -265,24 +265,27 @@ public class MenuScreen extends ScreenAdapter {
         }
     }
 
-    public String getSelectionString(){
+    public String getSelectionString() {
         String outputstring = "";
         outputstring += "MODE:  ";
         if (currentSelectionType == modeSelectionState.SELECT_MODE) {
             outputstring += ("[" + currentModeSelection.toString() + "]       ");
+        } else {
+            outputstring += currentModeSelection.toString() + "       ";
+        }
+        if (currentModeSelection == mode.SCENARIO) {
+            outputstring += "DIFFICULTY:  ";
+            if (currentSelectionType == modeSelectionState.SELECT_DIFFICULTY) {
+                outputstring += ("[" + currentDifficultySelection.toString() + "] ");
+            } else {
+                outputstring += currentDifficultySelection.toString() + " ";
+            }
         }
         else {
-            outputstring += currentModeSelection.toString()+ "       ";
-        }
-        outputstring += "DIFFICULTY:  ";
-        if (currentSelectionType == modeSelectionState.SELECT_DIFFICULTY) {
-            outputstring += ("[" + currentDifficultySelection.toString() + "] ");
-        }
-        else {
-            outputstring += currentDifficultySelection.toString()+ " ";
+            outputstring += "                                  ";
         }
         return outputstring;
-    };
+    }
 
     public difficulty cycleDifficulty(int direction){
         if (direction >= 0){
