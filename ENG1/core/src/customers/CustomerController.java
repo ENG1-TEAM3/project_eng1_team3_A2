@@ -32,6 +32,8 @@ public class CustomerController {
 
     private boolean hasAssignedIdsToServingStations = false;
 
+    private int timeCount = 0;
+
     /**
      * Constructor for the {@link CustomerController}.
      * <br>It sets up the array that the {@link Customer}s
@@ -219,5 +221,64 @@ public class CustomerController {
      */
     public void clearServingStations() {
         servingStations.clear();
+    }
+
+    public void spawnCutomer_Scenario(int timecopy){
+        if(timecopy - timeCount == 30){
+            if(canAddCustomer() == true){
+                addCustomer();
+                timeCount += 30;
+            }
+        }
+    }
+
+    public void spawnCutomer_Normal(int timecopy){
+        if(timecopy - timeCount == 25){
+            if(canAddCustomer() == true){
+                addCustomer();
+                timeCount += 25;
+            }
+        }
+    }
+
+    public void spawnCutomer_Hard(int timecopy){
+        if(timecopy - timeCount == 25){
+            boolean check = canAddCustomer();
+            if(check == true){
+                addCustomer();
+                if(getCustomersLeft() > 0 && getCustomersServed() >=7 && canAddCustomer() == true){
+                    addCustomer();
+                }
+                timeCount += 25;
+            }
+        }
+    }
+
+    public void spawnCutomer_Endless(int timecopy){
+        if(getCustomersServed() <= 5){
+            spawnCutomer_Scenario(timecopy);
+        }else if (getCustomersServed() >5 && getCustomersServed()<= 10){
+            spawnCutomer_Normal(timecopy);
+        }else if (getCustomersServed() >10 && getCustomersServed()<= 15){
+            spawnCutomer_Hard(timecopy);
+        }else if (getCustomersServed() >15 && getCustomersServed()<= 20){
+            if(timecopy - timeCount == 15){
+                if(canAddCustomer() == true){
+                    addCustomer();
+                    timeCount += 15;
+                }
+            }
+        }else if (getCustomersServed() >20){
+            if(timecopy - timeCount == 12){
+                boolean check = canAddCustomer();
+                if(check == true){
+                    addCustomer();
+                    if(canAddCustomer() == true){
+                        addCustomer();
+                    }
+                    timeCount += 12;
+                }
+            }
+        }
     }
 }
