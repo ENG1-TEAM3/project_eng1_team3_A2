@@ -66,7 +66,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * The constructor for the {@link GameScreen}.
-	 * 
+	 *
 	 * @param screenController The {@link ScreenController} of the
 	 *                         {@link ScreenAdapter}.
 	 * @param camera           The {@link OrthographicCamera} that the game should
@@ -130,7 +130,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * Update the game's values, {@link GameEntity}s and so on.
-	 * 
+	 *
 	 * @param delta The time between frames as a float.
 	 */
 	public void update(float delta, boolean shouldResetKeys) {
@@ -181,7 +181,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * The next frame of the game.
-	 * 
+	 *
 	 * @param delta The time between frames as a float.
 	 */
 	@Override
@@ -203,7 +203,7 @@ public class GameScreen extends ScreenAdapter {
 	/**
 	 * Render the {@link GameScreen}. It is a separate function to allow rendering
 	 * of the game from the {@link PauseScreen}.
-	 * 
+	 *
 	 * @param delta The time between frames as a float.
 	 */
 	public void renderGame(float delta) {
@@ -230,10 +230,10 @@ public class GameScreen extends ScreenAdapter {
 		batch.end();
 		shape.begin(ShapeRenderer.ShapeType.Filled);
 
-		for (GameEntity entity : gameEntities) {
-			entity.renderShape(shape);
-			// entity.renderShapeDebug(shape);
-		}
+        for (GameEntity entity : gameEntities) {
+            entity.renderShape(shape);
+            entity.renderShapeDebug(shape);
+        }
 
 		shape.end();
 		// box2DDebugRenderer.render(world, camera.combined.scl(Constants.PPM));
@@ -262,7 +262,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * Get the world that the game is using.
-	 * 
+	 *
 	 * @return {@link World} : The {@link GameScreen}'s {@link World}.
 	 */
 	public World getWorld() {
@@ -271,7 +271,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * Sets the currently active {@link #cook} that the game is using.
-	 * 
+	 *
 	 * @param cookIndex The index of {@link #cook} in the {@link #cooks} array.
 	 * @return {@link Cook} : The {@link Cook} that the game has swapped to.
 	 */
@@ -287,7 +287,7 @@ public class GameScreen extends ScreenAdapter {
 	/**
 	 * Adds a new {@link Cook} to the {@link #cooks} {@link Array} for the game to
 	 * swap between.
-	 * 
+	 *
 	 * @param newCook The {@link Cook} to be added to the {@link Array}.
 	 * @return {@code int} : The index of the new cook in the cooks array.
 	 */
@@ -299,7 +299,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * Updates the {@link GameHud} with the correct number of {@link Customer}s.
-	 * 
+	 *
 	 * @param customerCount The {@code int} number to set the number of
 	 *                      {@link Customer}s to.
 	 */
@@ -338,7 +338,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * Returns the number of customers remaining before the game is finished.
-	 * 
+	 *
 	 * @return {@code int} : The value of
 	 *         {@link CustomerController#getCustomersLeft()}.
 	 */
@@ -351,7 +351,7 @@ public class GameScreen extends ScreenAdapter {
 	 * The {@link #previousSecond} is used for the timer, by checking when the
 	 * previous second was so that the game can check if it has been another second
 	 * or not.
-	 * 
+	 *
 	 * @return {@code long} : The {@link #previousSecond}.
 	 */
 	public long getPreviousSecond() {
@@ -360,7 +360,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * A setter to set the {@link #previousSecond} to the {@code long} provided.
-	 * 
+	 *
 	 * @param newSecond What to set the {@link #previousSecond} to as a
 	 *                  {@code long}.
 	 */
@@ -372,7 +372,7 @@ public class GameScreen extends ScreenAdapter {
 	 * A getter to get the {@link #nextCustomerSecond}. <br>
 	 * The {@link #nextCustomerSecond} is used for spawning the {@link Customer}s
 	 * after a short delay.
-	 * 
+	 *
 	 * @return {@code long} : The {@link #nextCustomerSecond}.
 	 */
 	public long getNextCustomerSecond() {
@@ -381,7 +381,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * A setter to set the {@link #nextCustomerSecond} to the {@code long} provided.
-	 * 
+	 *
 	 * @param newSecond What to set the {@link #nextCustomerSecond} to as a
 	 *                  {@code long}.
 	 */
@@ -392,7 +392,7 @@ public class GameScreen extends ScreenAdapter {
 	/**
 	 * {@link #interactables} getter. Contains all the {@link #interactables} in the
 	 * {@link GameScreen}.
-	 * 
+	 *
 	 * @return {@link Array}&lt;{@link CookInteractable}&gt; :
 	 *         {@link #interactables}.
 	 */
@@ -403,7 +403,7 @@ public class GameScreen extends ScreenAdapter {
 	/**
 	 * Adds a {@link CookInteractable} that a {@link Cook} can interact with to
 	 * {@link #interactables}.
-	 * 
+	 *
 	 * @param cookInteractable The {@link CookInteractable} object that the
 	 *                         {@link Cook} should be able to interact with.
 	 */
@@ -413,7 +413,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * Adds a game entity to the GameScreen to be rendered and updated.
-	 * 
+	 *
 	 * @param entity The {@link GameEntity} to be added.
 	 */
 	public void addGameEntity(GameEntity entity) {
@@ -423,7 +423,7 @@ public class GameScreen extends ScreenAdapter {
 	/**
 	 * Intermediate function to allow the {@link MapHelper} to add the
 	 * {@link ServingStation}s to the {@link CustomerController}.
-	 * 
+	 *
 	 * @param station The {@link ServingStation} to add to the
 	 *                {@link CustomerController}.
 	 */
@@ -456,7 +456,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * A variable for setting up the game when it starts.
-	 * 
+	 *
 	 * @param customers The number of customers that need to be served in the game
 	 *                  to finish.
 	 */
@@ -481,7 +481,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * A getter for the {@link CustomerController} of the game.
-	 * 
+	 *
 	 * @return {@link CustomerController} : The {@link CustomerController} for the
 	 *         game.
 	 */
@@ -491,7 +491,7 @@ public class GameScreen extends ScreenAdapter {
 
 	/**
 	 * Getter to get the {@link GameHud}.
-	 * 
+	 *
 	 * @return {@link GameHud} : The game's {@link GameHud}.
 	 */
 	public GameHud getGameHud() {

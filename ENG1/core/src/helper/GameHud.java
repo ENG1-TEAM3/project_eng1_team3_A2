@@ -10,11 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 
 import customers.Customer;
+import food.FoodItem;
 import food.FoodStack;
 import food.Recipe;
 import game.GameScreen;
 import game.GameSprites;
 import stations.ServingStation;
+
+import java.util.HashMap;
 
 // import java.awt.*;
 
@@ -41,7 +44,7 @@ public class GameHud extends Hud {
 
 	/**
 	 * The GameHud constructor.
-	 * 
+	 *
 	 * @param batch      The {@link SpriteBatch} to render
 	 * @param gameScreen The {@link GameScreen} to render the GameHud on
 	 */
@@ -94,73 +97,72 @@ public class GameHud extends Hud {
 		batch.end();
 	}
 
-	/**
-	 * Adds a recipe to the rendering hashmap
-	 * 
-	 * @param num The integer key for the recipe in the hashmap - Corresponds to the
-	 *            index of the serving station
-	 * @param fs  The FoodStack to be rendered.
-	 */
-	public void addRecipeToRender(Integer num, FoodStack fs) {
-		recipes.put(num, fs);
-	}
+    /**
+     * Adds a recipe to the rendering hashmap
+     * @param num The integer key for the recipe in the hashmap - Corresponds to the index of the serving station
+     * @param fs The FoodStack to be rendered.
+     */
+    public void addRecipeToRender(Integer num, FoodStack fs) {
+        recipes.put(num, fs);
+    }
 
-	/**
-	 * Removes a recipe from the rendering hashmap
-	 * 
-	 * @param num The integer key for the recipe in the hashmap
-	 */
-	public void removeRecipeToRender(Integer num) {
-		recipes.remove(num);
-	}
 
-	/**
-	 * Gives the GameHud an array of all serving stations.
-	 * 
-	 * @param srvs The array of serving stations
-	 */
-	public void setServingStations(Array<ServingStation> srvs) {
-		this.servingStations = srvs;
-	}
+    /**
+     * Removes a recipe from the rendering hashmap
+     * @param num The integer key for the recipe in the hashmap
+     */
+    public void removeRecipeToRender(Integer num){
+        recipes.remove(num);
+    }
 
-	/**
-	 * Update the Timer
-	 * 
-	 * @param secondsPassed The number of seconds passed
-	 */
-	public void updateTime(int secondsPassed) {
-		updateTime(0, 0, secondsPassed);
-	}
+    public void clearRecipes(){
+        recipes.clear();
+    }
 
-	/**
-	 * Update the Timer
-	 * 
-	 * @param minutesPassed The number of minutes passed
-	 * @param secondsPassed The number of seconds passed
-	 */
-	public void updateTime(int minutesPassed, int secondsPassed) {
-		updateTime(0, minutesPassed, secondsPassed);
-	}
+    /**
+     * Gives the GameHud an array of all serving stations.
+     * @param srvs The array of serving stations
+     */
+    public void setServingStations(Array<ServingStation> srvs) {
+        this.servingStations = srvs;
+    }
 
-	/**
-	 * Update the Timer
-	 * 
-	 * @param hoursPassed   The number of hours passed
-	 * @param minutesPassed The number of minutes passed
-	 * @param secondsPassed The number of seconds passed
-	 */
-	public void updateTime(int hoursPassed, int minutesPassed, int secondsPassed) {
-		timeLabel.setText("TIMER: " + String.format(Util.formatTime(hoursPassed, minutesPassed, secondsPassed)));
-	}
 
-	/**
-	 * Set the Customer Count label
-	 * 
-	 * @param customerCount New Customer Count
-	 */
-	public void setCustomerCount(int customerCount) {
-		CustomerLabel.setText(String.format("CUSTOMERS: %d", customerCount));
-	}
+    /**
+     * Update the Timer
+     * @param secondsPassed The number of seconds passed
+     */
+    public void updateTime(int secondsPassed) {
+        updateTime(0,0,secondsPassed);
+    }
+
+    /**
+     * Update the Timer
+     * @param minutesPassed The number of minutes passed
+     * @param secondsPassed The number of seconds passed
+     */
+    public void updateTime(int minutesPassed, int secondsPassed) {
+        updateTime(0,minutesPassed,secondsPassed);
+    }
+
+    /**
+     * Update the Timer
+     * @param hoursPassed The number of hours passed
+     * @param minutesPassed The number of minutes passed
+     * @param secondsPassed The number of seconds passed
+     */
+    public void updateTime(int hoursPassed, int minutesPassed, int secondsPassed)
+    {
+        timeLabel.setText("TIMER: " + String.format(Util.formatTime(hoursPassed,minutesPassed,secondsPassed)));
+    }
+
+    /**
+     * Set the Customer Count label
+     * @param customerCount New Customer Count
+     */
+    public void setCustomerCount(int customerCount) {
+        CustomerLabel.setText(String.format("CUSTOMERS: %d",customerCount));
+    }
 
 	public void setReputationPoints(int reputation) {
 		reputationLabel.setText(String.format("Reputation: %d", reputation));
