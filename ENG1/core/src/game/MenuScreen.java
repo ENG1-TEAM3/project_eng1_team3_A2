@@ -69,6 +69,8 @@ public class MenuScreen extends ScreenAdapter {
 
     private Label modeSelectLabel;
 
+    private int customer;
+
     /**
      * The constructor for the {@link MenuScreen}.
      * @param screenController The {@link ScreenController} of the {@link ScreenAdapter}.
@@ -208,13 +210,10 @@ public class MenuScreen extends ScreenAdapter {
 
             if (Interactions.isJustPressed(InputKey.InputTypes.START_GAME)) {
                 screenController.setScreen(ScreenID.GAME);
-                ((GameScreen) screenController.getScreen(ScreenID.GAME)).startGame(5);
+                ((GameScreen) screenController.getScreen(ScreenID.GAME)).startGame(customer);
                 // todo make this actually change the difficulty based on the selection
                 setCurrentScreenState(menuState.MAIN_MENU);
             }
-
-
-
             modeSelectLabel.setText(getSelectionString());
         }
     }
@@ -288,23 +287,29 @@ public class MenuScreen extends ScreenAdapter {
     public difficulty cycleDifficulty(int direction){
         if (direction >= 0){
             if (currentDifficultySelection == difficulty.EASY){
+                customer = 10;
                 return difficulty.MEDIUM;
             }
             else if (currentDifficultySelection == difficulty.MEDIUM){
+                customer = 15;
                 return difficulty.HARD;
             }
             else {
+                customer = 5;
                 return difficulty.EASY;
             }
         }
         else {
             if (currentDifficultySelection == difficulty.EASY){
+                customer = 15;
                 return difficulty.HARD;
             }
             else if (currentDifficultySelection == difficulty.MEDIUM){
+                customer = 5;
                 return difficulty.EASY;
             }
             else {
+                customer = 10;
                 return difficulty.MEDIUM;
             }
         }
