@@ -69,7 +69,7 @@ public class MenuScreen extends ScreenAdapter {
 
     private Label modeSelectLabel;
 
-    private int customer;
+    private int customer = 5;
 
     /**
      * The constructor for the {@link MenuScreen}.
