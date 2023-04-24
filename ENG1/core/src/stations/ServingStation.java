@@ -79,11 +79,7 @@ public class ServingStation extends Station {
 				if (Recipe.matchesRecipe(cook.foodStack, customer.getRequestName())) {
 					// If it's correct, then the customer will take the food and leave.
 					servedTime = gameScreen.getTime();
-					System.out.println(servedTime);
-					System.out.printf("TOTAL TIME TO SERVE: %d - %d = %d", initialOrderTime, servedTime, servedTime - initialOrderTime);
-					System.out.println("");
 					if (servedTime - initialOrderTime > maxServingTime) {
-						System.out.println("LOST REPUTATION!");
 						gameScreen.loseReputation();
 					}
 					request = null;
@@ -124,8 +120,11 @@ public class ServingStation extends Station {
 	 * @param customer The {@link Customer} to set the {@link ServingStation} to.
 	 */
 	public void setCustomer(Customer customer) {
-		initialOrderTime = gameScreen.getTime() * 1;
-		System.out.println(initialOrderTime);
+		if (customer != null) {
+			gameScreen.addMoney(Recipe.prices.get(customer.getRequestName()));
+			initialOrderTime = gameScreen.getTime() * 1;
+		}
+
 		this.customer = customer;
 	}
 

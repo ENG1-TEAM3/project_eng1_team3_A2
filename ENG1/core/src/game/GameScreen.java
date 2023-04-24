@@ -62,7 +62,7 @@ public class GameScreen extends ScreenAdapter {
 
 	private int diffculty;
 
-	private int reputation = 3;
+	private int reputation = 3, money = 0;
 
 	/**
 	 * The constructor for the {@link GameScreen}.
@@ -318,6 +318,22 @@ public class GameScreen extends ScreenAdapter {
 		}
 
 		gameHud.setReputationPoints(reputation);
+	}
+
+	public void addMoney(int amount) {
+		money += amount;
+		gameHud.setMoneyLabel(money);
+	}
+
+	public boolean spendMoney(int amount) {
+		if (money - amount < 0) {
+			return false;
+		}
+		money -= amount;
+
+		gameHud.setMoneyLabel(money);
+
+		return true;
 	}
 
 	/**

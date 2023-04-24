@@ -26,7 +26,7 @@ public class GameHud extends Hud {
 	Label CustomerLabel;
 	Label CustomerScore;
 
-	Label reputationLabel;
+	Label reputationLabel, moneyLabel;
 	/**
 	 * The {@link SpriteBatch} of the GameHud. Use for drawing {@link food.Recipe}s.
 	 */
@@ -54,10 +54,12 @@ public class GameHud extends Hud {
 
 		CustomerLabel = new Label("CUSTOMERS LEFT: ", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
 		reputationLabel = new Label("Reputation: 3", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+		moneyLabel = new Label("Money: £0.00", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
 
 		table.add(CustomerLabel).expandX().padTop(80).padRight(60);
 		table.add(timeLabel).expandX().padTop(80).padLeft(60);
 		table.add(reputationLabel).expandX().padTop(120).padRight(60);
+		table.add(moneyLabel).expandX().padTop(160).padRight(60);
 
 		this.batch = batch;
 	}
@@ -162,6 +164,12 @@ public class GameHud extends Hud {
 
 	public void setReputationPoints(int reputation) {
 		reputationLabel.setText(String.format("Reputation: %d", reputation));
+	}
+
+	public void setMoneyLabel(int amount) {
+		int pounds = Math.floorDiv(amount, 100);
+		int pennies = amount - pounds * 100;
+		moneyLabel.setText(String.format("Money: £%d.%d", pounds, pennies));
 	}
 
 }
