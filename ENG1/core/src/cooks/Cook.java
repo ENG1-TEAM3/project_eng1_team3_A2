@@ -35,7 +35,7 @@ public class Cook extends GameEntity {
      * inputs = { Facing.RIGHT, Facing.DOWN }
      */
     private Array<Facing> inputs;
-
+    private int ID;
     /** All possible directions the cook can be facing. */
     public enum Facing {
         RIGHT,
@@ -54,6 +54,7 @@ public class Cook extends GameEntity {
      */
     public Cook(float width, float height, Body body, GameScreen gameScreen) {
         super(width, height, body);
+        this.ID = 0;
         this.dir = Facing.DOWN;
         this.speed = 10f;
         // this.gameScreen = gameScreen;
@@ -73,6 +74,13 @@ public class Cook extends GameEntity {
         float cookInteractorSize = 32;
 
         this.cookInteractor = new CookInteractor(x,y,cookInteractorSize);
+    }
+
+    public void setCookID(int num){
+        this.ID = num;
+    }
+    public int getCookID(){
+        return this.ID;
     }
 
     /** Responsible for processing user input information into {@link #inputs}, {@link #velX} and {@link #velY}. */

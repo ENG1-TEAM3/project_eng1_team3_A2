@@ -64,6 +64,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private int reputation = 3, money = 0;
 
+    private SaveHandler sv;
+
 	/**
 	 * The constructor for the {@link GameScreen}.
 	 *
@@ -97,6 +99,7 @@ public class GameScreen extends ScreenAdapter {
 		this.gameHud = new GameHud(batch, this);
 		this.gameHud.setServingStations(this.customerController.getServingStations());
 		this.instructionHUD = new InstructionHud(batch);
+        this.sv = new SaveHandler(this);
 
 		if (this.batch != null) {
 			this.shape = screenController.getShapeRenderer();
@@ -104,6 +107,10 @@ public class GameScreen extends ScreenAdapter {
 			this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
 		}
 	}
+
+    public void restoreFromSaveFile(){
+
+    }
 
 	public void updateTiming() {
 		long diffInMillis = TimeUtils.timeSinceMillis(previousSecond);
@@ -127,6 +134,14 @@ public class GameScreen extends ScreenAdapter {
 	public int getTime() {
 		return hoursPassed * 60 * 60 + minutesPassed * 60 + secondsPassed;
 	}
+
+    public int getReputation(){
+        return reputation;
+    }
+
+    public int getMoney(){
+        return money;
+    }
 
 	/**
 	 * Update the game's values, {@link GameEntity}s and so on.
@@ -269,6 +284,13 @@ public class GameScreen extends ScreenAdapter {
 		return world;
 	}
 
+    public Array<GameEntity> getGameEntities(){
+        return this.gameEntities;
+    }
+
+    public Array<Cook> getCooks(){
+        return this.cooks;
+    }
 	/**
 	 * Sets the currently active {@link #cook} that the game is using.
 	 *
@@ -335,6 +357,10 @@ public class GameScreen extends ScreenAdapter {
 
 		return true;
 	}
+    public void setMoney(int amount){
+        money = amount;
+    }
+
 
 	/**
 	 * Returns the number of customers remaining before the game is finished.
