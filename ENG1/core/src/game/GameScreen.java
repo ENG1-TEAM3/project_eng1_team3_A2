@@ -57,7 +57,7 @@ public class GameScreen extends ScreenAdapter {
     private CustomerController customerController;
     private int customersToServe;
 
-    private int timeCount = 0;
+
     private int timecopy = 0;
 
     private int diffculty;
@@ -426,70 +426,11 @@ public class GameScreen extends ScreenAdapter {
         customerController.setCustomersLeft(customers);
         customerController.setCustomersServed(0);
         customerController.addCustomer();
-
-        setCustomerHud(customers);
+        
         gameHud.setCustomerCount(customers);
     }
 
-    public void spawnCutomer_Scenario(){
-        if(timecopy - timeCount == 30){
-            if(customerController.canAddCustomer() == true){
-                customerController.addCustomer();
-                timeCount += 30;
-            }
-        }
-    }
-
-    public void spawnCutomer_Normal(){
-        if(timecopy - timeCount == 25){
-            if(customerController.canAddCustomer() == true){
-                customerController.addCustomer();
-                timeCount += 25;
-            }
-        }
-    }
-
-    public void spawnCutomer_Hard(){
-        if(secondsPassed - timeCount == 25){
-            boolean check = customerController.canAddCustomer();
-            if(check == true){
-                customerController.addCustomer();
-                if(customerController.getCustomersLeft() > 0 && customerController.getCustomersServed() >=7 && customerController.canAddCustomer() == true){
-                    customerController.addCustomer();
-                }
-                timeCount += 25;
-            }
-        }
-    }
-
-    public void spawnCutomer_Endless(){
-        if(customerController.getCustomersServed() <= 5){
-            spawnCutomer_Scenario();
-        }else if (customerController.getCustomersServed() >5 && customerController.getCustomersServed()<= 10){
-            spawnCutomer_Normal();
-        }else if (customerController.getCustomersServed() >10 && customerController.getCustomersServed()<= 15){
-            spawnCutomer_Hard();
-        }else if (customerController.getCustomersServed() >15 && customerController.getCustomersServed()<= 20){
-            if(secondsPassed - timeCount == 15){
-                if(customerController.canAddCustomer() == true){
-                    customerController.addCustomer();
-                    timeCount += 15;
-                }
-            }
-        }else if (customerController.getCustomersServed() >20){
-            if(secondsPassed - timeCount == 12){
-                boolean check = customerController.canAddCustomer();
-                if(check == true){
-                    customerController.addCustomer();
-                    if(customerController.canAddCustomer() == true){
-                        customerController.addCustomer();
-                    }
-                    timeCount += 12;
-                }
-            }
-        }
-
-        }
+        
     /**
      * A getter for the {@link CustomerController} of the
      * game.
@@ -513,13 +454,13 @@ public class GameScreen extends ScreenAdapter {
 
     public void setDifficulties(){
         if(diffculty == 5){
-            spawnCutomer_Scenario();
+            customerController.spawnCutomer_Scenario(timecopy);
         }else if(diffculty == 10){
-            spawnCutomer_Normal();
+            customerController.spawnCutomer_Normal(timecopy);
         }else if(diffculty == 15){
-            spawnCutomer_Hard();
+            customerController.spawnCutomer_Hard(timecopy);
         }else if(diffculty > 15){
-            spawnCutomer_Endless();
+            customerController.spawnCutomer_Endless(timecopy);
         }
     }
 }
