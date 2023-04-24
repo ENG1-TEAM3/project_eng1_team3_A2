@@ -101,6 +101,9 @@ public class GameHud extends Hud {
         recipes.remove(num);
     }
 
+    public void clearRecipes(){
+        recipes.clear();
+    }
 
     /**
      * Gives the GameHud an array of all serving stations.

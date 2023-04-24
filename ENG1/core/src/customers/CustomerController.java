@@ -30,7 +30,6 @@ public class CustomerController {
     /** The {@link game.GameScreen} to send the {@link #customersServed} to. */
     private GameScreen gameScreen;
 
-    private boolean hasAssignedIdsToServingStations = false;
 
     /**
      * Constructor for the {@link CustomerController}.
@@ -218,6 +217,8 @@ public class CustomerController {
      * be called when the game is reset.
      */
     public void clearServingStations() {
+
         servingStations.clear();
+        gameScreen.getGameHud().clearRecipes();
     }
 }

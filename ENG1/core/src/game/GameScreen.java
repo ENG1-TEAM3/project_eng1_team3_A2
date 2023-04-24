@@ -233,7 +233,7 @@ public class GameScreen extends ScreenAdapter {
 
         for (GameEntity entity : gameEntities) {
             entity.renderShape(shape);
-            //entity.renderShapeDebug(shape);
+            entity.renderShapeDebug(shape);
         }
 
         shape.end();
