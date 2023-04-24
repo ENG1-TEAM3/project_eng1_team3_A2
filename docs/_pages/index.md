@@ -26,7 +26,7 @@ Below is a link to the GitHub Repository we've been developing our game in:
 
 > [{{ page.github }}{{ site.repository }}]({{ page.github }}{{ site.repository }})
 
-## The Team
+## The Assessment 1 Team
 Details for all the team members can be found here:
 <ul>
 <li>Fin Cochrane   - ftc505@york.ac.uk</li>
@@ -36,6 +36,18 @@ Details for all the team members can be found here:
 <li>Owen Thomas    - obt503@york.ac.uk</li>
 <li>Zhenyi Xu      - zx1090@york.ac.uk</li>
 </ul>
+
+## The Assessment 2 Team
+Details for all the team members can be found here:
+<ul>
+<li>James Sutton - jis509@york.ac.uk</li>
+<li>Harry Richardson  - hr1040@york.ac.uk</li>
+<li>Yuzhao Liu - yl5164@york.ac.uk</li>
+<li>Ivan Ndahiro - in597@york.ac.uk</li>
+<li>Ben Howard - bh1219@york.ac.uk</li>
+<li>Cai Hughes - cabh500@york.ac.uk</li>
+</ul>
+
 
 ## Requirements:
 [Requirements Google Doc](https://docs.google.com/document/d/17tcN_Xeo0Gzz8ficlVVp_1x0h8Q2EDLzrCXvKtgHNlw/edit?usp=share_link)
