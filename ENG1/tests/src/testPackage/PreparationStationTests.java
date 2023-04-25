@@ -30,7 +30,7 @@ public class PreparationStationTests {
         Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
         Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, ((GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME)).getWorld()), null);
 
-        PreparationStation ps1 = new PreparationStation(new Rectangle(100,100,100,100));
+        PreparationStation ps1 = new PreparationStation(new Rectangle(100,100,100,100), false, (GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME) );
         ps1.setID(Station.StationID.cut);
         c1.foodStack.addStack(FoodItem.FoodID.meat);
 
@@ -118,7 +118,7 @@ public class PreparationStationTests {
         Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
         Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, ((GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME)).getWorld()), null);
 
-        PreparationStation ps1 = new PreparationStation(new Rectangle(100,100,100,100));
+        PreparationStation ps1 = new PreparationStation(new Rectangle(100,100,100,100), false, (GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME));
         ps1.setID(Station.StationID.fry);
         c1.foodStack.addStack(FoodItem.FoodID.meat);
 

@@ -34,7 +34,7 @@ public class BinTests {
         c1.foodStack.addStack(FoodItem.FoodID.bottomBun);
         assertEquals(1, c1.foodStack.size());
 
-        BinStation bs1 = new BinStation(new Rectangle(100,100,100,100));
+        BinStation bs1 = new BinStation(new Rectangle(100,100,100,100),false,(GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME));
         bs1.interact(c1, InputKey.InputTypes.USE);
         assertEquals("This test asserts that the cooks stack is popped when interacting with a bin, using the use key",
                 0, c1.foodStack.size());
