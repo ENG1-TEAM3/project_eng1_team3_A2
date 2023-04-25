@@ -32,7 +32,7 @@ public class PantryStationTests {
         Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
         Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, ((GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME)).getWorld()), null);
 
-        Pantry p1 = new Pantry(new Rectangle(100,100,100,100));
+        Pantry p1 = new Pantry(new Rectangle(100,100,100,100), false,(GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME));
         p1.setItem(FoodItem.FoodID.meat);
 
         assertEquals("This test asserts that a cook starts out with an empty stack",
