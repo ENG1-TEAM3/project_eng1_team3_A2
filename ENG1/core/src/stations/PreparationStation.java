@@ -136,7 +136,7 @@ public class PreparationStation extends Station {
 	 * It draws the {@link #progress} bar of the
 	 * {@link interactions.Interactions.InteractionResult}.
 	 * 
-	 * @param shape The {@link ShapeRenderer} used to render.
+	 * @param shapeRenderer The {@link ShapeRenderer} used to render.
 	 */
 	@Override
 	public void renderShape(ShapeRenderer shapeRenderer) {
@@ -244,7 +244,7 @@ public class PreparationStation extends Station {
 							progress = steps[stepNum];
 							stepNum += 1;
 							if (interaction.getSpeed() == -1) {
-								if (stepNum >= steps.length) {
+								if (stepNum < steps.length) {
 									progress = steps[stepNum];
 								} else {
 									progress = 100f;
