@@ -61,11 +61,14 @@ public class PreparationStation extends Station {
 				if (interaction.getSpeed() > 0) {
 					if (progress < stopPoint) {
 						progress = Math.min(progress + interaction.getSpeed() * delta, stopPoint);
-					} else if (burnMeter < 100) {
-						burnMeter += interaction.getBurnSpeed() * delta;
 					} else {
-						inUse = false;
+						if (burnMeter < 100) {
+							burnMeter += interaction.getBurnSpeed() * delta;
+						} else {
+							inUse = false;
+						}
 					}
+
 				}
 
 				if (stepNum < steps.length) {
@@ -93,6 +96,7 @@ public class PreparationStation extends Station {
 				state = StationState.FINISHED;
 			}
 		}
+
 	}
 
 	/**
@@ -146,8 +150,7 @@ public class PreparationStation extends Station {
 			float burnMeterY = y + 60;
 			// Black bar behind
 			shapeRenderer.rect(rectX, rectY, rectWidth, rectHeight, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
-			shapeRenderer.rect(rectX, burnMeterY, rectWidth, rectHeight, Color.BLACK, Color.BLACK, Color.BLACK,
-					Color.BLACK);
+
 			// Now the progress bar.
 			float progressWidth = rectWidth - 4;
 			Color progressColor = Color.SKY;
@@ -164,8 +167,13 @@ public class PreparationStation extends Station {
 			}
 			shapeRenderer.rect(rectX + 2, rectY + 2, progress / 100 * progressWidth, rectHeight - 4, progressColor,
 					progressColor, progressColor, progressColor);
-			shapeRenderer.rect(rectX + 2, burnMeterY + 2, burnMeter / 100 * progressWidth, rectHeight - 4, Color.RED,
-					Color.RED, Color.RED, Color.RED);
+
+			if (interaction.getBurnSpeed() > 0) {
+				shapeRenderer.rect(rectX, burnMeterY, rectWidth, rectHeight, Color.BLACK, Color.BLACK, Color.BLACK,
+						Color.BLACK);
+				shapeRenderer.rect(rectX + 2, burnMeterY + 2, burnMeter / 100 * progressWidth, rectHeight - 4,
+						Color.RED, Color.RED, Color.RED, Color.RED);
+			}
 		}
 	}
 
