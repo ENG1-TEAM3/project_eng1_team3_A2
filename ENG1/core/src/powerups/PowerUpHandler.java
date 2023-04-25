@@ -7,7 +7,7 @@ public class PowerUpHandler {
 
 	private static final int POWERUP_SLOTS = 1;
 
-	private static final PowerUp[] potentialPowerups = { PowerUp.AUTOFLIP, PowerUp.DOUBLE_MONEY,
+	private static final PowerUp[] potentialPowerups = { PowerUp.AUTO_STATION, PowerUp.DOUBLE_MONEY,
 			PowerUp.SATISFIED_CUSTOMER, PowerUp.BONUS_TIME, PowerUp.FASTER_COOKS };
 	public static final ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
 	static {
@@ -31,7 +31,9 @@ public class PowerUpHandler {
 		// Do something with powerup!
 
 		switch (selectedPower) {
-		case AUTOFLIP:
+		case NO_BURN:
+			break;
+		case AUTO_STATION:
 			break;
 		case DOUBLE_MONEY:
 			break;
@@ -60,7 +62,8 @@ public class PowerUpHandler {
 
 enum PowerUp {
 
-	AUTOFLIP(1, 30), DOUBLE_MONEY(2, 30), SATISFIED_CUSTOMER(3, 30), BONUS_TIME(2, 30), FASTER_COOKS(1, 30);
+	AUTO_STATION(1, 30), DOUBLE_MONEY(2, 30), SATISFIED_CUSTOMER(3, 30), BONUS_TIME(2, 30), FASTER_COOKS(1, 30),
+	NO_BURN(3, 30);
 
 	private final int weight, duration;
 
