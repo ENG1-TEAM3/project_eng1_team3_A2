@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="64" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="37">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="64" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="39">
  <tileset firstgid="1" source="Stations.tsx"/>
  <layer id="1" name="Tile Layer 1" width="30" height="20">
   <data encoding="csv">
@@ -45,29 +45,121 @@
   <object id="9" name="CookStart" x="64" y="128" width="42.5" height="20"/>
   <object id="10" name="Cook" x="128" y="128" width="42.5" height="20"/>
   <object id="11" name="Cook" x="192" y="128" width="42.5" height="20"/>
-  <object id="12" name="PantryOnion" x="384" y="64" width="64" height="64"/>
-  <object id="13" name="PantryLettuce" x="448" y="64" width="64" height="64"/>
-  <object id="14" name="PantryTomato" x="512" y="64" width="64" height="64"/>
-  <object id="15" name="PantryBun" x="576" y="64" width="64" height="64"/>
-  <object id="16" name="PantryMeat" x="640" y="64" width="64" height="64"/>
-  <object id="17" name="StationCut" x="384" y="192" width="64" height="64"/>
-  <object id="18" name="StationCut" x="448" y="192" width="64" height="64"/>
-  <object id="19" name="StationCut" x="512" y="192" width="64" height="64"/>
-  <object id="20" name="StationFry" x="384" y="320" width="64" height="64"/>
-  <object id="21" name="StationCut" x="640" y="192" width="64" height="64"/>
-  <object id="22" name="StationCut" x="704" y="192" width="64" height="64"/>
+  <object id="12" name="PantryOnion" x="384" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="13" name="PantryLettuce" x="448" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="14" name="PantryTomato" x="512" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="15" name="PantryBun" x="576" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="16" name="PantryMeat" x="640" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="17" name="StationCut" x="384" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="18" name="StationCut" x="448" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="19" name="StationCut" x="512" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="20" name="StationFry" x="384" y="320" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="21" name="StationCut" x="640" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="22" name="StationCut" x="704" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="23" name="StationBin" x="704" y="64" width="64" height="64"/>
-  <object id="24" name="StationCut" x="576" y="192" width="64" height="64"/>
-  <object id="25" name="StationFry" x="448" y="320" width="64" height="64"/>
-  <object id="26" name="StationFry" x="512" y="320" width="64" height="64"/>
-  <object id="27" name="StationFry" x="576" y="320" width="64" height="64"/>
-  <object id="28" name="StationFry" x="640" y="320" width="64" height="64"/>
-  <object id="29" name="StationFry" x="704" y="320" width="64" height="64"/>
-  <object id="30" name="StationCounter" x="384" y="448" width="64" height="64"/>
-  <object id="32" name="StationCounter" x="448" y="448" width="64" height="64"/>
-  <object id="33" name="StationCounter" x="640" y="448" width="64" height="64"/>
-  <object id="34" name="StationCounter" x="512" y="448" width="64" height="64"/>
-  <object id="35" name="StationCounter" x="576" y="448" width="64" height="64"/>
-  <object id="36" name="StationCounter" x="704" y="448" width="64" height="64"/>
+  <object id="24" name="StationCut" x="576" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="25" name="StationFry" x="448" y="320" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="26" name="StationFry" x="512" y="320" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="27" name="StationFry" x="576" y="320" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="28" name="StationFry" x="640" y="320" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="29" name="StationFry" x="704" y="320" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="30" name="StationCounter" x="384" y="448" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="32" name="StationCounter" x="448" y="448" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="33" name="StationCounter" x="640" y="448" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="34" name="StationCounter" x="512" y="448" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="35" name="StationCounter" x="576" y="448" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="36" name="StationCounter" x="704" y="448" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

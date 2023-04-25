@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class PowerUpHandler {
 
-	private static final int POWERUP_SLOTS = 3;
+	private static final int POWERUP_SLOTS = 1;
 
 	private static final PowerUp[] potentialPowerups = { PowerUp.AUTOFLIP, PowerUp.DOUBLE_MONEY,
 			PowerUp.SATISFIED_CUSTOMER, PowerUp.BONUS_TIME, PowerUp.FASTER_COOKS };

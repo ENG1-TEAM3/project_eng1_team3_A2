@@ -1,11 +1,11 @@
 package stations;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+
 import cooks.Cook;
 import food.FoodItem;
+import game.GameScreen;
 import interactions.InputKey;
 
 /**
@@ -21,8 +21,8 @@ public class Pantry extends Station {
      * The constructor for the {@link Pantry}.
      * @param rectangle The collision and interaction area of the {@link Pantry}.
      */
-    public Pantry(Rectangle rectangle) {
-        super(rectangle);
+    public Pantry(Rectangle rectangle, boolean locked, GameScreen gameScreen) {
+        super(rectangle, locked, gameScreen);
     }
 
     /**

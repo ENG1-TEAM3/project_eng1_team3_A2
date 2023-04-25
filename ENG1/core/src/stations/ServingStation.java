@@ -21,7 +21,6 @@ public class ServingStation extends Station {
 
 	private String request;
 	private Customer customer;
-	private GameScreen gameScreen;
 	private float customerX, customerY;
 	private CustomerController customerController;
 	private int id;
@@ -36,8 +35,9 @@ public class ServingStation extends Station {
 	 *//*
 		 * //* @param customerController The {@link CustomerController} for the game.
 		 */
-	public ServingStation(Rectangle rectangle) {
-		super(rectangle);
+	public ServingStation(Rectangle rectangle, boolean locked, GameScreen gameScreen) {
+		super(rectangle, locked, gameScreen);
+		this.customerController = gameScreen.getCustomerController();
 		this.customerController = null;
 		// The below x and y can be changed wherever needed.
 		this.customerX = rectangle.x + 32;
@@ -77,6 +77,7 @@ public class ServingStation extends Station {
 			if (hasCustomer()) {
 				// If there is a request, then compare the two.
 				if (Recipe.matchesRecipe(cook.foodStack, customer.getRequestName())) {
+					gameScreen.addMoney(Recipe.prices.get(customer.getRequestName()));
 					// If it's correct, then the customer will take the food and leave.
 					servedTime = gameScreen.getTime();
 					if (servedTime - initialOrderTime > maxServingTime) {
@@ -103,17 +104,6 @@ public class ServingStation extends Station {
 	}
 
 	/**
-	 * Set the {@link GameScreen} that will be used by the {@link ServingStation}
-	 * when interacted with.
-	 * 
-	 * @param gameScreen The {@link GameScreen} to set it to.
-	 */
-	public void setGameScreen(GameScreen gameScreen) {
-		this.gameScreen = gameScreen;
-		this.customerController = gameScreen.getCustomerController();
-	}
-
-	/**
 	 * Set the {@link #customer} of the {@link ServingStation} to a new
 	 * {@link Customer}.
 	 * 
@@ -121,7 +111,6 @@ public class ServingStation extends Station {
 	 */
 	public void setCustomer(Customer customer) {
 		if (customer != null) {
-			gameScreen.addMoney(Recipe.prices.get(customer.getRequestName()));
 			initialOrderTime = gameScreen.getTime() * 1;
 		}
 

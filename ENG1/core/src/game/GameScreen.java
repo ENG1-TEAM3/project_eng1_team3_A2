@@ -62,9 +62,9 @@ public class GameScreen extends ScreenAdapter {
 
 	private int diffculty;
 
-	private int reputation = 3, money = 0;
+	private int reputation = 3, money = 2000;
 
-    private SaveHandler sv;
+	private SaveHandler sv;
 
 	/**
 	 * The constructor for the {@link GameScreen}.
@@ -99,7 +99,7 @@ public class GameScreen extends ScreenAdapter {
 		this.gameHud = new GameHud(batch, this);
 		this.gameHud.setServingStations(this.customerController.getServingStations());
 		this.instructionHUD = new InstructionHud(batch);
-        this.sv = new SaveHandler(this);
+		this.sv = new SaveHandler(this);
 
 		if (this.batch != null) {
 			this.shape = screenController.getShapeRenderer();
@@ -108,9 +108,9 @@ public class GameScreen extends ScreenAdapter {
 		}
 	}
 
-    public void restoreFromSaveFile(){
+	public void restoreFromSaveFile() {
 
-    }
+	}
 
 	public void updateTiming() {
 		long diffInMillis = TimeUtils.timeSinceMillis(previousSecond);
@@ -135,13 +135,13 @@ public class GameScreen extends ScreenAdapter {
 		return hoursPassed * 60 * 60 + minutesPassed * 60 + secondsPassed;
 	}
 
-    public int getReputation(){
-        return reputation;
-    }
+	public int getReputation() {
+		return reputation;
+	}
 
-    public int getMoney(){
-        return money;
-    }
+	public int getMoney() {
+		return money;
+	}
 
 	/**
 	 * Update the game's values, {@link GameEntity}s and so on.
@@ -245,10 +245,10 @@ public class GameScreen extends ScreenAdapter {
 		batch.end();
 		shape.begin(ShapeRenderer.ShapeType.Filled);
 
-        for (GameEntity entity : gameEntities) {
-            entity.renderShape(shape);
-            entity.renderShapeDebug(shape);
-        }
+		for (GameEntity entity : gameEntities) {
+			entity.renderShape(shape);
+			entity.renderShapeDebug(shape);
+		}
 
 		shape.end();
 		// box2DDebugRenderer.render(world, camera.combined.scl(Constants.PPM));
@@ -284,13 +284,14 @@ public class GameScreen extends ScreenAdapter {
 		return world;
 	}
 
-    public Array<GameEntity> getGameEntities(){
-        return this.gameEntities;
-    }
+	public Array<GameEntity> getGameEntities() {
+		return this.gameEntities;
+	}
 
-    public Array<Cook> getCooks(){
-        return this.cooks;
-    }
+	public Array<Cook> getCooks() {
+		return this.cooks;
+	}
+
 	/**
 	 * Sets the currently active {@link #cook} that the game is using.
 	 *
@@ -357,10 +358,10 @@ public class GameScreen extends ScreenAdapter {
 
 		return true;
 	}
-    public void setMoney(int amount){
-        money = amount;
-    }
 
+	public void setMoney(int amount) {
+		money = amount;
+	}
 
 	/**
 	 * Returns the number of customers remaining before the game is finished.

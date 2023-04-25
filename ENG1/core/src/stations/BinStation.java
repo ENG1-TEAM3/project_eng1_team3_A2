@@ -2,6 +2,7 @@ package stations;
 
 import com.badlogic.gdx.math.Rectangle;
 import cooks.Cook;
+import game.GameScreen;
 import interactions.InputKey;
 
 /** The Bin Station Class.
@@ -13,8 +14,8 @@ public class BinStation extends Station {
      * The constructor for the {@link BinStation}.
      * @param rectangle The collision and interaction area of the {@link Station}.
      */
-    public BinStation(Rectangle rectangle) {
-        super(rectangle);
+    public BinStation(Rectangle rectangle, boolean locked, GameScreen gameScreen) {
+        super(rectangle, locked, gameScreen);
     }
 
     /**
