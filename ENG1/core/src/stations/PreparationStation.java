@@ -83,10 +83,12 @@ public class PreparationStation extends Station {
 					state = StationState.PREPARING;
 				}
 			} else {
-				if (interaction.getBurnSpeed() > 0 && burnMeter < 100) {
-					burnMeter += interaction.getBurnSpeed() * delta;
-				} else {
-					inUse = false;
+				if (interaction.getBurnSpeed() > 0) {
+					if (burnMeter < 100) {
+						burnMeter += interaction.getBurnSpeed() * delta;
+					} else {
+						inUse = false;
+					}
 				}
 				state = StationState.FINISHED;
 			}
