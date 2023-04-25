@@ -142,4 +142,19 @@ public class Station extends CookInteractable {
 	public void renderShapeDebug(ShapeRenderer shape) {
 
 	}
+    public boolean isLocked(){
+        return locked;
+    }
+
+    public boolean isInUse(){
+        return inUse;
+    }
+
+    public void setLocked(boolean lock){
+        this.locked = lock;
+    }
+
+    public void setUsage(boolean isUsed){
+        this.inUse = isUsed;
+    }
 }

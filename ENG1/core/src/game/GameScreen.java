@@ -18,12 +18,15 @@ import com.badlogic.gdx.utils.TimeUtils;
 import cooks.Cook;
 import cooks.GameEntity;
 import customers.CustomerController;
+import food.FoodItem;
 import helper.*;
 import interactions.InputKey;
 import interactions.Interactions;
 import stations.CookInteractable;
 import stations.ServingStation;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 /** A {@link ScreenAdapter} containing certain elements of the game. */
@@ -106,10 +109,33 @@ public class GameScreen extends ScreenAdapter {
 			this.box2DDebugRenderer = new Box2DDebugRenderer();
 			this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
 		}
+        gameHud.setMoneyLabel(money);
 	}
 
-	public void restoreFromSaveFile() {
+	public void restoreFromData(long smallTimeDifference, int totalSeconds, int repPoints,
+                                    int moneyAmount, int customersServed, int customersLeft,
+                                    float[] ckpositions, ArrayList<?> foodstacks, Cook.Facing[] cookFacings) {
+        this.money = moneyAmount;
+        gameHud.setMoneyLabel(moneyAmount);
+        this.reputation = repPoints;
+        this.customerController.setCustomersLeft(customersLeft);
+        this.customerController.setCustomersServed(customersServed);
+        gameHud.setCustomerCount(customersLeft);
 
+
+        System.out.println(this.customerController.getCustomersLeft());
+        System.out.println(this.customerController.getCustomersServed());
+
+
+
+        int ctr = 0;
+        for (Cook ck: cooks){
+            ck.getBody().setTransform(ckpositions[ctr*2], ckpositions[ctr*2 + 1], 0);
+            ArrayList<?> minilist = (ArrayList<?>) foodstacks.get(ctr);
+            ck.foodStack.setFoodStackFromArrayList(minilist);
+            ck.setFacing(cookFacings[ctr]);
+            ctr ++;
+        }
 	}
 
 	public void updateTiming() {
@@ -135,6 +161,9 @@ public class GameScreen extends ScreenAdapter {
 		return hoursPassed * 60 * 60 + minutesPassed * 60 + secondsPassed;
 	}
 
+    public void setTime(int seconds){
+    }
+
 	public int getReputation() {
 		return reputation;
 	}
@@ -148,7 +177,7 @@ public class GameScreen extends ScreenAdapter {
 	 *
 	 * @param delta The time between frames as a float.
 	 */
-	public void update(float delta, boolean shouldResetKeys) {
+	public void update(float delta, boolean shouldResetKeys){
 
 		// First thing, update all inputs
 		Interactions.updateKeys(shouldResetKeys);
@@ -178,7 +207,21 @@ public class GameScreen extends ScreenAdapter {
 		if (Interactions.isJustPressed(InputKey.InputTypes.PAUSE)) {
 			screenController.pauseGameScreen();
 		}
-
+        if (Interactions.isJustPressed(InputKey.InputTypes.SAVE)){
+            try {
+                sv.saveToFile("save1.txt");
+            }
+            catch (IOException io){
+                throw new RuntimeException(io);
+            }
+        }
+        if (Interactions.isJustPressed(InputKey.InputTypes.LOAD)) {
+            try {
+                sv.loadFromFile("save1.txt");
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
 		world.step(1 / 60f, 6, 2);
 
 		for (GameEntity entity : gameEntities) {
@@ -200,11 +243,11 @@ public class GameScreen extends ScreenAdapter {
 	 * @param delta The time between frames as a float.
 	 */
 	@Override
-	public void render(float delta) {
+	public void render(float delta){
+        this.update(delta, true);
 
-		this.update(delta, true);
 
-		renderGame(delta);
+        renderGame(delta);
 
 		setDifficulties();
 

@@ -38,7 +38,6 @@ public class ServingStation extends Station {
 	public ServingStation(Rectangle rectangle, boolean locked, GameScreen gameScreen) {
 		super(rectangle, locked, gameScreen);
 		this.customerController = gameScreen.getCustomerController();
-		this.customerController = null;
 		// The below x and y can be changed wherever needed.
 		this.customerX = rectangle.x + 32;
 		this.customerY = rectangle.y + 96;

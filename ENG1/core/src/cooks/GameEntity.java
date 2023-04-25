@@ -6,10 +6,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import helper.MapHelper;
 
+import java.io.Serializable;
+
 import static helper.Constants.PPM;
 
 /** The class for any object that can exist in the game world. */
-public abstract class GameEntity {
+public abstract class GameEntity implements Serializable {
 
     /** X and Y position coordinates.*/
     protected float x,y;

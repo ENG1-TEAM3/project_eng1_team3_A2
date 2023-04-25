@@ -3,6 +3,7 @@ package game;
 // import com.badlogic.gdx.ApplicationAdapter;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -56,6 +57,7 @@ public class Boot extends Game {
 
 	@Override
 	public void create() {
+        System.out.println(Gdx.files.getLocalStoragePath() + "egg.txt");
 		// this.widthScreen = Gdx.graphics.getWidth();
 		// this.heightScreen = Gdx.graphics.getHeight();
 		this.uiCamera = new OrthographicCamera();
