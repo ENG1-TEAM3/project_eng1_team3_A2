@@ -46,10 +46,10 @@ public class MenuScreen extends ScreenAdapter {
         HARD
     }
 
-    private ScreenController screenController;
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private Viewport viewport;
+    private final ScreenController screenController;
+    private final OrthographicCamera camera;
+    private final SpriteBatch batch;
+    private final Viewport viewport;
 
     /** Stage used to contain the text for the main menu */
     private Stage mainMenuStage;
@@ -64,10 +64,10 @@ public class MenuScreen extends ScreenAdapter {
     public mode currentModeSelection;
     /** State used to contain the current difficulty selection (easy medium or hard)*/
     public difficulty currentDifficultySelection;
-    private Sprite backgroundSprite;
-    private BitmapFont bitmapFont;
+    private final Sprite backgroundSprite;
+    private final BitmapFont bitmapFont;
 
-    private Label modeSelectLabel;
+    private final Label modeSelectLabel;
 
     private int customer = 5;
 
@@ -212,7 +212,6 @@ public class MenuScreen extends ScreenAdapter {
                 screenController.setScreen(ScreenID.GAME);
                 ((GameScreen) screenController.getScreen(ScreenID.GAME)).startGame(customer, currentDifficultySelection,
                         currentModeSelection);
-                // todo make this actually change the difficulty based on the selection
                 setCurrentScreenState(menuState.MAIN_MENU);
             }
             modeSelectLabel.setText(getSelectionString());

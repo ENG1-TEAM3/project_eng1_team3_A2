@@ -34,33 +34,28 @@ public class GameScreen extends ScreenAdapter {
 
 	private final OrthographicCamera camera;
 	private long msPast1s = 0;
-	private long previousSecond = 0, totalTimePaused = 0;
+	private long previousSecond, totalTimePaused = 0;
 	private int secondsPassed = 0, minutesPassed = 0, hoursPassed = 0;
 	private final GameHud gameHud;
 	private final InstructionHud instructionHUD;
 	private final SpriteBatch batch;
 	private ShapeRenderer shape;
 	private final ScreenController screenController;
-	// private ShapeRenderer shapeRenderer;
 	private World world;
 	private Box2DDebugRenderer box2DDebugRenderer;
-
 	private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 	private MapHelper mapHelper;
 	private final Array<CookInteractable> interactables;
 	private final CollisionHelper collisionHelper;
 	private final Array<GameEntity> gameEntities;
 	private final DrawQueueComparator drawQueueComparator;
-	private Array<ServingStation> servingStations;
 
 	// Objects
 	private Array<Cook> cooks;
 	private Cook cook;
 	private int cookIndex;
 	private CustomerController customerController;
-	private int customersToServe;
-	private int timecopy = 0;
-	private int reputation = 3, money = 2000;
+    private int reputation = 3, money = 2000;
 	private SaveHandler sv;
     private MenuScreen.difficulty currentDifficulty;
     private MenuScreen.mode currentMode;
@@ -95,8 +90,6 @@ public class GameScreen extends ScreenAdapter {
 		this.mapHelper.setGameScreen(this);
 		this.mapHelper.setupMap();
 
-		
-
 		if (this.batch != null) {
 			this.shape = screenController.getShapeRenderer();
 			this.box2DDebugRenderer = new Box2DDebugRenderer();
@@ -112,14 +105,14 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	public void restoreFromData(long smallTimeDifference, int totalSeconds, int repPoints, int moneyAmount,
-			int customersServed, int customersLeft, float[] ckpositions, ArrayList<?> foodstacks,
+			int customersServed, int customersLeft,float[] ckpositions, ArrayList<?> foodstacks,
 			Cook.Facing[] cookFacings) {
 		this.money = moneyAmount;
 		gameHud.setMoneyLabel(moneyAmount);
 		this.reputation = repPoints;
 		this.customerController.setCustomersLeft(customersLeft);
 		this.customerController.setCustomersServed(customersServed);
-		gameHud.setCustomerCount(customersLeft);
+		gameHud.updateCustomersLeftLabel(customersLeft);
 
 		System.out.println(this.customerController.getCustomersLeft());
 		System.out.println(this.customerController.getCustomersServed());
@@ -140,7 +133,6 @@ public class GameScreen extends ScreenAdapter {
 			msPast1s = diffInMillis - (1000 - msPast1s);
 			previousSecond += 1000;
 			secondsPassed += 1;
-			timecopy += 1;
 			if (secondsPassed >= 60) {
 				secondsPassed = 0;
 				minutesPassed += 1;
@@ -158,6 +150,7 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	public void setTime(int seconds) {
+
 	}
 
 	public int getReputation() {
@@ -184,16 +177,20 @@ public class GameScreen extends ScreenAdapter {
 
 		updateTiming();
 
-        for(Customer cus :customerController.customers){
-            customerController.removeCustomerIfExpired(cus);
-        }
-        customerController.tryToSpawnCustomer(this.currentDifficulty, this.currentMode);
-
-        if ((customersToServe != -1 && customersToServe <= customerController.getCustomersServed()) || reputation == 0) {
+        if (customerController.getTotalCustomersToServe() != -1 && (customerController.getTotalCustomersToServe()
+                <= customerController.getCustomersServed())) {
             screenController.setScreen((ScreenController.ScreenID.GAMEOVER));
             ((GameOverScreen) screenController.getScreen(ScreenController.ScreenID.GAMEOVER)).setTime(hoursPassed,
                     minutesPassed, secondsPassed);
+            ((GameOverScreen) screenController.getScreen(ScreenController.ScreenID.GAMEOVER)).setTextLabel("YOU WIN!");
         }
+//
+        for(Customer cus : customerController.customers){
+            customerController.removeCustomerIfExpired(cus);
+        }
+
+        customerController.tryToSpawnCustomer(this.currentDifficulty, this.currentMode);
+
 
 		for (Cook thisCook : cooks) {
 			thisCook.getBody().setLinearVelocity(0F, 0F);
@@ -201,6 +198,8 @@ public class GameScreen extends ScreenAdapter {
 				thisCook.userInput();
 			}
 		}
+
+
 		if (Interactions.isJustPressed(InputKey.InputTypes.COOK_SWAP)) {
 			setCook((cookIndex + 1) % cooks.size);
 		}
@@ -227,9 +226,6 @@ public class GameScreen extends ScreenAdapter {
 		for (GameEntity entity : gameEntities) {
 			entity.update(delta);
 		}
-
-
-
 	}
 
 	/**
@@ -335,15 +331,13 @@ public class GameScreen extends ScreenAdapter {
 	 * Sets the currently active {@link #cook} that the game is using.
 	 *
 	 * @param cookIndex The index of {@link #cook} in the {@link #cooks} array.
-	 * @return {@link Cook} : The {@link Cook} that the game has swapped to.
 	 */
-	public Cook setCook(int cookIndex) {
+	public void setCook(int cookIndex) {
 		if (cookIndex < 0 || cookIndex > cooks.size) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
 		this.cook = cooks.get(cookIndex);
 		this.cookIndex = cookIndex;
-		return this.cook;
 	}
 
 	/**
@@ -359,16 +353,6 @@ public class GameScreen extends ScreenAdapter {
 		return cooks.size - 1;
 	}
 
-	/**
-	 * Updates the {@link GameHud} with the correct number of {@link Customer}s.
-	 *
-	 * @param customerCount The {@code int} number to set the number of
-	 *                      {@link Customer}s to.
-	 */
-	public void setCustomerHud(int customerCount) {
-        gameHud.setCustomerCount(customersToServe - customerCount);
-
-	}
 
 	public void loseReputation() {
 		if (reputation > 1) {
@@ -522,6 +506,7 @@ public class GameScreen extends ScreenAdapter {
 	 *                  to finish.
 	 */
 	public void startGame(int customers, MenuScreen.difficulty diff, MenuScreen.mode md) {
+
 		secondsPassed = 0;
 		minutesPassed = 0;
 		hoursPassed = 0;
@@ -529,21 +514,24 @@ public class GameScreen extends ScreenAdapter {
 		previousSecond = TimeUtils.millis();
         totalTimePaused = 0;
 		msPast1s = 0;
+
+        int customersToServe;
         if (md == MenuScreen.mode.SCENARIO) {
             customersToServe = customers;
         }
         else{
             customersToServe = -1;
+            System.out.println("Endless mode selected");
         }
 
         this.currentDifficulty = diff;
         this.currentMode = md;
 
-		customerController.setCustomersLeft(customers);
+		customerController.setCustomersLeft(customersToServe);
 		customerController.setCustomersServed(0);
+        customerController.setTotalCustomersToServe(customersToServe);
 		customerController.tryToSpawnCustomer(this.currentDifficulty, this.currentMode);
 
-		gameHud.setCustomerCount(customers);
 	}
 
 	/**

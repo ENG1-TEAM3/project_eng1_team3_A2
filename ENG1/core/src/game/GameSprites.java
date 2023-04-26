@@ -43,7 +43,7 @@ public class GameSprites {
      * each {@link Sprite} to be accessed via a simple {@link String}.
      * This is not static, or final, as it can be modified as needed during the game.
      */
-    private HashMap<String, Sprite> spriteMap;
+    private final HashMap<String, Sprite> spriteMap;
 
     private static GameSprites INSTANCE;
 
@@ -67,7 +67,6 @@ public class GameSprites {
     /**
      * Puts together the {@link #spriteMap} using the {@link TextureAtlas}es
      * provided in the {@link #textureAtlases} {@link HashMap}.
-     *
      * It creates the {@link Sprite}s here, so they
      * only ever have to be created once.
      */
@@ -98,8 +97,7 @@ public class GameSprites {
      * @return  {@link Sprite}: The retrieved from the {@link #spriteMap}.
      */
     public Sprite getSprite(SpriteID spriteID, String spriteName) {
-        Sprite returnSprite = spriteMap.get(spriteKey(spriteID,spriteName));
-        return returnSprite;
+        return spriteMap.get(spriteKey(spriteID,spriteName));
     }
 
     /**

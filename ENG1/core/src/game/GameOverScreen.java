@@ -25,12 +25,11 @@ import interactions.Interactions;
  */
 public class GameOverScreen extends ScreenAdapter {
 	private Viewport viewport;
-	private ScreenController screenController;
+	private final ScreenController screenController;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Stage stage;
-
-	private Label timeLabel;
+	private final Label timeLabel, gameOverLabel;
 
 	/**
 	 * The constructor for the {@link GameOverScreen}.
@@ -47,7 +46,7 @@ public class GameOverScreen extends ScreenAdapter {
 		table.center();
 		table.setFillParent(true);
 
-		Label gameOverLabel = new Label("GAME OVER", font);
+		gameOverLabel = new Label("GAME OVER", font);
 		gameOverLabel.setFontScale(3);
 		table.add(gameOverLabel).expandX();
 
@@ -129,4 +128,8 @@ public class GameOverScreen extends ScreenAdapter {
 	public void setTime(int hours, int minutes, int seconds) {
 		timeLabel.setText(Util.formatTime(hours, minutes, seconds));
 	}
+    public void setTextLabel(String text){
+        this.gameOverLabel.setText(text);
+    }
+
 }

@@ -10,28 +10,20 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 
-import customers.Customer;
-import food.FoodItem;
 import food.FoodStack;
 import food.Recipe;
 import game.GameScreen;
 import game.GameSprites;
 import stations.ServingStation;
 
-import java.util.HashMap;
-
 // import java.awt.*;
 
 /** Responsible for displaying information above the gameplay GameScreen. */
 public class GameHud extends Hud {
 	/** The label with the current amount of time played. */
-	Label timeLabel;
-	/** The label with the number of {@link Customer}s left to serve. */
-	Label CustomerLabel;
-	Label CustomerScore;
-    Label CustomerLabel2;
 
-	Label reputationLabel, moneyLabel;
+	Label timeLabel, customersLeftLabel, customersServedLabel, waveProgressLabel, reputationLabel, moneyLabel;
+
 	/**
 	 * The {@link SpriteBatch} of the GameHud. Use for drawing {@link food.Recipe}s.
 	 */
@@ -56,25 +48,33 @@ public class GameHud extends Hud {
 		super(batch);
 		recipes = new HashMap<>();
 		this.gs = gameScreen;
-		timeLabel = new Label("", new Label.LabelStyle(btfont, Color.BLACK));
-        timeLabel.setPosition(0, 82* Constants.V_Height/100.0f);
+		timeLabel = new Label("TIMER :", new Label.LabelStyle(btfont, Color.BLACK));
+        timeLabel.setPosition(10, 84* Constants.V_Height/100.0f);
 
 		updateTime(0, 0, 0);
 
-		CustomerLabel = new Label("CUSTOMERS LEFT: ", new Label.LabelStyle(btfont, Color.BLACK));
-        CustomerLabel.setPosition(0, 78* Constants.V_Height/100.0f);
-        CustomerLabel2 = new Label("PROGRESS UNTIL NEXT WAVE",new Label.LabelStyle(btfont, Color.WHITE));
-        CustomerLabel2.setPosition(Constants.V_Width / 2.0f - (CustomerLabel2.getWidth() / 2) ,  Constants.V_Height - Constants.V_Height / 32.0f);
+		customersLeftLabel = new Label("CUSTOMERS LEFT: ", new Label.LabelStyle(btfont, Color.BLACK));
+        customersLeftLabel.setPosition(10, 82* Constants.V_Height/100.0f);
+
+        customersServedLabel = new Label("CUSTOMERS SERVED SUCCESSFULLY: ", new Label.LabelStyle(btfont, Color.BLACK));
+        customersServedLabel.setPosition(10,80* Constants.V_Height/100.0f);
+
+        waveProgressLabel = new Label("PROGRESS UNTIL NEXT WAVE",new Label.LabelStyle(btfont, Color.WHITE));
+        waveProgressLabel.setPosition(Constants.V_Width / 2.0f - (waveProgressLabel.getWidth() / 2) ,  Constants.V_Height - Constants.V_Height / 32.0f);
+
 		reputationLabel = new Label("Reputation: 3", new Label.LabelStyle(btfont, Color.BLACK));
-        reputationLabel.setPosition(0, 76* Constants.V_Height/100.0f);
+        reputationLabel.setPosition(10, 78* Constants.V_Height/100.0f);
+
 		moneyLabel = new Label("Money: £0.00", new Label.LabelStyle(btfont, Color.BLACK));
-        moneyLabel.setPosition(0, 74* Constants.V_Height/100.0f);
+        moneyLabel.setPosition(10, 76* Constants.V_Height/100.0f);
+
         if (batch != null) {
-            stage.addActor(CustomerLabel);
-            stage.addActor(CustomerLabel2);
+            stage.addActor(customersLeftLabel);
+            stage.addActor(waveProgressLabel);
             stage.addActor(reputationLabel);
             stage.addActor(moneyLabel);
             stage.addActor(timeLabel);
+            stage.addActor(customersServedLabel);
         }
 		this.batch = batch;
         this.shape = shape;
@@ -102,16 +102,8 @@ public class GameHud extends Hud {
             }
         }
         shape.end();
-
-
         super.render();
-
-
-
         batch.begin();
-
-
-
         GameSprites gameSprites = GameSprites.getInstance();
         // AS2 CHANGE - Rewrote scaling code to allow for any map to render correctly in
         // the middle of the screen.
@@ -194,11 +186,18 @@ public class GameHud extends Hud {
 
     /**
      * Set the Customer Count label
-     * @param customerCount New Customer Count
+     * @param amountCustomers New Customer Count
      */
-    public void setCustomerCount(int customerCount) {
-        CustomerLabel.setText(String.format("CUSTOMERS LEFT: %d", customerCount));
-
+    public void updateCustomersLeftLabel(int amountCustomers) {
+        if (amountCustomers >= 0) {
+            customersLeftLabel.setText(String.format("CUSTOMERS LEFT: %d", amountCustomers));
+        }
+        else {
+            customersLeftLabel.setText("ENDLESS MODE");
+        }
+    }
+    public void updateCustomersServedLabel(int amountCustomers){
+        customersServedLabel.setText(String.format("CUSTOMERS SERVED SUCCESSFULLY: %d", amountCustomers));
     }
 
 	public void setReputationPoints(int reputation) {

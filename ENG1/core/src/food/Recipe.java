@@ -14,7 +14,7 @@ import food.FoodItem.FoodID;
  * in generating recipes.
  */
 public class Recipe {
-	private static Array<String> recipeNames = new Array<>();
+	private static final Array<String> recipeNames = new Array<>();
 	/**
 	 * A HashMap containing how each FoodItem's FoodID, via a station of StationID,
 	 * can convert to another foodID.

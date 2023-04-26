@@ -17,7 +17,6 @@ import powerups.PowerUp;
  */
 public class ServingStation extends Station {
 
-	// Maximum amount of time before losing a reputation point in seconds.
 
 	private String request;
 	private Customer customer;
@@ -90,7 +89,6 @@ public class ServingStation extends Station {
 		}
 	}
 
-	boolean failedServe = true;
 
 	/**
 	 * Renders the {@link Customer} that is at the {@link ServingStation}.

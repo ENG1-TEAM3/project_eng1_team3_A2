@@ -26,14 +26,11 @@ public class CustomerController {
 	 */
 	private static Array<ServingStation> servingStations;
 	/** The number of {@link Customer}s to spawn. */
-	private int customersLeft,
-			/** The number of {@link Customer}s served. */
-			customersServed;
+	private int customersLeft, customersServed, totalCustomersToServe;
+    /** The number of {@link Customer}s served. */
+
 	/** The {@link game.GameScreen} to send the {@link #customersServed} to. */
-	private GameScreen gameScreen;
-
-
-    private int timeCount = 0;
+	private final GameScreen gameScreen;
     private int lastCustomerSpawnTime;
     private int timeBetweenSpawnsSeconds;
     /**
@@ -44,9 +41,9 @@ public class CustomerController {
      *                   was created by.
      */
     public CustomerController(GameScreen gameScreen) {
+
         this.customers = new Array<>();
-        this.customersLeft = 0;
-        this.customersServed = 0;
+
         customerSprite = GameSprites.getInstance().getSprite(GameSprites.SpriteID.CUSTOMER,"0");
         customerSprite.setSize(42.5F,70);
         servingStations = new Array<>();
@@ -73,12 +70,9 @@ public class CustomerController {
 		return false;
 	}
 
+
     /**
      * Add a {@link Customer} to a {@link ServingStation}.
-     * @return {@code int} : The number of instructions in the
-     *                       {@link Customer}'s recipe.
-     *                       <br>It is -1 if the {@link Customer} fails
-     *                       to spawn.
      */
     public void addCustomer(int patience) {
         // Get a deep copy of all the ServingStations.
@@ -102,19 +96,17 @@ public class CustomerController {
 
 
         customers.add(newCustomer);
+
         this.initialCus(newCustomer, gameScreen.getTotalSecondsRunningGame(), patience);
 
-
         newCustomer.index = randomStationIndex;
-
 
         newCustomer.randomRecipe();
         chosenStation.setCustomer(newCustomer);
 
         // Show the Customer's recipe
         gameScreen.getGameHud().addRecipeToRender(servingStations.indexOf(chosenStation,true), Recipe.firstRecipeOption(newCustomer.getRequestName()));
-
-        customersLeft--;
+        setCustomersLeft(customersLeft-1);
     }
 
 	/**
@@ -142,7 +134,8 @@ public class CustomerController {
 	 * @param customersLeft The number of {@link Customer}s left.
 	 */
 	public void setCustomersLeft(int customersLeft) {
-		this.customersLeft = customersLeft;
+        this.customersLeft = customersLeft;
+        gameScreen.getGameHud().updateCustomersLeftLabel(customersLeft);
 	}
 
 	/**
@@ -160,7 +153,8 @@ public class CustomerController {
      */
     public void setCustomersServed(int customersServed) {
         this.customersServed = customersServed;
-        gameScreen.setCustomerHud(customersServed);
+        gameScreen.getGameHud().updateCustomersServedLabel(customersServed);
+
     }
 
 	/**
@@ -171,6 +165,14 @@ public class CustomerController {
 	public int getCustomersServed() {
 		return customersServed;
 	}
+
+    public void setTotalCustomersToServe(int amount) {
+        this.totalCustomersToServe = amount;
+    }
+
+    public int getTotalCustomersToServe(){
+        return this.totalCustomersToServe;
+    }
 
 	/**
 	 * Adds a {@link ServingStation} to the {@link Array} of {@link ServingStation}s
@@ -206,19 +208,7 @@ public class CustomerController {
 			return;
 		}
 		removeCustomer(station);
-		customersServed++;
-		gameScreen.setCustomerHud(customersServed);
-
-		// BELOW IS CODE FOR CUSTOMER SPAWNING.
-
-		// If there is no more customers on the stations, and
-		// the time for the next customer to arrive is above 2 seconds,
-		// lower the time until the next customer to 2.
-		/*
-		 * if (customers.size == 0) { if
-		 * (TimeUtils.timeSinceMillis(gameScreen.getNextCustomerSecond()) > 2000) {
-		 * gameScreen.setNextCustomerSecond(TimeUtils.millis() + 2000); } }
-		 */
+        setCustomersServed(customersServed + 1);
 	}
 
 	/**
@@ -270,11 +260,22 @@ public class CustomerController {
         }
         if ((gameScreen.getTotalSecondsRunningGame() - lastCustomerSpawnTime >= timeBetweenSpawnsSeconds) && canAddCustomer()) {
             addCustomer(patience);
-            if (this.customersServed > 8){
-                addCustomer(patience);  // If more than 8 customers served make wave of 2
+            if(md == MenuScreen.mode.ENDLESS) {
+                if (this.customersServed > 8) {
+                    addCustomer(patience);  // If more than 8 customers served make wave of 2
+                }
+                if (this.customersServed > 13) {
+                    addCustomer(patience); // If more than 13 customers served make wave of 3
+                }
             }
-            if (this.customersServed > 13){
-                addCustomer(patience); // If more than 13 customers served make wave of 3
+            if (md == MenuScreen.mode.SCENARIO){
+                if (msd == MenuScreen.difficulty.MEDIUM){
+                    addCustomer(patience);
+                }
+                if (msd == MenuScreen.difficulty.HARD){
+                    addCustomer(patience);
+                    addCustomer(patience);
+                }
             }
 
             lastCustomerSpawnTime = gameScreen.getTotalSecondsRunningGame();
@@ -287,7 +288,6 @@ public class CustomerController {
     public void removeCustomerIfExpired(Customer customer){
         if (gameScreen.getTotalSecondsRunningGame() >= customer.getDeadTime()){
             removeCustomer(servingStations.get(customer.index));
-            System.out.println("Removing expired customer");
             gameScreen.loseReputation();
         }
     }

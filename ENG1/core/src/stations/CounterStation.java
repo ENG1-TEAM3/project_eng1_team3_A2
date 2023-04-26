@@ -82,7 +82,8 @@ public class CounterStation extends Station {
 			}
 		} else if (inputType == InputKey.InputTypes.USE) {
 			if (gameScreen.getMoney() >= cost) {
-				
+                gameScreen.spendMoney(cost);
+                locked = false;
 			}
 		}
 	}
@@ -123,6 +124,9 @@ public class CounterStation extends Station {
 			foodSprite.draw(batch);
 			drawY += drawInc;
 		}
+        if (locked) {
+            batch.draw(lockedSymbol, x - 64 / 2f, y - 32, 64, 64);
+        }
 	}
 
 	public FoodStack getFoodStack() {

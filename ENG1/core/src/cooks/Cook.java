@@ -1,6 +1,6 @@
 package cooks;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -261,9 +261,6 @@ public class Cook extends GameEntity implements Serializable {
         // Get offset based on direction.
 
         float drawX = x, drawY = y + 27F;
-        /*if (foodStack.size() > 0) {
-            foodStack.popStack();
-        }*/
         for (int i = foodList.size-1 ; i >= 0 ; i--) {
             Sprite foodSprite = gameSprites.getSprite(GameSprites.SpriteID.FOOD, String.valueOf(foodList.get(i)));
             Float drawInc = FoodItem.foodHeights.get(foodList.get(i));
@@ -323,7 +320,6 @@ public class Cook extends GameEntity implements Serializable {
      * facing depending on the order of inputs, the latest
      * being prioritized, and ignoring any inputs that are
      * input with their opposite.
-     *
      * For example, pressing {Left, Up, Right} in the same
      * order. Right is prioritized as it is the newest input,
      * but the opposite Left was pressed, so Up is the

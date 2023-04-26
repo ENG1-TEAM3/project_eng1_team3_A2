@@ -24,11 +24,11 @@ import interactions.Interactions;
 public class CreditsScreen extends ScreenAdapter {
 
     private ScreenID prevScreenID = ScreenID.MENU;
-    private OrthographicCamera camera;
-    private ScreenController screenController;
-    private FitViewport viewport;
+    private final OrthographicCamera camera;
+    private final ScreenController screenController;
+    private final FitViewport viewport;
     private Stage stage;
-    private SpriteBatch batch;
+    private final SpriteBatch batch;
 
     /**
      * The constructor for the {@link CreditsScreen}.]

@@ -2,12 +2,8 @@ package customers;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import cooks.GameEntity;
-import food.FoodStack;
 import food.Recipe;
-import game.GameScreen;
 import helper.Constants;
 
 /**
@@ -52,9 +48,8 @@ public class Customer {
         this.position = position;
     }
 
-    public String randomRecipe() {
+    public void randomRecipe() {
         this.request = Recipe.randomRecipe();
-        return request;
     }
 
     /**
