@@ -51,6 +51,7 @@ public class CustomerController {
         customerSprite.setSize(42.5F,70);
         servingStations = new Array<>();
         this.gameScreen = gameScreen;
+        this.lastCustomerSpawnTime = gameScreen.getTotalSecondsRunningGame();
     }
 
 	/**
@@ -105,6 +106,8 @@ public class CustomerController {
 
 
         newCustomer.index = randomStationIndex;
+
+
         newCustomer.randomRecipe();
         chosenStation.setCustomer(newCustomer);
 
@@ -235,7 +238,6 @@ public class CustomerController {
 
 
     public void tryToSpawnCustomer(MenuScreen.difficulty msd, MenuScreen.mode md){
-
         int patience;
         if (md == MenuScreen.mode.SCENARIO) {
             switch (msd) {
@@ -254,20 +256,27 @@ public class CustomerController {
         }
         else {
             if (this.customersServed < 5){     // Less than 5 customers spawn rules easy
-                timeBetweenSpawnsSeconds = 30;
-                patience = 30;
+                timeBetweenSpawnsSeconds = 60;
+                patience = 60;
             }
             else if (this.customersServed < 10){ // 5>= c > 10 customers spawn rules medium
-                timeBetweenSpawnsSeconds = 25;
-                patience = 25;
+                timeBetweenSpawnsSeconds = 60;
+                patience = 60;
             }
             else {  // 10 >= c spawn rules hard
-                timeBetweenSpawnsSeconds = 20;
-                patience = 20;
+                timeBetweenSpawnsSeconds = 60;
+                patience = 60;
             }
         }
         if ((gameScreen.getTotalSecondsRunningGame() - lastCustomerSpawnTime >= timeBetweenSpawnsSeconds) && canAddCustomer()) {
             addCustomer(patience);
+            if (this.customersServed > 8){
+                addCustomer(patience);  // If more than 8 customers served make wave of 2
+            }
+            if (this.customersServed > 13){
+                addCustomer(patience); // If more than 13 customers served make wave of 3
+            }
+
             lastCustomerSpawnTime = gameScreen.getTotalSecondsRunningGame();
         }
     }

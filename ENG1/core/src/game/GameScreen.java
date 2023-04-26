@@ -189,7 +189,7 @@ public class GameScreen extends ScreenAdapter {
         }
         customerController.tryToSpawnCustomer(this.currentDifficulty, this.currentMode);
 
-        if (customersToServe <= customerController.getCustomersServed() || reputation == 0) {
+        if ((customersToServe != -1 && customersToServe <= customerController.getCustomersServed()) || reputation == 0) {
             screenController.setScreen((ScreenController.ScreenID.GAMEOVER));
             ((GameOverScreen) screenController.getScreen(ScreenController.ScreenID.GAMEOVER)).setTime(hoursPassed,
                     minutesPassed, secondsPassed);
@@ -366,7 +366,8 @@ public class GameScreen extends ScreenAdapter {
 	 *                      {@link Customer}s to.
 	 */
 	public void setCustomerHud(int customerCount) {
-		gameHud.setCustomerCount(customersToServe - customerCount);
+        gameHud.setCustomerCount(customersToServe - customerCount);
+
 	}
 
 	public void loseReputation() {
@@ -496,7 +497,7 @@ public class GameScreen extends ScreenAdapter {
 		secondsPassed = 0;
 		minutesPassed = 0;
 		hoursPassed = 0;
-        totalTimePaused = 0;
+
 		cooks.clear();
 		gameEntities.clear();
 		interactables.clear();
@@ -528,8 +529,12 @@ public class GameScreen extends ScreenAdapter {
 		previousSecond = TimeUtils.millis();
         totalTimePaused = 0;
 		msPast1s = 0;
-
-		customersToServe = customers;
+        if (md == MenuScreen.mode.SCENARIO) {
+            customersToServe = customers;
+        }
+        else{
+            customersToServe = -1;
+        }
 
         this.currentDifficulty = diff;
         this.currentMode = md;

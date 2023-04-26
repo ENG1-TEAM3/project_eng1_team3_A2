@@ -93,9 +93,25 @@ public class GameHud extends Hud {
         shape.rect(0, Constants.V_Height - Constants.V_Height/8f, Constants.V_Width, Constants.V_Height/8f, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
         shape.rect(0, Constants.V_Height - Constants.V_Height/8f,
                 Constants.V_Width * gs.getCustomerController().returnFractionProgressUntilNextCustomer(), Constants.V_Height/8f, Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
+        for (ServingStation ss : this.servingStations){
+            if(ss.hasCustomer()){
+                int dedtime = ss.getCustomer().getDeadTime();
+                int spawntime = ss.getCustomer().getSpawnTime();
+                float fractional = (gs.getTotalSecondsRunningGame() - spawntime) / (float) (dedtime - spawntime);
+                shape.rect(ss.getX() + 22, ss.getY() - 32, 5, 64 - (64*fractional) , Color.RED, Color.RED, Color.RED, Color.RED);
+            }
+        }
         shape.end();
+
+
         super.render();
+
+
+
         batch.begin();
+
+
+
         GameSprites gameSprites = GameSprites.getInstance();
         // AS2 CHANGE - Rewrote scaling code to allow for any map to render correctly in
         // the middle of the screen.
@@ -181,7 +197,8 @@ public class GameHud extends Hud {
      * @param customerCount New Customer Count
      */
     public void setCustomerCount(int customerCount) {
-        CustomerLabel.setText(String.format("CUSTOMERS: %d",customerCount));
+        CustomerLabel.setText(String.format("CUSTOMERS LEFT: %d", customerCount));
+
     }
 
 	public void setReputationPoints(int reputation) {

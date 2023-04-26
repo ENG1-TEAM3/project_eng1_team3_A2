@@ -103,5 +103,4 @@ public class Customer {
     public int getDeadTime(){
         return this.deadTime;
     }
-    
 }
