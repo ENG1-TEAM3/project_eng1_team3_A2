@@ -69,12 +69,13 @@ public class GameHud extends Hud {
         reputationLabel.setPosition(0, 76* Constants.V_Height/100.0f);
 		moneyLabel = new Label("Money: £0.00", new Label.LabelStyle(btfont, Color.BLACK));
         moneyLabel.setPosition(0, 74* Constants.V_Height/100.0f);
-        stage.addActor(CustomerLabel);
-        stage.addActor(CustomerLabel2);
-        stage.addActor(reputationLabel);
-        stage.addActor(moneyLabel);
-		stage.addActor(timeLabel);
-
+        if (batch != null) {
+            stage.addActor(CustomerLabel);
+            stage.addActor(CustomerLabel2);
+            stage.addActor(reputationLabel);
+            stage.addActor(moneyLabel);
+            stage.addActor(timeLabel);
+        }
 		this.batch = batch;
         this.shape = shape;
 	}
