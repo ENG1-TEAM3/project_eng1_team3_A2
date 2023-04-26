@@ -37,6 +37,20 @@ public class FoodItem {
         bottomBun,
         /** Top Bun -&gt; Highest bun on {@link FoodStack} is {@link #bottomBun} */
         topBun,
+        dough,
+        doughCook,
+        cheese,
+        cheeseChop,
+        beans,
+        beansCook,
+        chili,
+        chiliCook,
+        pepperoni,
+        pepperoniChop,
+        mushroom,
+        mushroomChop,
+        potato,
+        potatoCook,
         /** Default */
         none
     }
@@ -56,6 +70,21 @@ public class FoodItem {
         foodHeights.put(FoodID.bun, 20F);
         foodHeights.put(FoodID.bottomBun, 10F);
         foodHeights.put(FoodID.topBun, 12F);
+
+        foodHeights.put(FoodID.dough, 20F);
+        foodHeights.put(FoodID.doughCook, 20F);
+        foodHeights.put(FoodID.cheese, 20F);
+        foodHeights.put(FoodID.cheeseChop, 20F);
+        foodHeights.put(FoodID.beans, 20F);
+        foodHeights.put(FoodID.beansCook, 20F);
+        foodHeights.put(FoodID.chili, 20F);
+        foodHeights.put(FoodID.chiliCook, 20F);
+        foodHeights.put(FoodID.pepperoni, 20F);
+        foodHeights.put(FoodID.pepperoniChop, 20F);
+        foodHeights.put(FoodID.mushroom, 20F);
+        foodHeights.put(FoodID.mushroomChop, 20F);
+        foodHeights.put(FoodID.potato, 20F);
+        foodHeights.put(FoodID.potatoCook, 20F);
     }
 
 }

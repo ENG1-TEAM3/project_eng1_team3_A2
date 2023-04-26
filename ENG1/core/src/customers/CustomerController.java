@@ -87,6 +87,7 @@ public class CustomerController {
         // Now that the only stations left are the ones without Customers,
         // randomly pick one and add a customer to it.
         Random random = new Random();
+        System.out.println(emptyStations.size);
         int randomStationIndex = random.nextInt(emptyStations.size);
         ServingStation chosenStation = emptyStations.get(randomStationIndex);
 
@@ -172,6 +173,10 @@ public class CustomerController {
 
     public int getTotalCustomersToServe(){
         return this.totalCustomersToServe;
+    }
+
+    public Array<Customer> getCustomers(){
+        return this.customers;
     }
 
 	/**
@@ -284,9 +289,11 @@ public class CustomerController {
 
     public void initialCus(Customer cus, int spawnTime, int patience){
         cus.setTimings(spawnTime,  spawnTime + patience);
+        System.out.println("Customer added with spawntime " + spawnTime + " deadtime " + (spawnTime + patience));
     }
     public void removeCustomerIfExpired(Customer customer){
         if (gameScreen.getTotalSecondsRunningGame() >= customer.getDeadTime()){
+            System.out.println("Removing customer");
             removeCustomer(servingStations.get(customer.index));
             gameScreen.loseReputation();
         }

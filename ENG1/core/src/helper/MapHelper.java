@@ -221,24 +221,45 @@ public class MapHelper {
 							gameScreen);
 					gameScreen.addInteractable(pantry);
 					switch (rectangleName) {
-					case "Lettuce":
-						pantry.setItem(FoodItem.FoodID.lettuce);
-						break;
-					case "Tomato":
-						pantry.setItem(FoodItem.FoodID.tomato);
-						break;
-					case "Onion":
-						pantry.setItem(FoodItem.FoodID.onion);
-						break;
-					case "Meat":
-						pantry.setItem(FoodItem.FoodID.meat);
-						break;
-					case "Bun":
-						pantry.setItem(FoodItem.FoodID.bun);
-						break;
-					default:
-						pantry.setItem(FoodItem.FoodID.none);
-						break;
+                        case "Lettuce":
+                            pantry.setItem(FoodItem.FoodID.lettuce);
+                            break;
+					    case "Tomato":
+                            pantry.setItem(FoodItem.FoodID.tomato);
+						    break;
+					    case "Onion":
+						    pantry.setItem(FoodItem.FoodID.onion);
+						    break;
+					    case "Meat":
+						    pantry.setItem(FoodItem.FoodID.meat);
+						    break;
+					    case "Bun":
+						    pantry.setItem(FoodItem.FoodID.bun);
+						    break;
+                        case "Dough":
+                            pantry.setItem(FoodItem.FoodID.dough);
+                            break;
+                        case "Cheese":
+                            pantry.setItem(FoodItem.FoodID.cheese);
+                            break;
+                        case "Beans":
+                            pantry.setItem(FoodItem.FoodID.beans);
+                            break;
+                        case "Chili":
+                            pantry.setItem(FoodItem.FoodID.chili);
+                            break;
+                        case "Pepperoni":
+                            pantry.setItem(FoodItem.FoodID.pepperoni);
+                            break;
+                        case "Mushroom":
+                            pantry.setItem(FoodItem.FoodID.mushroom);
+                            break;
+                        case "Potato":
+                            pantry.setItem(FoodItem.FoodID.potato);
+                            break;
+					    default:
+						    pantry.setItem(FoodItem.FoodID.none);
+						    break;
 					}
 				}
 			}

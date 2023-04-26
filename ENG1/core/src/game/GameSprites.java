@@ -1,5 +1,7 @@
 package game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -76,6 +78,7 @@ public class GameSprites {
             for (TextureAtlas.AtlasRegion spriteRegion : thisAtlas.getRegions()) {
                 spriteMap.put(spriteKey(spriteID,spriteRegion.name),thisAtlas.createSprite(spriteRegion.name));
             }
+            createNonAtlasResources();
         }
     }
 
@@ -106,5 +109,64 @@ public class GameSprites {
     public void dispose() {
         spriteMap.clear();
     }
+
+    public void createNonAtlasResources(){
+        Texture ts0 = new Texture(Gdx.files.internal("foods/Beans_Canned.png"));
+        Sprite ns0 = new Sprite(ts0);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "beans"), ns0);
+
+        Texture ts1 = new Texture(Gdx.files.internal("foods/Beans_Cooked.png"));
+        Sprite ns1 = new Sprite(ts1);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "beansCook"), ns1);
+
+        Texture ts2 = new Texture(Gdx.files.internal("foods/Dough.png"));
+        Sprite ns2 = new Sprite(ts2);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "dough"), ns2);
+
+        Texture ts3 = new Texture(Gdx.files.internal("foods/Pizza.png"));
+        Sprite ns3 = new Sprite(ts3);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "doughCook"), ns3);
+
+        Texture ts4 = new Texture(Gdx.files.internal("foods/Cheese.png"));
+        Sprite ns4 = new Sprite(ts4);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "cheese"), ns4);
+
+        Texture ts5 = new Texture(Gdx.files.internal("foods/Cheese_Chopped.png"));
+        Sprite ns5 = new Sprite(ts5);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "cheeseChop"), ns5);
+
+        Texture ts6 = new Texture(Gdx.files.internal("foods/Chilli_Canned.png"));
+        Sprite ns6 = new Sprite(ts6);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "chili"), ns6);
+
+        Texture ts7 = new Texture(Gdx.files.internal("foods/Chilli_Cooked.png"));
+        Sprite ns7 = new Sprite(ts7);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "chiliCook"), ns7);
+
+        Texture ts8 = new Texture(Gdx.files.internal("foods/Pepperoni.png"));
+        Sprite ns8 = new Sprite(ts8);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "pepperoni"), ns8);
+
+        Texture ts9 = new Texture(Gdx.files.internal("foods/SlicedPepperoni.png"));
+        Sprite ns9 = new Sprite(ts9);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "pepperoniChop"), ns9);
+
+        Texture ts10 = new Texture(Gdx.files.internal("foods/Mushrooms.png"));
+        Sprite ns10 = new Sprite(ts10);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "mushroom"), ns10);
+
+        Texture ts11 = new Texture(Gdx.files.internal("foods/Mushrooms_Chopped.png"));
+        Sprite ns11 = new Sprite(ts11);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "mushroomChop"), ns11);
+
+        Texture ts12 = new Texture(Gdx.files.internal("foods/Potato.png"));
+        Sprite ns12 = new Sprite(ts12);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "potato"), ns12);
+
+        Texture ts13 = new Texture(Gdx.files.internal("foods/Potato_Cooked.png"));
+        Sprite ns13 = new Sprite(ts13);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "potatoCook"), ns13);
+    }
+
 
 }

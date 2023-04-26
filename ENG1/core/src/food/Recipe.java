@@ -35,7 +35,11 @@ public class Recipe {
 		topBunArray.add(FoodID.topBun);
 		Array<FoodID> bottomBunArray = new Array<FoodID>();
 		bottomBunArray.add(FoodID.bottomBun);
-
+        Array<FoodID> emptyPrependArray = new Array<>();
+        Array<FoodID> bottomCookedDough = new Array<>();
+        bottomCookedDough.add(FoodID.doughCook);
+        Array<FoodID> bottomCookedPotato = new Array<>();
+        bottomCookedPotato.add(FoodID.potatoCook);
 		generateRecipes("Lettuce Burger", allCombos(topBunArray, bottomBunArray, FoodID.meatCook, FoodID.lettuceChop),
 				299);
 		generateRecipes("Onion Burger", allCombos(topBunArray, bottomBunArray, FoodID.meatCook, FoodID.onionChop), 299);
@@ -51,6 +55,19 @@ public class Recipe {
 				allCombos(topBunArray, bottomBunArray, FoodID.meatCook, FoodID.tomatoChop, FoodID.onionChop), 320);
 		generateRecipes("Lettuce Tomato Onion Burger", allCombos(topBunArray, bottomBunArray, FoodID.meatCook,
 				FoodID.lettuceChop, FoodID.tomatoChop, FoodID.onionChop), 350);
+        generateRecipes("Cheese Tomato Pizza",
+                allCombos(emptyPrependArray, bottomCookedDough, FoodID.cheeseChop, FoodID.tomatoChop), 300);
+        generateRecipes("Pepperoni Pizza",
+                allCombos(emptyPrependArray, bottomCookedDough, FoodID.pepperoniChop), 300);
+        generateRecipes("Mushroom Pizza",
+                allCombos(emptyPrependArray, bottomCookedDough, FoodID.mushroomChop), 300);
+        generateRecipes("Beans Cheese Potato",
+                allCombos(emptyPrependArray, bottomCookedPotato, FoodID.cheeseChop, FoodID.beansCook), 300);
+        generateRecipes("Chili Potato",
+                allCombos(emptyPrependArray, bottomCookedPotato, FoodID.chiliCook), 300);
+
+
+
 		/*
 		 * recipes.put("Onion Tomato Salad", new String[] { new
 		 * FoodStack(FoodID.onionChop, FoodID.tomatoChop).toString(), new

@@ -27,8 +27,22 @@ public class Interactions {
 				new InteractionResult(FoodID.tomatoChop, new float[] { 25, 50, 75 }, -1, -1));
 		interactions.put(InteractionKey(FoodID.onion, StationID.cut),
 				new InteractionResult(FoodID.onionChop, new float[] { 25, 50, 75 }, -1, -1));
+        interactions.put(InteractionKey(FoodID.mushroom, StationID.cut),
+                new InteractionResult(FoodID.mushroomChop, new float[] { 25, 50, 75 }, -1, -1));
+        interactions.put(InteractionKey(FoodID.pepperoni, StationID.cut),
+                new InteractionResult(FoodID.pepperoniChop, new float[] { 33, 66 }, -1, -1));
+        interactions.put(InteractionKey(FoodID.cheese, StationID.cut),
+                new InteractionResult(FoodID.cheeseChop, new float[] { 25, 50,75 }, -1, -1));
 		interactions.put(InteractionKey(FoodID.meat, StationID.fry),
 				new InteractionResult(FoodID.meatCook, new float[] { 50 }, 13F, 13));
+        interactions.put(InteractionKey(FoodID.potato, StationID.fry),
+                new InteractionResult(FoodID.potatoCook, new float[] { 50 }, 13F, 13));
+        interactions.put(InteractionKey(FoodID.dough, StationID.fry),
+                new InteractionResult(FoodID.doughCook, new float[] { 50 }, 13F, 13));
+        interactions.put(InteractionKey(FoodID.beans, StationID.fry),
+                new InteractionResult(FoodID.beansCook, new float[] { 33, 66 }, 13F, 13));
+        interactions.put(InteractionKey(FoodID.chili, StationID.fry),
+                new InteractionResult(FoodID.chiliCook, new float[] { 33, 66 }, 13F, 13));
 	}
 
 	/**

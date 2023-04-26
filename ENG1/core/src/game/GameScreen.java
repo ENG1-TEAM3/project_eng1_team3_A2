@@ -184,8 +184,11 @@ public class GameScreen extends ScreenAdapter {
                     minutesPassed, secondsPassed);
             ((GameOverScreen) screenController.getScreen(ScreenController.ScreenID.GAMEOVER)).setTextLabel("YOU WIN!");
         }
-//
-        for(Customer cus : customerController.customers){
+
+
+        Array<Customer> customersCopy = new Array<>(customerController.getCustomers());
+
+        for(Customer cus : customersCopy){
             customerController.removeCustomerIfExpired(cus);
         }
 
