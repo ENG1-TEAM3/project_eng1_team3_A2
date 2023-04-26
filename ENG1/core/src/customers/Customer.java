@@ -24,9 +24,7 @@ public class Customer {
      * is requesting. */
     private String request;
 
-    public int spawnTime;
-
-    public int deadTime;
+    public int spawnTime, deadTime;
 
     public int index;
     /**
@@ -93,12 +91,17 @@ public class Customer {
         return request;
     }
 
-    public void setSpawnTime(int mins, int secs){
-        spawnTime = mins * 60 + secs;
+    public void setTimings(int spnTime, int dedTime){
+        this.spawnTime = spnTime;
+        this.deadTime = dedTime;
     }
 
-    public void setDeadTime(int patience){
-        deadTime = spawnTime + patience;
+    public int getSpawnTime(){
+        return this.spawnTime;
+    }
+
+    public int getDeadTime(){
+        return this.deadTime;
     }
     
 }

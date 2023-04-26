@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 
@@ -28,6 +29,7 @@ public class GameHud extends Hud {
 	/** The label with the number of {@link Customer}s left to serve. */
 	Label CustomerLabel;
 	Label CustomerScore;
+    Label CustomerLabel2;
 
 	Label reputationLabel, moneyLabel;
 	/**
@@ -35,10 +37,12 @@ public class GameHud extends Hud {
 	 */
 	private SpriteBatch batch;
 	/** The {@link FoodStack} that the {@link GameHud} should render. */
+    private ShapeRenderer shape;
 	private HashMap<Integer, FoodStack> recipes;
 	/** The Hashmap that contains all recipes to be rendered. */
 	private GameScreen gs;
 	private Array<ServingStation> servingStations;
+    private BitmapFont btfont = new BitmapFont();
 	// /** The time, in milliseconds, of the last recipe change. */
 	// private long lastChange;
 
@@ -48,23 +52,31 @@ public class GameHud extends Hud {
 	 * @param batch      The {@link SpriteBatch} to render
 	 * @param gameScreen The {@link GameScreen} to render the GameHud on
 	 */
-	public GameHud(SpriteBatch batch, GameScreen gameScreen) {
+	public GameHud(SpriteBatch batch, ShapeRenderer shape, GameScreen gameScreen) {
 		super(batch);
 		recipes = new HashMap<>();
 		this.gs = gameScreen;
-		timeLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+		timeLabel = new Label("", new Label.LabelStyle(btfont, Color.BLACK));
+        timeLabel.setPosition(0, 82* Constants.V_Height/100.0f);
+
 		updateTime(0, 0, 0);
 
-		CustomerLabel = new Label("CUSTOMERS LEFT: ", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
-		reputationLabel = new Label("Reputation: 3", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
-		moneyLabel = new Label("Money: £0.00", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
-
-		table.add(CustomerLabel).expandX().padTop(80).padRight(60);
-		table.add(timeLabel).expandX().padTop(80).padLeft(60);
-		table.add(reputationLabel).expandX().padTop(120).padRight(60);
-		table.add(moneyLabel).expandX().padTop(160).padRight(60);
+		CustomerLabel = new Label("CUSTOMERS LEFT: ", new Label.LabelStyle(btfont, Color.BLACK));
+        CustomerLabel.setPosition(0, 78* Constants.V_Height/100.0f);
+        CustomerLabel2 = new Label("PROGRESS UNTIL NEXT WAVE",new Label.LabelStyle(btfont, Color.WHITE));
+        CustomerLabel2.setPosition(Constants.V_Width / 2.0f - (CustomerLabel2.getWidth() / 2) ,  Constants.V_Height - Constants.V_Height / 32.0f);
+		reputationLabel = new Label("Reputation: 3", new Label.LabelStyle(btfont, Color.BLACK));
+        reputationLabel.setPosition(0, 76* Constants.V_Height/100.0f);
+		moneyLabel = new Label("Money: £0.00", new Label.LabelStyle(btfont, Color.BLACK));
+        moneyLabel.setPosition(0, 74* Constants.V_Height/100.0f);
+        stage.addActor(CustomerLabel);
+        stage.addActor(CustomerLabel2);
+        stage.addActor(reputationLabel);
+        stage.addActor(moneyLabel);
+		stage.addActor(timeLabel);
 
 		this.batch = batch;
+        this.shape = shape;
 	}
 
 	/**
@@ -74,27 +86,34 @@ public class GameHud extends Hud {
 	 */
 	@Override
 	public void render() {
-		super.render();
-		batch.begin();
-		GameSprites gameSprites = GameSprites.getInstance();
-		// AS2 CHANGE - Rewrote scaling code to allow for any map to render correctly in
-		// the middle of the screen.
-		float drawX, drawY;
-		for (Integer i : recipes.keySet()) {
-			drawY = this.servingStations.get(i).getY() + (Constants.V_Height / 2.0f - Constants.gameCameraOffset.y)
-					+ this.servingStations.get(i).getRectangle().getHeight();
-			for (int i2 = (recipes.get(i).getStack().size - 1); i2 >= 0; i2--) { // Render from the bottom up, for
-																					// consistent distance.
-				drawX = this.servingStations.get(i).getX() + (Constants.V_Width / 2.0f - Constants.gameCameraOffset.x);
-				Sprite foodSprite = gameSprites.getSprite(GameSprites.SpriteID.FOOD,
-						recipes.get(i).getStack().get(i2).toString());
-				foodSprite.setScale(2F);
-				foodSprite.setPosition(drawX - foodSprite.getWidth() / 2, drawY - foodSprite.getHeight() / 2);
-				foodSprite.draw(batch);
-				drawY += 32;
-			}
-		}
-		batch.end();
+
+
+        shape.begin(ShapeRenderer.ShapeType.Filled);
+        shape.rect(0, Constants.V_Height - Constants.V_Height/8f, Constants.V_Width, Constants.V_Height/8f, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
+        shape.rect(0, Constants.V_Height - Constants.V_Height/8f,
+                Constants.V_Width * gs.getCustomerController().returnFractionProgressUntilNextCustomer(), Constants.V_Height/8f, Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
+        shape.end();
+        super.render();
+        batch.begin();
+        GameSprites gameSprites = GameSprites.getInstance();
+        // AS2 CHANGE - Rewrote scaling code to allow for any map to render correctly in
+        // the middle of the screen.
+        float drawX, drawY;
+        for (Integer i : recipes.keySet()) {
+            drawY = this.servingStations.get(i).getY() + (Constants.V_Height / 2.0f - Constants.gameCameraOffset.y)
+                    + this.servingStations.get(i).getRectangle().getHeight();
+            for (int i2 = (recipes.get(i).getStack().size - 1); i2 >= 0; i2--) { // Render from the bottom up, for
+                // consistent distance.
+                drawX = this.servingStations.get(i).getX() + (Constants.V_Width / 2.0f - Constants.gameCameraOffset.x);
+                Sprite foodSprite = gameSprites.getSprite(GameSprites.SpriteID.FOOD,
+                        recipes.get(i).getStack().get(i2).toString());
+                foodSprite.setScale(2F);
+                foodSprite.setPosition(drawX - foodSprite.getWidth() / 2, drawY - foodSprite.getHeight() / 2);
+                foodSprite.draw(batch);
+                drawY += 32;
+            }
+        }
+        batch.end();
 	}
 
     /**
@@ -169,7 +188,7 @@ public class GameHud extends Hud {
 	}
 
 	public void setMoneyLabel(int amount) {
-		int pounds = Math.floorDiv(amount, 100);
+		int pounds = amount / 100;
 		int pennies = amount - pounds * 100;
 		moneyLabel.setText(String.format("Money: £%d.%d", pounds, pennies));
 	}

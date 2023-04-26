@@ -23,7 +23,7 @@ public class ScreenController {
     private PauseScreen pauseScreen;
     private HashMap<ScreenID, ScreenAdapter> screens;
     private long playTimeDiff;
-    private long customerTimeDiff;
+    private long pauseStartTime;
 
     /**
      * Screen Controller Constructor
@@ -107,7 +107,7 @@ public class ScreenController {
     /** Pause the game. */
     public void pauseGameScreen() {
         playTimeDiff = TimeUtils.millis() - gameScreen.getPreviousSecond();
-        customerTimeDiff = gameScreen.getNextCustomerSecond() - TimeUtils.millis();
+        pauseStartTime = TimeUtils.millis();
         setScreen(ScreenID.PAUSE);
     }
 
@@ -115,7 +115,7 @@ public class ScreenController {
      * Only call this AFTER {@link #pauseGameScreen()}. */
     public void playGameScreen() {
         gameScreen.setPreviousSecond(TimeUtils.millis()- playTimeDiff);
-        gameScreen.setNextCustomerSecond(TimeUtils.millis() - customerTimeDiff);
+        gameScreen.addToTimePaused(TimeUtils.millis() - pauseStartTime);
         setScreen(ScreenID.GAME);
     }
 

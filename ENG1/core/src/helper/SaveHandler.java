@@ -1,13 +1,11 @@
 package helper;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import cooks.Cook;
 import cooks.GameEntity;
 import food.FoodItem;
-import food.FoodStack;
 import game.GameScreen;
 import stations.CookInteractable;
 
@@ -47,7 +45,7 @@ public class SaveHandler {
         }
 
         long smallTimeDiff = TimeUtils.millis() - gameScreen.getPreviousSecond();
-        int totalSecondsPassed = gameScreen.getTime();
+        int totalSecondsPassed = gameScreen.getTotalSecondsRunningGame();
         int repPointsLeft = gameScreen.getReputation();
         int money = gameScreen.getMoney();
         int amountCustomersServed = gameScreen.getCustomerController().getCustomersServed();

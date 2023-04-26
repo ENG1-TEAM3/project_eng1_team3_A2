@@ -18,7 +18,6 @@ import powerups.PowerUp;
 public class ServingStation extends Station {
 
 	// Maximum amount of time before losing a reputation point in seconds.
-	private int maxServingTime = 30;
 
 	private String request;
 	private Customer customer;
@@ -26,7 +25,6 @@ public class ServingStation extends Station {
 	private CustomerController customerController;
 	private int id;
 
-	private int initialOrderTime = 0;
 
 	/**
 	 * The constructor for the {@link ServingStation}.
@@ -104,11 +102,6 @@ public class ServingStation extends Station {
 		if (hasCustomer()) {
 			customer.render(batch);
 		}
-
-		if (gameScreen.getTime() - initialOrderTime > maxServingTime && this.customer != null && !failedServe) {
-			gameScreen.loseReputation();
-			failedServe = true;
-		}
 	}
 
 	/**
@@ -118,12 +111,6 @@ public class ServingStation extends Station {
 	 * @param customer The {@link Customer} to set the {@link ServingStation} to.
 	 */
 	public void setCustomer(Customer customer) {
-		// FIX!!!
-		if (customer != null) {
-			initialOrderTime = gameScreen.getTime() * 1;
-			failedServe = false;
-		}
-
 		this.customer = customer;
 	}
 

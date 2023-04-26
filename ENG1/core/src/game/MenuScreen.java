@@ -210,7 +210,8 @@ public class MenuScreen extends ScreenAdapter {
 
             if (Interactions.isJustPressed(InputKey.InputTypes.START_GAME)) {
                 screenController.setScreen(ScreenID.GAME);
-                ((GameScreen) screenController.getScreen(ScreenID.GAME)).startGame(customer);
+                ((GameScreen) screenController.getScreen(ScreenID.GAME)).startGame(customer, currentDifficultySelection,
+                        currentModeSelection);
                 // todo make this actually change the difficulty based on the selection
                 setCurrentScreenState(menuState.MAIN_MENU);
             }
