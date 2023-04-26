@@ -9,6 +9,7 @@ import customers.CustomerController;
 import food.Recipe;
 import game.GameScreen;
 import interactions.InputKey;
+import powerups.PowerUp;
 
 /**
  * The {@link ServingStation} class, where the {@link cooks.Cook} provide the
@@ -25,7 +26,7 @@ public class ServingStation extends Station {
 	private CustomerController customerController;
 	private int id;
 
-	private int initialOrderTime = 0, servedTime;
+	private int initialOrderTime = 0;
 
 	/**
 	 * The constructor for the {@link ServingStation}.
@@ -78,17 +79,20 @@ public class ServingStation extends Station {
 				if (Recipe.matchesRecipe(cook.foodStack, customer.getRequestName())) {
 					gameScreen.addMoney(Recipe.prices.get(customer.getRequestName()));
 					// If it's correct, then the customer will take the food and leave.
-					servedTime = gameScreen.getTime();
-					if (servedTime - initialOrderTime > maxServingTime) {
-						gameScreen.loseReputation();
-					}
 					request = null;
 					cook.foodStack.clearStack();
 					customerController.customerServed(this);
+				} else if (gameScreen.powerUpHandler.activePowerUp() == PowerUp.SATISFIED_CUSTOMER) {
+					gameScreen.addMoney(Recipe.prices.get(customer.getRequestName()));
+					request = null;
+					customerController.customerServed(this);
+					gameScreen.powerUpHandler.usePowerUp();
 				}
 			}
 		}
 	}
+
+	boolean failedServe = true;
 
 	/**
 	 * Renders the {@link Customer} that is at the {@link ServingStation}.
@@ -100,6 +104,11 @@ public class ServingStation extends Station {
 		if (hasCustomer()) {
 			customer.render(batch);
 		}
+
+		if (gameScreen.getTime() - initialOrderTime > maxServingTime && this.customer != null && !failedServe) {
+			gameScreen.loseReputation();
+			failedServe = true;
+		}
 	}
 
 	/**
@@ -109,8 +118,10 @@ public class ServingStation extends Station {
 	 * @param customer The {@link Customer} to set the {@link ServingStation} to.
 	 */
 	public void setCustomer(Customer customer) {
+		// FIX!!!
 		if (customer != null) {
 			initialOrderTime = gameScreen.getTime() * 1;
+			failedServe = false;
 		}
 
 		this.customer = customer;

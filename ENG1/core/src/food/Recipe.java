@@ -19,7 +19,7 @@ public class Recipe {
 	 * A HashMap containing how each FoodItem's FoodID, via a station of StationID,
 	 * can convert to another foodID.
 	 */
-	private static final HashMap<String, Array<FoodStack>> recipes = new HashMap<>();
+	public static final HashMap<String, Array<FoodStack>> recipes = new HashMap<>();
 	public static final HashMap<String, Integer> prices = new HashMap<>();
 
 	static {

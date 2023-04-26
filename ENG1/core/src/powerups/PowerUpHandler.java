@@ -3,10 +3,13 @@ package powerups;
 import java.util.ArrayList;
 import java.util.Random;
 
+import food.FoodStack;
+import food.Recipe;
 import game.GameScreen;
 import interactions.InputKey.InputTypes;
 import stations.CookInteractable;
 import stations.PreparationStation;
+import stations.ServingStation;
 
 public class PowerUpHandler {
 
@@ -44,7 +47,7 @@ public class PowerUpHandler {
 
 		if (currentPowerUps[slot] == null) {
 			// Just for testing set the current power up to auto station.
-			activePowerUp = PowerUp.AUTO_STATION;
+			activePowerUp = PowerUp.SATISFIED_CUSTOMER;
 			cooldown = activePowerUp.duration();
 			return null;
 		}
@@ -56,7 +59,22 @@ public class PowerUpHandler {
 		return activePowerUp;
 	}
 
+	public boolean usePowerUp() {
+		if (activePowerUp == null) {
+			return false;
+		}
+		activePowerUp = null;
+		cooldown = 0;
+		return true;
+	}
+
 	public boolean updateCoolDown(float dt) {
+
+		if (activePowerUp.duration() < 0) {
+			cooldown = 1;
+			return false;
+		}
+
 		cooldown -= dt;
 		if (cooldown <= 0) {
 			cooldown = 0;
