@@ -24,6 +24,11 @@ public class Customer {
      * is requesting. */
     private String request;
 
+    public int spawnTime;
+
+    public int deadTime;
+
+    public int index;
     /**
      * The constructor for the {@link Customer}.
      * <br>Randomly picks out a {@link Recipe} as a request.
@@ -34,6 +39,8 @@ public class Customer {
         this.sprite = sprite;
         this.position = Constants.customerSpawn;
         this.request = Recipe.randomRecipe();
+        spawnTime = 0;
+        deadTime = 0;
     }
 
     /**
@@ -85,4 +92,13 @@ public class Customer {
     public String getRequestName() {
         return request;
     }
+
+    public void setSpawnTime(int mins, int secs){
+        spawnTime = mins * 60 + secs;
+    }
+
+    public void setDeadTime(int patience){
+        deadTime = spawnTime + patience;
+    }
+    
 }
