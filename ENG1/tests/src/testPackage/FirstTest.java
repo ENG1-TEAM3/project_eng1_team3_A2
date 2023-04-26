@@ -31,4 +31,9 @@ public class FirstTest {
     public void fifthTest(){
         assertTrue("This test shouldnt also fail", Gdx.files.internal("cooks/normal right.png").exists());
     }
+    @Test
+    public void sixthTest(){
+
+    }
+
 }

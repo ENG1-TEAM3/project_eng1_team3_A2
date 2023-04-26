@@ -17,8 +17,10 @@ import food.FoodItem.FoodID;
 import interactions.InputKey;
 import interactions.Interactions;
 
+import java.io.Serializable;
+
 /** A {@link GameEntity} that the player controls to interact with the game. */
-public class Cook extends GameEntity {
+public class Cook extends GameEntity implements Serializable {
     /** The cook's current sprite. */
     private Sprite sprite;
     /** The control arrow sprite. */
@@ -159,6 +161,10 @@ public class Cook extends GameEntity {
             spriteName += "h";
         }
         sprite = gameSprites.getSprite(GameSprites.SpriteID.COOK, spriteName + dir);
+    }
+
+    public void setFacing(Cook.Facing face){
+        this.dir = face;
     }
 
     /**
@@ -356,5 +362,13 @@ public class Cook extends GameEntity {
 
     public Facing getDir(){
         return dir;
+    }
+
+    public float getWidth(){
+        return this.width;
+    }
+
+    public float getHeight(){
+        return this.height;
     }
 }

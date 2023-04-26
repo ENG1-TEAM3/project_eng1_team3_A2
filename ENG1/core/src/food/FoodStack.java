@@ -3,12 +3,15 @@ package food;
 import com.badlogic.gdx.utils.Array;
 import food.FoodItem.FoodID;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * A class to create the behaviour of a {@code Stack} for
  * {@link FoodItem}s to be used by the {@link cooks.Cook},
  * {@link stations.CounterStation} and {@link Recipe}s.
  */
-public class FoodStack {
+public class FoodStack implements Serializable {
     /** The cook's stack of things, containing all the items they're holding. Index 0 = Top Item.
      * Has a public getter and setter.
     */
@@ -102,4 +105,21 @@ public class FoodStack {
     public String toString() {
         return foodStack.toString();
     }
+
+    public ArrayList<FoodID> toArrayList(){
+        ArrayList<FoodID> retArrayList = new ArrayList<>();
+        for (int i =0; i < foodStack.size; i++){
+            retArrayList.add(this.foodStack.get(i));
+        }
+        return retArrayList;
+    }
+
+    public void setFoodStackFromArrayList(ArrayList<?> foodArrayList){
+        Array<FoodID> newFoodStack = new Array<>();
+        for (Object fi: foodArrayList){
+            newFoodStack.add((FoodID) fi);
+        }
+        this.foodStack = newFoodStack;
+    }
+
 }

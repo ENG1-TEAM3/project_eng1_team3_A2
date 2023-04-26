@@ -1,5 +1,7 @@
 package game;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 import com.badlogic.gdx.Gdx;
@@ -116,10 +118,30 @@ public class GameScreen extends ScreenAdapter {
 		}
 		powerUpHandler = new PowerUpHandler(this);
 		powerUpHandler.activatePower(0);
+		gameHud.setMoneyLabel(money);
 	}
 
-	public void restoreFromSaveFile() {
+	public void restoreFromData(long smallTimeDifference, int totalSeconds, int repPoints, int moneyAmount,
+			int customersServed, int customersLeft, float[] ckpositions, ArrayList<?> foodstacks,
+			Cook.Facing[] cookFacings) {
+		this.money = moneyAmount;
+		gameHud.setMoneyLabel(moneyAmount);
+		this.reputation = repPoints;
+		this.customerController.setCustomersLeft(customersLeft);
+		this.customerController.setCustomersServed(customersServed);
+		gameHud.setCustomerCount(customersLeft);
 
+		System.out.println(this.customerController.getCustomersLeft());
+		System.out.println(this.customerController.getCustomersServed());
+
+		int ctr = 0;
+		for (Cook ck : cooks) {
+			ck.getBody().setTransform(ckpositions[ctr * 2], ckpositions[ctr * 2 + 1], 0);
+			ArrayList<?> minilist = (ArrayList<?>) foodstacks.get(ctr);
+			ck.foodStack.setFoodStackFromArrayList(minilist);
+			ck.setFacing(cookFacings[ctr]);
+			ctr++;
+		}
 	}
 
 	public void updateTiming() {
@@ -143,6 +165,9 @@ public class GameScreen extends ScreenAdapter {
 
 	public int getTime() {
 		return hoursPassed * 60 * 60 + minutesPassed * 60 + secondsPassed;
+	}
+
+	public void setTime(int seconds) {
 	}
 
 	public int getReputation() {
@@ -192,7 +217,20 @@ public class GameScreen extends ScreenAdapter {
 		if (Interactions.isJustPressed(InputKey.InputTypes.PAUSE)) {
 			screenController.pauseGameScreen();
 		}
-
+		if (Interactions.isJustPressed(InputKey.InputTypes.SAVE)) {
+			try {
+				sv.saveToFile("save1.txt");
+			} catch (IOException io) {
+				throw new RuntimeException(io);
+			}
+		}
+		if (Interactions.isJustPressed(InputKey.InputTypes.LOAD)) {
+			try {
+				sv.loadFromFile("save1.txt");
+			} catch (IOException | ClassNotFoundException e) {
+				throw new RuntimeException(e);
+			}
+		}
 		world.step(1 / 60f, 6, 2);
 
 		for (GameEntity entity : gameEntities) {
@@ -215,7 +253,6 @@ public class GameScreen extends ScreenAdapter {
 	 */
 	@Override
 	public void render(float delta) {
-
 		this.update(delta, true);
 
 		renderGame(delta);
@@ -494,7 +531,7 @@ public class GameScreen extends ScreenAdapter {
 		}
 		cookIndex = -1;
 	}
-	
+
 	public Cook getCurrentCook() {
 		return cook;
 	}

@@ -28,6 +28,9 @@ public class InputKey {
         QUIT,
 
         MODE_SELECT,
+        SAVE,
+        LOAD,
+
 
         // COOK_INTERACT
         /** Put down an item onto a {@link stations.Station} in the {@link cooks.Cook}'s hands. */

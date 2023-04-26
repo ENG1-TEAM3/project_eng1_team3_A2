@@ -17,7 +17,7 @@ import interactions.InputKey;
  * {@link stations}.
  */
 public class Station extends CookInteractable {
-	
+
 	public static final int cost = 1000;
 
 	/** IDs of all the different possible types of stations. */
@@ -38,7 +38,7 @@ public class Station extends CookInteractable {
 		/** Default Station that does nothing. */
 		none
 	}
-	
+
 	GameScreen gameScreen;
 
 	StationID stationID;
@@ -59,10 +59,6 @@ public class Station extends CookInteractable {
 		this.locked = locked;
 		lockedSymbol = new Sprite(new Texture(Gdx.files.internal("padlock.png")));
 		this.gameScreen = gameScreen;
-	}
-	
-	public boolean isLocked() {
-		return locked;
 	}
 
 	/**
@@ -145,5 +141,21 @@ public class Station extends CookInteractable {
 	@Override
 	public void renderShapeDebug(ShapeRenderer shape) {
 
+	}
+
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public boolean isInUse() {
+		return inUse;
+	}
+
+	public void setLocked(boolean lock) {
+		this.locked = lock;
+	}
+
+	public void setUsage(boolean isUsed) {
+		this.inUse = isUsed;
 	}
 }

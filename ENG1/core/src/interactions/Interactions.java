@@ -128,7 +128,9 @@ public class Interactions {
 						new InputKey(InputKey.InputTypes.UNPAUSE, Input.Keys.ESCAPE),
 						new InputKey(InputKey.InputTypes.CREDITS, Input.Keys.C),
 						new InputKey(InputKey.InputTypes.QUIT, Input.Keys.Q),
-						new InputKey(InputKey.InputTypes.MODE_SELECT, Input.Keys.G) }));
+						new InputKey(InputKey.InputTypes.MODE_SELECT, Input.Keys.G),
+                        new InputKey(InputKey.InputTypes.SAVE, Input.Keys.O),
+                        new InputKey(InputKey.InputTypes.LOAD, Input.Keys.P)}));
 		inputs.put(InputID.COOK_MOVEMENT,
 				new Array<>(new InputKey[] { new InputKey(InputKey.InputTypes.COOK_UP, Input.Keys.W),
 						new InputKey(InputKey.InputTypes.COOK_LEFT, Input.Keys.A),
@@ -153,7 +155,7 @@ public class Interactions {
 				new Array<>(new InputKey.InputTypes[] { InputKey.InputTypes.INSTRUCTIONS,
 						InputKey.InputTypes.RESET_GAME, InputKey.InputTypes.START_GAME, InputKey.InputTypes.PAUSE,
 						InputKey.InputTypes.UNPAUSE, InputKey.InputTypes.CREDITS, InputKey.InputTypes.QUIT,
-						InputKey.InputTypes.MODE_SELECT }));
+						InputKey.InputTypes.MODE_SELECT, InputKey.InputTypes.SAVE, InputKey.InputTypes.LOAD }));
 		inputGroups.put(InputID.COOK_MOVEMENT, new Array<>(new InputKey.InputTypes[] { InputKey.InputTypes.COOK_UP,
 				InputKey.InputTypes.COOK_LEFT, InputKey.InputTypes.COOK_DOWN, InputKey.InputTypes.COOK_RIGHT, }));
 		inputGroups.put(InputID.COOK_INTERACT, new Array<>(new InputKey.InputTypes[] { InputKey.InputTypes.USE,
