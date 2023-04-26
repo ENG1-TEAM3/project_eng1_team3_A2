@@ -60,6 +60,10 @@ public class Station extends CookInteractable {
 		lockedSymbol = new Sprite(new Texture(Gdx.files.internal("padlock.png")));
 		this.gameScreen = gameScreen;
 	}
+	
+	public boolean isLocked() {
+		return locked;
+	}
 
 	/**
 	 * Sets the {@link #stationID} of the {@link Station} to a {@link StationID}.

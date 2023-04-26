@@ -1,6 +1,6 @@
 package game;
 
-import customers.Customer;
+import java.util.Comparator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -15,16 +15,22 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+
 import cooks.Cook;
 import cooks.GameEntity;
+import customers.Customer;
 import customers.CustomerController;
-import helper.*;
+import helper.CollisionHelper;
+import helper.Constants;
+import helper.GameHud;
+import helper.InstructionHud;
+import helper.MapHelper;
+import helper.SaveHandler;
 import interactions.InputKey;
 import interactions.Interactions;
+import powerups.PowerUpHandler;
 import stations.CookInteractable;
 import stations.ServingStation;
-
-import java.util.Comparator;
 
 /** A {@link ScreenAdapter} containing certain elements of the game. */
 public class GameScreen extends ScreenAdapter {
@@ -66,6 +72,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private SaveHandler sv;
 
+	public PowerUpHandler powerUpHandler;
+
 	/**
 	 * The constructor for the {@link GameScreen}.
 	 *
@@ -106,6 +114,8 @@ public class GameScreen extends ScreenAdapter {
 			this.box2DDebugRenderer = new Box2DDebugRenderer();
 			this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
 		}
+		powerUpHandler = new PowerUpHandler(this);
+		powerUpHandler.activatePower(0);
 	}
 
 	public void restoreFromSaveFile() {
@@ -149,6 +159,10 @@ public class GameScreen extends ScreenAdapter {
 	 * @param delta The time between frames as a float.
 	 */
 	public void update(float delta, boolean shouldResetKeys) {
+
+		if (powerUpHandler.activePowerUp() != null) {
+			powerUpHandler.updateCoolDown(delta);
+		}
 
 		// First thing, update all inputs
 		Interactions.updateKeys(shouldResetKeys);
@@ -479,6 +493,10 @@ public class GameScreen extends ScreenAdapter {
 			this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
 		}
 		cookIndex = -1;
+	}
+	
+	public Cook getCurrentCook() {
+		return cook;
 	}
 
 	/**

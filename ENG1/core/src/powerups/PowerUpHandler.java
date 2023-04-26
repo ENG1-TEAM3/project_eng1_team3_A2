@@ -3,6 +3,11 @@ package powerups;
 import java.util.ArrayList;
 import java.util.Random;
 
+import game.GameScreen;
+import interactions.InputKey.InputTypes;
+import stations.CookInteractable;
+import stations.PreparationStation;
+
 public class PowerUpHandler {
 
 	private static final int POWERUP_SLOTS = 1;
@@ -20,33 +25,62 @@ public class PowerUpHandler {
 
 	private final Random random = new Random();
 
-	private static PowerUp[] currentPowerUps = new PowerUp[POWERUP_SLOTS];
+	private PowerUp[] currentPowerUps = new PowerUp[POWERUP_SLOTS];
+
+	private int cooldown = 0;
+
+	private PowerUp activePowerUp = null;
+
+	private GameScreen gameScreen;
+
+	public PowerUpHandler(GameScreen gameScreen) {
+		this.gameScreen = gameScreen;
+	}
 
 	public PowerUp activatePower(int slot) {
-		if (slot < 0 || slot > POWERUP_SLOTS - 1) {
+		if (slot < 0 || slot > POWERUP_SLOTS - 1 || cooldown > 0) {
 			return null;
 		}
 
-		PowerUp selectedPower = currentPowerUps[slot];
-		// Do something with powerup!
+		if (currentPowerUps[slot] == null) {
+			// Just for testing set the current power up to auto station.
+			activePowerUp = PowerUp.AUTO_STATION;
+			cooldown = activePowerUp.duration();
+			return null;
+		}
 
-		switch (selectedPower) {
-		case NO_BURN:
-			break;
+		activePowerUp = currentPowerUps[slot];
+		cooldown = activePowerUp.duration();
+
+		currentPowerUps[slot] = null;
+		return activePowerUp;
+	}
+
+	public boolean updateCoolDown(float dt) {
+		cooldown -= dt;
+		if (cooldown <= 0) {
+			cooldown = 0;
+			activePowerUp = null;
+			return true;
+		}
+
+		switch (activePowerUp) {
 		case AUTO_STATION:
+			if (cooldown % (activePowerUp.duration() / 20) == 0) {
+				for (CookInteractable interactable : gameScreen.getInteractables()) {
+					if (interactable instanceof PreparationStation) {
+						if (!((PreparationStation) interactable).isLocked()) {
+							interactable.interact(gameScreen.getCurrentCook(), InputTypes.USE);
+						}
+					}
+				}
+			}
 			break;
-		case DOUBLE_MONEY:
-			break;
-		case SATISFIED_CUSTOMER:
-			break;
-		case BONUS_TIME:
-			break;
-		case FASTER_COOKS:
+		default:
 			break;
 		}
 
-		currentPowerUps[slot] = null;
-		return selectedPower;
+		return false;
 	}
 
 	public void addPowerUp() {
@@ -58,26 +92,8 @@ public class PowerUpHandler {
 		}
 	}
 
-}
-
-enum PowerUp {
-
-	AUTO_STATION(1, 30), DOUBLE_MONEY(2, 30), SATISFIED_CUSTOMER(3, 30), BONUS_TIME(2, 30), FASTER_COOKS(1, 30),
-	NO_BURN(3, 30);
-
-	private final int weight, duration;
-
-	PowerUp(int weight, int duration) {
-		this.weight = weight;
-		this.duration = duration;
-	}
-
-	public int weight() {
-		return weight;
-	}
-
-	public int duration() {
-		return duration;
+	public PowerUp activePowerUp() {
+		return activePowerUp;
 	}
 
 }
