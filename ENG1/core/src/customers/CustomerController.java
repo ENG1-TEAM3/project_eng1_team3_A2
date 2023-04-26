@@ -18,7 +18,7 @@ import java.util.Random;
 public class CustomerController {
 
     /** An {@link Array} of {@link Customer}s currently waiting. */
-    private Array<Customer> customers;
+    public Array<Customer> customers;
     /** The {@link Sprite} of the {@link Customer}. */
     private static Sprite customerSprite;
     /** An array of all {@link ServingStation}s to assign to the {@link Customer}s.*/
@@ -78,7 +78,7 @@ public class CustomerController {
      *                       <br>It is -1 if the {@link Customer} fails
      *                       to spawn.
      */
-    public int addCustomer() {
+    public int addCustomer(int mins, int secs, int patience) {
         // If there are no more customers left to serve, then don't bother
         if (customersLeft <= 0) {
             return -1;
@@ -106,6 +106,8 @@ public class CustomerController {
                 new Vector2(chosenStation.getCustomerX(),
                         chosenStation.getCustomerY()));
         customers.add(newCustomer);
+        newCustomer.index = randomStationIndex;
+        this.initialCus(newCustomer, mins, secs, patience);
         newCustomer.randomRecipe();
         chosenStation.setCustomer(newCustomer);
         // Show the Customer's recipe
@@ -228,48 +230,48 @@ public class CustomerController {
 	 * game is reset.
 	 */
 
-	public void spawnCutomer_Scenario(int timecopy) {
+	public void spawnCutomer_Scenario(int timecopy, int mins, int secs, int patience) {
 		if (timecopy - timeCount == 30) {
 			if (canAddCustomer()) {
-				addCustomer();
+				addCustomer(mins,secs,patience);
 				timeCount += 30;
 			}
 		}
 	}
 
-	public void spawnCutomer_Normal(int timecopy) {
+	public void spawnCutomer_Normal(int timecopy, int mins, int secs, int patience) {
 		if (timecopy - timeCount == 25) {
 			if (canAddCustomer()) {
-				addCustomer();
+				addCustomer(mins,secs,patience);
 				timeCount += 25;
 			}
 		}
 	}
 
-	public void spawnCutomer_Hard(int timecopy) {
+	public void spawnCutomer_Hard(int timecopy, int mins, int secs, int patience) {
 		if (timecopy - timeCount == 25) {
 			boolean check = canAddCustomer();
 			if (check == true) {
-				addCustomer();
+				addCustomer(mins, secs, patience);
 				if (getCustomersLeft() > 0 && getCustomersServed() >= 7 && canAddCustomer() == true) {
-					addCustomer();
+					addCustomer(mins, secs, patience);
 				}
 				timeCount += 25;
 			}
 		}
 	}
 
-	public void spawnCutomer_Endless(int timecopy) {
+	public void spawnCutomer_Endless(int timecopy, int mins, int secs, int patience) {
 		if (getCustomersServed() <= 5) {
-			spawnCutomer_Scenario(timecopy);
+			spawnCutomer_Scenario(timecopy, mins, secs, patience);
 		} else if (getCustomersServed() > 5 && getCustomersServed() <= 10) {
-			spawnCutomer_Normal(timecopy);
+			spawnCutomer_Normal(timecopy, mins, secs, patience -5);
 		} else if (getCustomersServed() > 10 && getCustomersServed() <= 15) {
-			spawnCutomer_Hard(timecopy);
+			spawnCutomer_Hard(timecopy, mins, secs, patience - 10);
 		} else if (getCustomersServed() > 15 && getCustomersServed() <= 20) {
 			if (timecopy - timeCount == 15) {
 				if (canAddCustomer() == true) {
-					addCustomer();
+					addCustomer(mins, patience, patience - 15);
 					timeCount += 15;
 				}
 			}
@@ -277,13 +279,34 @@ public class CustomerController {
 			if (timecopy - timeCount == 12) {
 				boolean check = canAddCustomer();
 				if (check == true) {
-					addCustomer();
+					addCustomer(mins, secs, patience - 18);
 					if (canAddCustomer() == true) {
-						addCustomer();
+						addCustomer(mins, secs, patience - 18);
 					}
 					timeCount += 12;
 				}
 			}
 		}
 	}
+
+    public void initialCus(Customer cus, int mins, int secs, int patience){
+        cus.setSpawnTime(mins, secs);
+        cus.setDeadTime(patience);
+    }
+
+    public boolean checkRemove(Customer cus, int mins, int secs, int patience){
+        int currentTime = mins * 60 + secs;
+        if(cus.deadTime == currentTime){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void NoPatience(boolean B, Customer cus){
+        if(B == true){
+            removeCustomer(servingStations.get(cus.index));
+        }
+    }
 }
+
