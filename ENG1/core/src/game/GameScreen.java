@@ -1,8 +1,6 @@
 package game;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
+import customers.Customer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -17,22 +15,19 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-
 import cooks.Cook;
 import cooks.GameEntity;
-import customers.Customer;
 import customers.CustomerController;
-import helper.CollisionHelper;
-import helper.Constants;
-import helper.GameHud;
-import helper.InstructionHud;
-import helper.MapHelper;
-import helper.SaveHandler;
+import food.FoodItem;
+import helper.*;
 import interactions.InputKey;
 import interactions.Interactions;
-import powerups.PowerUpHandler;
 import stations.CookInteractable;
 import stations.ServingStation;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 /** A {@link ScreenAdapter} containing certain elements of the game. */
 public class GameScreen extends ScreenAdapter {
@@ -72,9 +67,9 @@ public class GameScreen extends ScreenAdapter {
 
 	private int reputation = 3, money = 2000;
 
-	private SaveHandler sv;
+	private int patience;
 
-	public PowerUpHandler powerUpHandler;
+	private SaveHandler sv;
 
 	/**
 	 * The constructor for the {@link GameScreen}.
@@ -116,32 +111,33 @@ public class GameScreen extends ScreenAdapter {
 			this.box2DDebugRenderer = new Box2DDebugRenderer();
 			this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
 		}
-		powerUpHandler = new PowerUpHandler(this);
-		powerUpHandler.activatePower(0);
-		gameHud.setMoneyLabel(money);
+        gameHud.setMoneyLabel(money);
 	}
 
-	public void restoreFromData(long smallTimeDifference, int totalSeconds, int repPoints, int moneyAmount,
-			int customersServed, int customersLeft, float[] ckpositions, ArrayList<?> foodstacks,
-			Cook.Facing[] cookFacings) {
-		this.money = moneyAmount;
-		gameHud.setMoneyLabel(moneyAmount);
-		this.reputation = repPoints;
-		this.customerController.setCustomersLeft(customersLeft);
-		this.customerController.setCustomersServed(customersServed);
-		gameHud.setCustomerCount(customersLeft);
+	public void restoreFromData(long smallTimeDifference, int totalSeconds, int repPoints,
+                                    int moneyAmount, int customersServed, int customersLeft,
+                                    float[] ckpositions, ArrayList<?> foodstacks, Cook.Facing[] cookFacings) {
+        this.money = moneyAmount;
+        gameHud.setMoneyLabel(moneyAmount);
+        this.reputation = repPoints;
+        this.customerController.setCustomersLeft(customersLeft);
+        this.customerController.setCustomersServed(customersServed);
+        gameHud.setCustomerCount(customersLeft);
 
-		System.out.println(this.customerController.getCustomersLeft());
-		System.out.println(this.customerController.getCustomersServed());
 
-		int ctr = 0;
-		for (Cook ck : cooks) {
-			ck.getBody().setTransform(ckpositions[ctr * 2], ckpositions[ctr * 2 + 1], 0);
-			ArrayList<?> minilist = (ArrayList<?>) foodstacks.get(ctr);
-			ck.foodStack.setFoodStackFromArrayList(minilist);
-			ck.setFacing(cookFacings[ctr]);
-			ctr++;
-		}
+        System.out.println(this.customerController.getCustomersLeft());
+        System.out.println(this.customerController.getCustomersServed());
+
+
+
+        int ctr = 0;
+        for (Cook ck: cooks){
+            ck.getBody().setTransform(ckpositions[ctr*2], ckpositions[ctr*2 + 1], 0);
+            ArrayList<?> minilist = (ArrayList<?>) foodstacks.get(ctr);
+            ck.foodStack.setFoodStackFromArrayList(minilist);
+            ck.setFacing(cookFacings[ctr]);
+            ctr ++;
+        }
 	}
 
 	public void updateTiming() {
@@ -167,8 +163,8 @@ public class GameScreen extends ScreenAdapter {
 		return hoursPassed * 60 * 60 + minutesPassed * 60 + secondsPassed;
 	}
 
-	public void setTime(int seconds) {
-	}
+    public void setTime(int seconds){
+    }
 
 	public int getReputation() {
 		return reputation;
@@ -183,11 +179,7 @@ public class GameScreen extends ScreenAdapter {
 	 *
 	 * @param delta The time between frames as a float.
 	 */
-	public void update(float delta, boolean shouldResetKeys) {
-
-		if (powerUpHandler.activePowerUp() != null) {
-			powerUpHandler.updateCoolDown(delta);
-		}
+	public void update(float delta, boolean shouldResetKeys){
 
 		// First thing, update all inputs
 		Interactions.updateKeys(shouldResetKeys);
@@ -217,20 +209,21 @@ public class GameScreen extends ScreenAdapter {
 		if (Interactions.isJustPressed(InputKey.InputTypes.PAUSE)) {
 			screenController.pauseGameScreen();
 		}
-		if (Interactions.isJustPressed(InputKey.InputTypes.SAVE)) {
-			try {
-				sv.saveToFile("save1.txt");
-			} catch (IOException io) {
-				throw new RuntimeException(io);
-			}
-		}
-		if (Interactions.isJustPressed(InputKey.InputTypes.LOAD)) {
-			try {
-				sv.loadFromFile("save1.txt");
-			} catch (IOException | ClassNotFoundException e) {
-				throw new RuntimeException(e);
-			}
-		}
+        if (Interactions.isJustPressed(InputKey.InputTypes.SAVE)){
+            try {
+                sv.saveToFile("save1.txt");
+            }
+            catch (IOException io){
+                throw new RuntimeException(io);
+            }
+        }
+        if (Interactions.isJustPressed(InputKey.InputTypes.LOAD)) {
+            try {
+                sv.loadFromFile("save1.txt");
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
 		world.step(1 / 60f, 6, 2);
 
 		for (GameEntity entity : gameEntities) {
@@ -252,14 +245,24 @@ public class GameScreen extends ScreenAdapter {
 	 * @param delta The time between frames as a float.
 	 */
 	@Override
-	public void render(float delta) {
-		this.update(delta, true);
+	public void render(float delta){
+        this.update(delta, true);
 
-		renderGame(delta);
 
-		setDifficulties();
+        renderGame(delta);
 
-		if (customersToServe <= customerController.getCustomersServed()) {
+		setDifficulties(patience);
+
+		for(Customer cus :customerController.customers){
+			boolean B = customerController.checkRemove(cus, minutesPassed, secondsPassed, cookIndex);
+			if(B == true ){
+				customerController.NoPatience(B, cus);
+				reputation --;
+				gameHud.setReputationPoints(reputation);
+			}
+		}
+
+		if (customersToServe <= customerController.getCustomersServed() || reputation == 0) {
 			screenController.setScreen((ScreenController.ScreenID.GAMEOVER));
 			((GameOverScreen) screenController.getScreen(ScreenController.ScreenID.GAMEOVER)).setTime(hoursPassed,
 					minutesPassed, secondsPassed);
@@ -532,10 +535,6 @@ public class GameScreen extends ScreenAdapter {
 		cookIndex = -1;
 	}
 
-	public Cook getCurrentCook() {
-		return cook;
-	}
-
 	/**
 	 * A variable for setting up the game when it starts.
 	 *
@@ -554,9 +553,10 @@ public class GameScreen extends ScreenAdapter {
 
 		customersToServe = customers;
 		diffculty = customers;
+		patience = setPatience(diffculty);
 		customerController.setCustomersLeft(customers);
 		customerController.setCustomersServed(0);
-		customerController.addCustomer();
+		customerController.addCustomer(minutesPassed, secondsPassed, patience);
 
 		gameHud.setCustomerCount(customers);
 	}
@@ -584,15 +584,28 @@ public class GameScreen extends ScreenAdapter {
 		return instructionHUD;
 	}
 
-	public void setDifficulties() {
+	public void setDifficulties(int patience) {
 		if (diffculty == 5) {
-			customerController.spawnCutomer_Scenario(timecopy);
+			customerController.spawnCutomer_Scenario(timecopy, minutesPassed, secondsPassed, patience);
 		} else if (diffculty == 10) {
-			customerController.spawnCutomer_Normal(timecopy);
+			customerController.spawnCutomer_Normal(timecopy, minutesPassed, secondsPassed, patience);
 		} else if (diffculty == 15) {
-			customerController.spawnCutomer_Hard(timecopy);
+			customerController.spawnCutomer_Hard(timecopy, minutesPassed, secondsPassed ,patience);
 		} else if (diffculty > 15) {
-			customerController.spawnCutomer_Endless(timecopy);
+			customerController.spawnCutomer_Endless(timecopy, minutesPassed, secondsPassed, patience);
 		}
 	}
+
+	public int setPatience(int numOfCus){
+		if(diffculty == 5){
+			patience = 30;
+		}else if(diffculty == 10){
+			patience = 25;
+		}else if(diffculty == 15){
+			patience = 20;
+		}else{
+			patience = 30;
+		}
+		return patience;
+		}
 }
