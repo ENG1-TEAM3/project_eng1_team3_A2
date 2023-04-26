@@ -22,6 +22,7 @@ import food.FoodItem;
 import helper.*;
 import interactions.InputKey;
 import interactions.Interactions;
+import powerups.PowerUpHandler;
 import stations.CookInteractable;
 import stations.ServingStation;
 
@@ -71,6 +72,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private SaveHandler sv;
 
+	public PowerUpHandler powerUpHandler;
+
 	/**
 	 * The constructor for the {@link GameScreen}.
 	 *
@@ -111,33 +114,31 @@ public class GameScreen extends ScreenAdapter {
 			this.box2DDebugRenderer = new Box2DDebugRenderer();
 			this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
 		}
-        gameHud.setMoneyLabel(money);
+		powerUpHandler = new PowerUpHandler(this);
+		gameHud.setMoneyLabel(money);
 	}
 
-	public void restoreFromData(long smallTimeDifference, int totalSeconds, int repPoints,
-                                    int moneyAmount, int customersServed, int customersLeft,
-                                    float[] ckpositions, ArrayList<?> foodstacks, Cook.Facing[] cookFacings) {
-        this.money = moneyAmount;
-        gameHud.setMoneyLabel(moneyAmount);
-        this.reputation = repPoints;
-        this.customerController.setCustomersLeft(customersLeft);
-        this.customerController.setCustomersServed(customersServed);
-        gameHud.setCustomerCount(customersLeft);
+	public void restoreFromData(long smallTimeDifference, int totalSeconds, int repPoints, int moneyAmount,
+			int customersServed, int customersLeft, float[] ckpositions, ArrayList<?> foodstacks,
+			Cook.Facing[] cookFacings) {
+		this.money = moneyAmount;
+		gameHud.setMoneyLabel(moneyAmount);
+		this.reputation = repPoints;
+		this.customerController.setCustomersLeft(customersLeft);
+		this.customerController.setCustomersServed(customersServed);
+		gameHud.setCustomerCount(customersLeft);
 
+		System.out.println(this.customerController.getCustomersLeft());
+		System.out.println(this.customerController.getCustomersServed());
 
-        System.out.println(this.customerController.getCustomersLeft());
-        System.out.println(this.customerController.getCustomersServed());
-
-
-
-        int ctr = 0;
-        for (Cook ck: cooks){
-            ck.getBody().setTransform(ckpositions[ctr*2], ckpositions[ctr*2 + 1], 0);
-            ArrayList<?> minilist = (ArrayList<?>) foodstacks.get(ctr);
-            ck.foodStack.setFoodStackFromArrayList(minilist);
-            ck.setFacing(cookFacings[ctr]);
-            ctr ++;
-        }
+		int ctr = 0;
+		for (Cook ck : cooks) {
+			ck.getBody().setTransform(ckpositions[ctr * 2], ckpositions[ctr * 2 + 1], 0);
+			ArrayList<?> minilist = (ArrayList<?>) foodstacks.get(ctr);
+			ck.foodStack.setFoodStackFromArrayList(minilist);
+			ck.setFacing(cookFacings[ctr]);
+			ctr++;
+		}
 	}
 
 	public void updateTiming() {
@@ -163,8 +164,8 @@ public class GameScreen extends ScreenAdapter {
 		return hoursPassed * 60 * 60 + minutesPassed * 60 + secondsPassed;
 	}
 
-    public void setTime(int seconds){
-    }
+	public void setTime(int seconds) {
+	}
 
 	public int getReputation() {
 		return reputation;
@@ -179,7 +180,7 @@ public class GameScreen extends ScreenAdapter {
 	 *
 	 * @param delta The time between frames as a float.
 	 */
-	public void update(float delta, boolean shouldResetKeys){
+	public void update(float delta, boolean shouldResetKeys) {
 
 		// First thing, update all inputs
 		Interactions.updateKeys(shouldResetKeys);
@@ -209,21 +210,20 @@ public class GameScreen extends ScreenAdapter {
 		if (Interactions.isJustPressed(InputKey.InputTypes.PAUSE)) {
 			screenController.pauseGameScreen();
 		}
-        if (Interactions.isJustPressed(InputKey.InputTypes.SAVE)){
-            try {
-                sv.saveToFile("save1.txt");
-            }
-            catch (IOException io){
-                throw new RuntimeException(io);
-            }
-        }
-        if (Interactions.isJustPressed(InputKey.InputTypes.LOAD)) {
-            try {
-                sv.loadFromFile("save1.txt");
-            } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
+		if (Interactions.isJustPressed(InputKey.InputTypes.SAVE)) {
+			try {
+				sv.saveToFile("save1.txt");
+			} catch (IOException io) {
+				throw new RuntimeException(io);
+			}
+		}
+		if (Interactions.isJustPressed(InputKey.InputTypes.LOAD)) {
+			try {
+				sv.loadFromFile("save1.txt");
+			} catch (IOException | ClassNotFoundException e) {
+				throw new RuntimeException(e);
+			}
+		}
 		world.step(1 / 60f, 6, 2);
 
 		for (GameEntity entity : gameEntities) {
@@ -245,19 +245,18 @@ public class GameScreen extends ScreenAdapter {
 	 * @param delta The time between frames as a float.
 	 */
 	@Override
-	public void render(float delta){
-        this.update(delta, true);
+	public void render(float delta) {
+		this.update(delta, true);
 
-
-        renderGame(delta);
+		renderGame(delta);
 
 		setDifficulties(patience);
 
-		for(Customer cus :customerController.customers){
+		for (Customer cus : customerController.customers) {
 			boolean B = customerController.checkRemove(cus, minutesPassed, secondsPassed, cookIndex);
-			if(B == true ){
+			if (B == true) {
 				customerController.NoPatience(B, cus);
-				reputation --;
+				reputation--;
 				gameHud.setReputationPoints(reputation);
 			}
 		}
@@ -415,6 +414,10 @@ public class GameScreen extends ScreenAdapter {
 
 	public void setMoney(int amount) {
 		money = amount;
+	}
+
+	public Cook getCurrentCook() {
+		return cook;
 	}
 
 	/**
@@ -590,22 +593,22 @@ public class GameScreen extends ScreenAdapter {
 		} else if (diffculty == 10) {
 			customerController.spawnCutomer_Normal(timecopy, minutesPassed, secondsPassed, patience);
 		} else if (diffculty == 15) {
-			customerController.spawnCutomer_Hard(timecopy, minutesPassed, secondsPassed ,patience);
+			customerController.spawnCutomer_Hard(timecopy, minutesPassed, secondsPassed, patience);
 		} else if (diffculty > 15) {
 			customerController.spawnCutomer_Endless(timecopy, minutesPassed, secondsPassed, patience);
 		}
 	}
 
-	public int setPatience(int numOfCus){
-		if(diffculty == 5){
+	public int setPatience(int numOfCus) {
+		if (diffculty == 5) {
 			patience = 30;
-		}else if(diffculty == 10){
+		} else if (diffculty == 10) {
 			patience = 25;
-		}else if(diffculty == 15){
+		} else if (diffculty == 15) {
 			patience = 20;
-		}else{
+		} else {
 			patience = 30;
 		}
 		return patience;
-		}
+	}
 }

@@ -105,6 +105,7 @@ public class ServingStation extends Station {
 			customer.render(batch);
 		}
 
+		// This is a mess!
 		if (gameScreen.getTime() - initialOrderTime > maxServingTime && this.customer != null && !failedServe) {
 			gameScreen.loseReputation();
 			failedServe = true;
