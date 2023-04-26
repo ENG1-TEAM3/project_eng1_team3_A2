@@ -64,7 +64,7 @@ public class GameScreen extends ScreenAdapter {
 	private SaveHandler sv;
     private MenuScreen.difficulty currentDifficulty;
     private MenuScreen.mode currentMode;
-    public PowerUpHandler powerUpHandler = new PowerUpHandler(this);
+    public PowerUpHandler powerUpHandler;
 
 
 	/**
@@ -95,45 +95,43 @@ public class GameScreen extends ScreenAdapter {
 		this.mapHelper.setGameScreen(this);
 		this.mapHelper.setupMap();
 
-        if (this.batch != null) {
-            this.shape = screenController.getShapeRenderer();
-            this.box2DDebugRenderer = new Box2DDebugRenderer();
-            this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
-        }
+		
 
-		this.gameHud = new GameHud(batch, shape, this);
-		this.gameHud.setServingStations(this.customerController.getServingStations());
-		this.instructionHUD = new InstructionHud(batch);
-		this.sv = new SaveHandler(this);
-
-
-        gameHud.setMoneyLabel(money);
+		if (this.batch != null) {
+			this.shape = screenController.getShapeRenderer();
+			this.box2DDebugRenderer = new Box2DDebugRenderer();
+			this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
+		}
+        this.gameHud = new GameHud(batch,shape, this);
+        this.gameHud.setServingStations(this.customerController.getServingStations());
+        this.instructionHUD = new InstructionHud(batch);
+        this.sv = new SaveHandler(this);
+        
+		powerUpHandler = new PowerUpHandler(this);
+		gameHud.setMoneyLabel(money);
 	}
 
-	public void restoreFromData(long smallTimeDifference, int totalSeconds, int repPoints,
-                                    int moneyAmount, int customersServed, int customersLeft,
-                                    float[] ckpositions, ArrayList<?> foodstacks, Cook.Facing[] cookFacings) {
-        this.money = moneyAmount;
-        gameHud.setMoneyLabel(moneyAmount);
-        this.reputation = repPoints;
-        this.customerController.setCustomersLeft(customersLeft);
-        this.customerController.setCustomersServed(customersServed);
-        gameHud.setCustomerCount(customersLeft);
+	public void restoreFromData(long smallTimeDifference, int totalSeconds, int repPoints, int moneyAmount,
+			int customersServed, int customersLeft, float[] ckpositions, ArrayList<?> foodstacks,
+			Cook.Facing[] cookFacings) {
+		this.money = moneyAmount;
+		gameHud.setMoneyLabel(moneyAmount);
+		this.reputation = repPoints;
+		this.customerController.setCustomersLeft(customersLeft);
+		this.customerController.setCustomersServed(customersServed);
+		gameHud.setCustomerCount(customersLeft);
 
+		System.out.println(this.customerController.getCustomersLeft());
+		System.out.println(this.customerController.getCustomersServed());
 
-        System.out.println(this.customerController.getCustomersLeft());
-        System.out.println(this.customerController.getCustomersServed());
-
-
-
-        int ctr = 0;
-        for (Cook ck: cooks){
-            ck.getBody().setTransform(ckpositions[ctr*2], ckpositions[ctr*2 + 1], 0);
-            ArrayList<?> minilist = (ArrayList<?>) foodstacks.get(ctr);
-            ck.foodStack.setFoodStackFromArrayList(minilist);
-            ck.setFacing(cookFacings[ctr]);
-            ctr ++;
-        }
+		int ctr = 0;
+		for (Cook ck : cooks) {
+			ck.getBody().setTransform(ckpositions[ctr * 2], ckpositions[ctr * 2 + 1], 0);
+			ArrayList<?> minilist = (ArrayList<?>) foodstacks.get(ctr);
+			ck.foodStack.setFoodStackFromArrayList(minilist);
+			ck.setFacing(cookFacings[ctr]);
+			ctr++;
+		}
 	}
 
 	public void updateTiming() {
@@ -159,8 +157,8 @@ public class GameScreen extends ScreenAdapter {
 		return hoursPassed * 60 * 60 + minutesPassed * 60 + secondsPassed;
 	}
 
-    public void setTime(int seconds){
-    }
+	public void setTime(int seconds) {
+	}
 
 	public int getReputation() {
 		return reputation;
@@ -179,7 +177,7 @@ public class GameScreen extends ScreenAdapter {
 	 *
 	 * @param delta The time between frames as a float.
 	 */
-	public void update(float delta, boolean shouldResetKeys){
+	public void update(float delta, boolean shouldResetKeys) {
 
 		// First thing, update all inputs
 		Interactions.updateKeys(shouldResetKeys);
@@ -210,21 +208,20 @@ public class GameScreen extends ScreenAdapter {
 		if (Interactions.isJustPressed(InputKey.InputTypes.PAUSE)) {
 			screenController.pauseGameScreen();
 		}
-        if (Interactions.isJustPressed(InputKey.InputTypes.SAVE)){
-            try {
-                sv.saveToFile("save1.txt");
-            }
-            catch (IOException io){
-                throw new RuntimeException(io);
-            }
-        }
-        if (Interactions.isJustPressed(InputKey.InputTypes.LOAD)) {
-            try {
-                sv.loadFromFile("save1.txt");
-            } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
+		if (Interactions.isJustPressed(InputKey.InputTypes.SAVE)) {
+			try {
+				sv.saveToFile("save1.txt");
+			} catch (IOException io) {
+				throw new RuntimeException(io);
+			}
+		}
+		if (Interactions.isJustPressed(InputKey.InputTypes.LOAD)) {
+			try {
+				sv.loadFromFile("save1.txt");
+			} catch (IOException | ClassNotFoundException e) {
+				throw new RuntimeException(e);
+			}
+		}
 		world.step(1 / 60f, 6, 2);
 
 		for (GameEntity entity : gameEntities) {
@@ -249,8 +246,8 @@ public class GameScreen extends ScreenAdapter {
 	 * @param delta The time between frames as a float.
 	 */
 	@Override
-	public void render(float delta){
-        this.update(delta, true);
+	public void render(float delta) {
+		this.update(delta, true);
 
         renderGame(delta);
 
