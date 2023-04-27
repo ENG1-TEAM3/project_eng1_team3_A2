@@ -88,19 +88,20 @@ public class CustomerController {
 		}
 		// Now that the only stations left are the ones without Customers,
 		// randomly pick one and add a customer to it.
+
+
 		Random random = new Random();
-		System.out.println(emptyStations.size);
 		int randomStationIndex = random.nextInt(emptyStations.size);
 		ServingStation chosenStation = emptyStations.get(randomStationIndex);
+        int actualStationIndex = servingStations.indexOf(chosenStation, true);
 
-		Customer newCustomer = new Customer(customerSprite,
+
+		Customer newCustomer = new Customer(customerSprite, actualStationIndex,
 				new Vector2(chosenStation.getCustomerX(), chosenStation.getCustomerY()));
 
 		customers.add(newCustomer);
 
 		this.initialCus(newCustomer, gameScreen.getTotalSecondsRunningGame(), patience);
-
-		newCustomer.index = randomStationIndex;
 
 		newCustomer.randomRecipe();
 		chosenStation.setCustomer(newCustomer);
@@ -110,6 +111,21 @@ public class CustomerController {
 				Recipe.firstRecipeOption(newCustomer.getRequestName()));
 		setCustomersLeft(customersLeft - 1);
 	}
+
+    public void restoreCustomerFromSave(int stationIndex, int spawntime, int deadtime, String order){
+        Customer newCust = new Customer(customerSprite, stationIndex,
+                new Vector2(servingStations.get(stationIndex).getCustomerX(),
+                servingStations.get(stationIndex).getCustomerY()));
+        customers.add(newCust);
+
+        this.initialCus(newCust, spawntime, deadtime - spawntime);
+        newCust.setRequestName(order);
+        servingStations.get(stationIndex).setCustomer(newCust);
+        gameScreen.getGameHud().addRecipeToRender(stationIndex,
+                Recipe.firstRecipeOption(newCust.getRequestName()));
+    }
+
+
 
 	/**
 	 * Removes a customer from a {@link ServingStation}.
@@ -298,7 +314,7 @@ public class CustomerController {
 	public void removeCustomerIfExpired(Customer customer) {
 		if (gameScreen.getTotalSecondsRunningGame() >= customer.getDeadTime()) {
 			System.out.println("Removing customer");
-			removeCustomer(servingStations.get(customer.index));
+			removeCustomer(servingStations.get(customer.getStationIndex()));
 			gameScreen.loseReputation();
 		}
 	}
@@ -306,4 +322,11 @@ public class CustomerController {
 	public float returnFractionProgressUntilNextCustomer() {
 		return (gameScreen.getTotalSecondsRunningGame() - lastCustomerSpawnTime) / (float) (timeBetweenSpawnsSeconds);
 	}
+
+    public void setLastCustomerSpawnTime(int tm){
+        this.lastCustomerSpawnTime =tm;
+    }
+    public int getLastCustomerSpawnTime() {
+        return lastCustomerSpawnTime;
+    }
 }

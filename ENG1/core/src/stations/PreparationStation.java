@@ -194,7 +194,6 @@ public class PreparationStation extends Station {
 	@Override
 	public void interact(Cook cook, InputKey.InputTypes inputType) {
 		if (!locked) {
-
 			// If the Cook is holding a food item, and they use the "Put down" control...
 			if (cook.foodStack.size() > 0 && inputType == InputKey.InputTypes.PUT_DOWN) {
 				// Start by getting the possible interaction result
@@ -271,7 +270,33 @@ public class PreparationStation extends Station {
 		}
 	}
 
+    public void restoreStationFromSave(Interactions.InteractionResult inter, float progress, float burnProg, int stepNum,
+                                       FoodItem.FoodID foodItem){
+        this.interaction = inter;
+        this.progress = progress;
+        this.burnMeter = burnProg;
+        this.stepNum = stepNum;
+        this.foodItem = foodItem;
+        this.inUse = true;
+        System.out.println("Restoring an interaction at" + x +" "+ y+ foodItem.toString());
+    }
+
 	public float getProgress() {
 		return progress;
 	}
+
+    public float getBurnProgress() {
+        return burnMeter;
+    }
+
+    public int getStepNum(){
+        return stepNum;
+    }
+    public FoodItem.FoodID getFoodItem() {
+        return foodItem;
+    }
+
+    public Interactions.InteractionResult getInteraction(){
+        return interaction;
+    }
 }

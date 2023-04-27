@@ -18,13 +18,13 @@ import com.badlogic.gdx.utils.TimeUtils;
 import cooks.Cook;
 import cooks.GameEntity;
 import customers.CustomerController;
+import food.FoodItem;
 import helper.*;
 import interactions.InputKey;
 import interactions.Interactions;
 import powerups.PowerUp;
 import powerups.PowerUpHandler;
-import stations.CookInteractable;
-import stations.ServingStation;
+import stations.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -521,8 +521,14 @@ public class GameScreen extends ScreenAdapter {
     public void restoreFromData(long smallTimeDifference, int totalSeconds, int repPoints, int moneyAmount,
                                 int customersServed, int customersLeft, int customersToServe,
                                 MenuScreen.difficulty loadedDiff, MenuScreen.mode loadedMode,
-                                float[] ckpositions, ArrayList<?> foodstacks,
-                                Cook.Facing[] cookFacings) {
+                                float[] cookPositions, ArrayList<?> cookFoodStacks,
+                                Cook.Facing[] cookFacings,
+                                ArrayList<?> stationFoodStacks, int lastCustomerSpawnTime,
+                                String[] custOrders, int[] cusIndices, int[] cusSpawnTimes, int[] custDeadTimes,
+                                boolean[] lockedStations,
+                                Interactions.InteractionResult[] inters, float[] progresses,
+                                float[] burnprogresses, int[] stepnums, FoodItem.FoodID[] foods) {
+
         this.money = moneyAmount;
         gameHud.setMoneyLabel(moneyAmount);
         this.reputation = repPoints;
@@ -531,17 +537,37 @@ public class GameScreen extends ScreenAdapter {
         this.customerController.setTotalCustomersToServe(customersToServe);
         gameHud.updateCustomersLeftLabel(customersLeft);
 
-        System.out.println(this.customerController.getCustomersLeft());
-        System.out.println(this.customerController.getCustomersServed());
-
         int ctr = 0;
         for (Cook ck : cooks) {
-            ck.getBody().setTransform(ckpositions[ctr * 2], ckpositions[ctr * 2 + 1], 0);
-            ArrayList<?> minilist = (ArrayList<?>) foodstacks.get(ctr);
+            ck.getBody().setTransform(cookPositions[ctr * 2], cookPositions[ctr * 2 + 1], 0);
+            ArrayList<?> minilist = (ArrayList<?>) cookFoodStacks.get(ctr);
             ck.foodStack.setFoodStackFromArrayList(minilist);
             ck.setFacing(cookFacings[ctr]);
             ctr++;
         }
+
+        for (int i = 0; i < this.interactables.size; i++){
+            if (!lockedStations[i]){
+                ((Station) this.interactables.get(i)).setLocked(false);
+            }
+            if (stationFoodStacks.get(i) != null) {
+                ArrayList<?> minilist = (ArrayList<?>) stationFoodStacks.get(i);
+                ((CounterStation) this.interactables.get(i)).getFoodStack().setFoodStackFromArrayList(minilist);
+            }
+            if (this.interactables.get(i) instanceof PreparationStation){
+                if (inters[i] != null) {
+                    ((PreparationStation) this.interactables.get(i)).restoreStationFromSave(inters[i], progresses[i],
+                            burnprogresses[i], stepnums[i], foods[i]);
+                }
+            }
+        }
+
+        customerController.setLastCustomerSpawnTime(lastCustomerSpawnTime);
+        for (int i =0; i< custOrders.length;i++){
+            this.customerController.restoreCustomerFromSave(cusIndices[i],
+                     cusSpawnTimes[i], custDeadTimes[i],custOrders[i]);
+        }
+
         this.previousSecond = TimeUtils.millis() - smallTimeDifference;
         this.setTiming(totalSeconds);
         startGame(customersToServe, loadedDiff, loadedMode, true);

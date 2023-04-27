@@ -9,7 +9,11 @@ import customers.Customer;
 import food.FoodItem;
 import game.GameScreen;
 import game.MenuScreen;
+import interactions.Interactions;
 import stations.CookInteractable;
+import stations.CounterStation;
+import stations.PreparationStation;
+import stations.Station;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -57,8 +61,58 @@ public class SaveHandler {
         MenuScreen.difficulty currentDif = gameScreen.getCurrentDifficulty();
         MenuScreen.mode currentMod = gameScreen.getCurrentMode();
 
-        System.out.println("Saving seconds amount " + totalSecondsPassed);
-        System.out.println("Saving smalltimedif " + smallTimeDiff);
+        ArrayList<ArrayList<FoodItem.FoodID>> stationFoodStacks = new ArrayList<>();
+        System.out.println(ints.size);
+        for(int i = 0; i < ints.size; i++){
+            if (ints.get(i) instanceof CounterStation){
+                stationFoodStacks.add(((CounterStation) ints.get(i)).getFoodStack().toArrayList());
+            }
+            else {
+                stationFoodStacks.add(null);
+            }
+        }
+
+        int lastCustomerSpawnTime = gameScreen.getCustomerController().getLastCustomerSpawnTime();
+        String[] customerOrders = new String[custs.size];
+        int[] customerIndices = new int[custs.size];
+        int[] customerSpawnTimes = new int[custs.size];
+        int[] customerDeadTimes = new int[custs.size];
+        for(int i = 0; i < custs.size; i++){
+            customerOrders[i] = custs.get(i).getRequestName();
+            customerIndices[i] = custs.get(i).getStationIndex();
+            customerSpawnTimes[i] = custs.get(i).getSpawnTime();
+            customerDeadTimes[i] = custs.get(i).getDeadTime();
+        }
+
+
+
+        Interactions.InteractionResult[] inters = new Interactions.InteractionResult[ints.size];
+        float[] progs = new float[ints.size];
+        float[] burnprogs = new float[ints.size];
+        int[] stps = new int[ints.size];
+        FoodItem.FoodID[] foodItems = new FoodItem.FoodID[ints.size];
+
+        boolean[] lockedStats = new boolean[ints.size];
+        for (int i = 0; i < ints.size; i++){
+            if (((Station) ints.get(i)).isLocked()) {
+                lockedStats[i] = true;
+            }
+            else {
+                lockedStats[i] = false;
+            }
+            if (ints.get(i) instanceof PreparationStation){
+                if (((PreparationStation) ints.get(i)).isInUse()){
+                    System.out.println("Saving one interaction at" +ints.get(i).getX()+" "+ints.get(i).getY());
+                    inters[i] = ((PreparationStation) ints.get(i)).getInteraction();
+                    progs[i] = ((PreparationStation) ints.get(i)).getProgress();
+                    burnprogs[i] = ((PreparationStation) ints.get(i)).getBurnProgress();
+                    stps[i] = ((PreparationStation) ints.get(i)).getStepNum();
+                    foodItems[i] = ((PreparationStation) ints.get(i)).getFoodItem();
+                }
+            }
+        }
+
+
 
         try (FileOutputStream fos = new FileOutputStream(totalpath)){
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -79,6 +133,23 @@ public class SaveHandler {
             oos.writeObject(ckfacings);
             oos.writeObject(foodstacks);
             oos.writeObject(cookPositions);
+
+            oos.writeObject(stationFoodStacks);
+
+            oos.writeObject(lastCustomerSpawnTime);
+            oos.writeObject(customerOrders);
+            oos.writeObject(customerIndices);
+            oos.writeObject(customerSpawnTimes);
+            oos.writeObject(customerDeadTimes);
+
+            oos.writeObject(lockedStats);
+
+            oos.writeObject(inters);
+            oos.writeObject(progs);
+            oos.writeObject(burnprogs);
+            oos.writeObject(stps);
+            oos.writeObject(foodItems);
+
 
             oos.flush();
             oos.close();
@@ -109,18 +180,36 @@ public class SaveHandler {
         Cook.Facing[] cookFacings = (Cook.Facing[]) ois.readObject();
         ArrayList<?> foodstacks = (ArrayList<?>) ois.readObject();
         float[] cookPositions = (float[]) ois.readObject();
-        System.out.println(Arrays.toString(cookIDS));
-        System.out.println(Arrays.toString(cookFacings));
-        System.out.println(Arrays.toString(cookPositions));
         for (Object foodstack : foodstacks) {
             ArrayList<?> minilist = (ArrayList<?>) foodstack;
             System.out.println(minilist);
         }
+
+        ArrayList<?> counterStationFoodStacks = (ArrayList<?>) ois.readObject();
+
+        int lastCustomerSpawnTime =(int) ois.readObject();
+        String[] custOrder = (String[]) ois.readObject();
+        int[] custIndices = (int[]) ois.readObject();
+        int[] custSpawnTimes= (int[]) ois.readObject();
+        int[] custDeadTimes = (int[]) ois.readObject();
+
+        boolean[] lockdstats = (boolean[]) ois.readObject();
+
+        Interactions.InteractionResult[] inters = (Interactions.InteractionResult[]) ois.readObject();
+        float[] progresses = (float[]) ois.readObject();
+        float[] burnprogresses = (float[]) ois.readObject();
+        int[] stepnums = (int[]) ois.readObject();
+        FoodItem.FoodID[] foods = (FoodItem.FoodID[]) ois.readObject();
+
         ois.close();
         this.gameScreen.restoreFromData(smallTimeDiff, totalSecondsPassed, repPointsLeft, money,
                 amountCustomersServed, amountCustomersLeft, amountCustomersTot,
                 currentDiff, currentMd,
-                cookPositions, foodstacks, cookFacings);
+                cookPositions, foodstacks, cookFacings, counterStationFoodStacks,
+                lastCustomerSpawnTime,
+                custOrder,custIndices,custSpawnTimes,custDeadTimes,
+                lockdstats,
+                inters, progresses, burnprogresses, stepnums, foods);
     }
 
 }
