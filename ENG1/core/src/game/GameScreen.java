@@ -21,6 +21,7 @@ import customers.CustomerController;
 import helper.*;
 import interactions.InputKey;
 import interactions.Interactions;
+import powerups.PowerUp;
 import powerups.PowerUpHandler;
 import stations.CookInteractable;
 import stations.ServingStation;
@@ -55,12 +56,11 @@ public class GameScreen extends ScreenAdapter {
 	private Cook cook;
 	private int cookIndex;
 	private CustomerController customerController;
-    private int reputation = 3, money = 2000;
+	private int reputation = 3, money = 2000;
 	private SaveHandler sv;
-    private MenuScreen.difficulty currentDifficulty;
-    private MenuScreen.mode currentMode;
-    public PowerUpHandler powerUpHandler;
-
+	private MenuScreen.difficulty currentDifficulty;
+	private MenuScreen.mode currentMode;
+	public PowerUpHandler powerUpHandler;
 
 	/**
 	 * The constructor for the {@link GameScreen}.
@@ -95,17 +95,17 @@ public class GameScreen extends ScreenAdapter {
 			this.box2DDebugRenderer = new Box2DDebugRenderer();
 			this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
 		}
-        this.gameHud = new GameHud(batch,shape, this);
-        this.gameHud.setServingStations(this.customerController.getServingStations());
-        this.instructionHUD = new InstructionHud(batch);
-        this.sv = new SaveHandler(this);
-        
+		this.gameHud = new GameHud(batch, shape, this);
+		this.gameHud.setServingStations(this.customerController.getServingStations());
+		this.instructionHUD = new InstructionHud(batch);
+		this.sv = new SaveHandler(this);
+
 		powerUpHandler = new PowerUpHandler(this);
 		gameHud.setMoneyLabel(money);
 	}
 
 	public void restoreFromData(long smallTimeDifference, int totalSeconds, int repPoints, int moneyAmount,
-			int customersServed, int customersLeft,float[] ckpositions, ArrayList<?> foodstacks,
+			int customersServed, int customersLeft, float[] ckpositions, ArrayList<?> foodstacks,
 			Cook.Facing[] cookFacings) {
 		this.money = moneyAmount;
 		gameHud.setMoneyLabel(moneyAmount);
@@ -161,9 +161,9 @@ public class GameScreen extends ScreenAdapter {
 		return money;
 	}
 
-    public Cook getCurrentCook(){
-        return cook;
-    }
+	public Cook getCurrentCook() {
+		return cook;
+	}
 
 	/**
 	 * Update the game's values, {@link GameEntity}s and so on.
@@ -177,23 +177,21 @@ public class GameScreen extends ScreenAdapter {
 
 		updateTiming();
 
-        if (customerController.getTotalCustomersToServe() != -1 && (customerController.getTotalCustomersToServe()
-                <= customerController.getCustomersServed())) {
-            screenController.setScreen((ScreenController.ScreenID.GAMEOVER));
-            ((GameOverScreen) screenController.getScreen(ScreenController.ScreenID.GAMEOVER)).setTime(hoursPassed,
-                    minutesPassed, secondsPassed);
-            ((GameOverScreen) screenController.getScreen(ScreenController.ScreenID.GAMEOVER)).setTextLabel("YOU WIN!");
-        }
+		if (customerController.getTotalCustomersToServe() != -1
+				&& (customerController.getTotalCustomersToServe() <= customerController.getCustomersServed())) {
+			screenController.setScreen((ScreenController.ScreenID.GAMEOVER));
+			((GameOverScreen) screenController.getScreen(ScreenController.ScreenID.GAMEOVER)).setTime(hoursPassed,
+					minutesPassed, secondsPassed);
+			((GameOverScreen) screenController.getScreen(ScreenController.ScreenID.GAMEOVER)).setTextLabel("YOU WIN!");
+		}
 
+		Array<Customer> customersCopy = new Array<>(customerController.getCustomers());
 
-        Array<Customer> customersCopy = new Array<>(customerController.getCustomers());
+		for (Customer cus : customersCopy) {
+			customerController.removeCustomerIfExpired(cus);
+		}
 
-        for(Customer cus : customersCopy){
-            customerController.removeCustomerIfExpired(cus);
-        }
-
-        customerController.tryToSpawnCustomer(this.currentDifficulty, this.currentMode);
-
+		customerController.tryToSpawnCustomer(this.currentDifficulty, this.currentMode);
 
 		for (Cook thisCook : cooks) {
 			thisCook.getBody().setLinearVelocity(0F, 0F);
@@ -201,7 +199,6 @@ public class GameScreen extends ScreenAdapter {
 				thisCook.userInput();
 			}
 		}
-
 
 		if (Interactions.isJustPressed(InputKey.InputTypes.COOK_SWAP)) {
 			setCook((cookIndex + 1) % cooks.size);
@@ -229,6 +226,14 @@ public class GameScreen extends ScreenAdapter {
 		for (GameEntity entity : gameEntities) {
 			entity.update(delta);
 		}
+
+		if (PowerUpHandler.activePowerUp() != null) {
+			powerUpHandler.updateCoolDown(delta);
+		} else if (Interactions.isPressed(InputKey.InputTypes.BUY_POWERUP) && money >= 500) {
+			spendMoney(500);
+			powerUpHandler.addPowerUp();
+			System.out.println(powerUpHandler.activatePower(0));
+		}
 	}
 
 	/**
@@ -248,8 +253,7 @@ public class GameScreen extends ScreenAdapter {
 	public void render(float delta) {
 		this.update(delta, true);
 
-        renderGame(delta);
-
+		renderGame(delta);
 
 	}
 
@@ -356,7 +360,6 @@ public class GameScreen extends ScreenAdapter {
 		return cooks.size - 1;
 	}
 
-
 	public void loseReputation() {
 		if (reputation > 1) {
 			reputation--;
@@ -371,11 +374,15 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	public void addMoney(int amount) {
+		if (PowerUpHandler.activePowerUp() == PowerUp.DOUBLE_MONEY) {
+			amount *= 2;
+		}
 		money += amount;
 		gameHud.setMoneyLabel(money);
 	}
 
 	public boolean spendMoney(int amount) {
+		System.out.println("AMOUNT OF MONEY SPENT: " + amount);
 		if (money - amount < 0) {
 			return false;
 		}
@@ -422,19 +429,17 @@ public class GameScreen extends ScreenAdapter {
 		previousSecond = newSecond;
 	}
 
-
 	public long getTotalTimePaused() {
 		return totalTimePaused;
 	}
-
 
 	public void setTotalTimePaused(long newTime) {
 		totalTimePaused = newTime;
 	}
 
-    public void addToTimePaused(long amount){
-        totalTimePaused += amount;
-    }
+	public void addToTimePaused(long amount) {
+		totalTimePaused += amount;
+	}
 
 	/**
 	 * {@link #interactables} getter. Contains all the {@link #interactables} in the
@@ -515,24 +520,23 @@ public class GameScreen extends ScreenAdapter {
 		hoursPassed = 0;
 
 		previousSecond = TimeUtils.millis();
-        totalTimePaused = 0;
+		totalTimePaused = 0;
 		msPast1s = 0;
 
-        int customersToServe;
-        if (md == MenuScreen.mode.SCENARIO) {
-            customersToServe = customers;
-        }
-        else{
-            customersToServe = -1;
-            System.out.println("Endless mode selected");
-        }
+		int customersToServe;
+		if (md == MenuScreen.mode.SCENARIO) {
+			customersToServe = customers;
+		} else {
+			customersToServe = -1;
+			System.out.println("Endless mode selected");
+		}
 
-        this.currentDifficulty = diff;
-        this.currentMode = md;
+		this.currentDifficulty = diff;
+		this.currentMode = md;
 
 		customerController.setCustomersLeft(customersToServe);
 		customerController.setCustomersServed(0);
-        customerController.setTotalCustomersToServe(customersToServe);
+		customerController.setTotalCustomersToServe(customersToServe);
 		customerController.tryToSpawnCustomer(this.currentDifficulty, this.currentMode);
 
 	}

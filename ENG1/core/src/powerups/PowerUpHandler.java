@@ -30,9 +30,9 @@ public class PowerUpHandler {
 
 	private PowerUp[] currentPowerUps = new PowerUp[POWERUP_SLOTS];
 
-	private int cooldown = 0;
+	private static int cooldown = 0;
 
-	private PowerUp activePowerUp = null;
+	private static PowerUp activePowerUp = null;
 
 	private GameScreen gameScreen;
 
@@ -46,32 +46,33 @@ public class PowerUpHandler {
 		}
 
 		if (currentPowerUps[slot] == null) {
-			// Just for testing set the current power up to auto station.
-			activePowerUp = PowerUp.SATISFIED_CUSTOMER;
-			cooldown = activePowerUp.duration();
 			return null;
 		}
 
 		activePowerUp = currentPowerUps[slot];
-		cooldown = activePowerUp.duration();
+		cooldown = Math.abs(activePowerUp.duration());
 
 		currentPowerUps[slot] = null;
 		return activePowerUp;
 	}
 
-	public boolean usePowerUp() {
+	public static boolean usePowerUp() {
+		cooldown--;
+		
 		if (activePowerUp == null) {
 			return false;
 		}
-		activePowerUp = null;
-		cooldown = 0;
+		if (cooldown <= 0) {
+			activePowerUp = null;
+			cooldown = 0;
+		}
+
 		return true;
 	}
 
 	public boolean updateCoolDown(float dt) {
 
 		if (activePowerUp.duration() < 0) {
-			cooldown = 1;
 			return false;
 		}
 
@@ -110,7 +111,8 @@ public class PowerUpHandler {
 		}
 	}
 
-	public PowerUp activePowerUp() {
+	public static PowerUp activePowerUp() {
+
 		return activePowerUp;
 	}
 

@@ -27,22 +27,22 @@ public class Interactions {
 				new InteractionResult(FoodID.tomatoChop, new float[] { 25, 50, 75 }, -1, -1));
 		interactions.put(InteractionKey(FoodID.onion, StationID.cut),
 				new InteractionResult(FoodID.onionChop, new float[] { 25, 50, 75 }, -1, -1));
-        interactions.put(InteractionKey(FoodID.mushroom, StationID.cut),
-                new InteractionResult(FoodID.mushroomChop, new float[] { 25, 50, 75 }, -1, -1));
-        interactions.put(InteractionKey(FoodID.pepperoni, StationID.cut),
-                new InteractionResult(FoodID.pepperoniChop, new float[] { 33, 66 }, -1, -1));
-        interactions.put(InteractionKey(FoodID.cheese, StationID.cut),
-                new InteractionResult(FoodID.cheeseChop, new float[] { 25, 50,75 }, -1, -1));
+		interactions.put(InteractionKey(FoodID.mushroom, StationID.cut),
+				new InteractionResult(FoodID.mushroomChop, new float[] { 25, 50, 75 }, -1, -1));
+		interactions.put(InteractionKey(FoodID.pepperoni, StationID.cut),
+				new InteractionResult(FoodID.pepperoniChop, new float[] { 33, 66 }, -1, -1));
+		interactions.put(InteractionKey(FoodID.cheese, StationID.cut),
+				new InteractionResult(FoodID.cheeseChop, new float[] { 25, 50, 75 }, -1, -1));
 		interactions.put(InteractionKey(FoodID.meat, StationID.fry),
 				new InteractionResult(FoodID.meatCook, new float[] { 50 }, 13F, 13));
-        interactions.put(InteractionKey(FoodID.potato, StationID.fry),
-                new InteractionResult(FoodID.potatoCook, new float[] { 50 }, 13F, 13));
-        interactions.put(InteractionKey(FoodID.dough, StationID.fry),
-                new InteractionResult(FoodID.doughCook, new float[] { 50 }, 13F, 13));
-        interactions.put(InteractionKey(FoodID.beans, StationID.fry),
-                new InteractionResult(FoodID.beansCook, new float[] { 33, 66 }, 13F, 13));
-        interactions.put(InteractionKey(FoodID.chili, StationID.fry),
-                new InteractionResult(FoodID.chiliCook, new float[] { 33, 66 }, 13F, 13));
+		interactions.put(InteractionKey(FoodID.potato, StationID.fry),
+				new InteractionResult(FoodID.potatoCook, new float[] { 50 }, 13F, 13));
+		interactions.put(InteractionKey(FoodID.dough, StationID.fry),
+				new InteractionResult(FoodID.doughCook, new float[] { 50 }, 13F, 13));
+		interactions.put(InteractionKey(FoodID.beans, StationID.fry),
+				new InteractionResult(FoodID.beansCook, new float[] { 33, 66 }, 13F, 13));
+		interactions.put(InteractionKey(FoodID.chili, StationID.fry),
+				new InteractionResult(FoodID.chiliCook, new float[] { 33, 66 }, 13F, 13));
 	}
 
 	/**
@@ -143,8 +143,8 @@ public class Interactions {
 						new InputKey(InputKey.InputTypes.CREDITS, Input.Keys.C),
 						new InputKey(InputKey.InputTypes.QUIT, Input.Keys.Q),
 						new InputKey(InputKey.InputTypes.MODE_SELECT, Input.Keys.G),
-                        new InputKey(InputKey.InputTypes.SAVE, Input.Keys.O),
-                        new InputKey(InputKey.InputTypes.LOAD, Input.Keys.P)}));
+						new InputKey(InputKey.InputTypes.SAVE, Input.Keys.O),
+						new InputKey(InputKey.InputTypes.LOAD, Input.Keys.P) }));
 		inputs.put(InputID.COOK_MOVEMENT,
 				new Array<>(new InputKey[] { new InputKey(InputKey.InputTypes.COOK_UP, Input.Keys.W),
 						new InputKey(InputKey.InputTypes.COOK_LEFT, Input.Keys.A),
@@ -158,7 +158,8 @@ public class Interactions {
 		inputs.put(InputID.COOK_INTERACT,
 				new Array<>(new InputKey[] { new InputKey(InputKey.InputTypes.USE, Input.Keys.F),
 						new InputKey(InputKey.InputTypes.PICK_UP, Input.Keys.E),
-						new InputKey(InputKey.InputTypes.PUT_DOWN, Input.Keys.Q) }));
+						new InputKey(InputKey.InputTypes.PUT_DOWN, Input.Keys.Q),
+						new InputKey(InputKey.InputTypes.BUY_POWERUP, Input.Keys.SPACE) }));
 		inputs.put(InputID.COOK_MISC,
 				new Array<>(new InputKey[] { new InputKey(InputKey.InputTypes.COOK_SWAP, Input.Keys.TAB) }));
 	}
@@ -173,7 +174,7 @@ public class Interactions {
 		inputGroups.put(InputID.COOK_MOVEMENT, new Array<>(new InputKey.InputTypes[] { InputKey.InputTypes.COOK_UP,
 				InputKey.InputTypes.COOK_LEFT, InputKey.InputTypes.COOK_DOWN, InputKey.InputTypes.COOK_RIGHT, }));
 		inputGroups.put(InputID.COOK_INTERACT, new Array<>(new InputKey.InputTypes[] { InputKey.InputTypes.USE,
-				InputKey.InputTypes.PICK_UP, InputKey.InputTypes.PUT_DOWN }));
+				InputKey.InputTypes.PICK_UP, InputKey.InputTypes.PUT_DOWN, InputKey.InputTypes.BUY_POWERUP }));
 		inputGroups.put(InputID.COOK_MISC, new Array<>(new InputKey.InputTypes[] { InputKey.InputTypes.COOK_SWAP }));
 	}
 

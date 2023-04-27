@@ -39,6 +39,8 @@ public class InputKey {
         PICK_UP,
         /** Use the {@link stations.Station} in front of the Cook. */
         USE,
+        
+        BUY_POWERUP,
 
         // COOK_MOVEMENT
         /** Player moving up. */

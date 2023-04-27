@@ -10,6 +10,7 @@ import food.Recipe;
 import game.GameScreen;
 import interactions.InputKey;
 import powerups.PowerUp;
+import powerups.PowerUpHandler;
 
 /**
  * The {@link ServingStation} class, where the {@link cooks.Cook} provide the
@@ -17,13 +18,11 @@ import powerups.PowerUp;
  */
 public class ServingStation extends Station {
 
-
 	private String request;
 	private Customer customer;
 	private float customerX, customerY;
 	private CustomerController customerController;
 	private int id;
-
 
 	/**
 	 * The constructor for the {@link ServingStation}.
@@ -79,16 +78,15 @@ public class ServingStation extends Station {
 					request = null;
 					cook.foodStack.clearStack();
 					customerController.customerServed(this);
-				} else if (gameScreen.powerUpHandler.activePowerUp() == PowerUp.SATISFIED_CUSTOMER) {
+				} else if (PowerUpHandler.activePowerUp() == PowerUp.SATISFIED_CUSTOMER) {
+					PowerUpHandler.usePowerUp();
 					gameScreen.addMoney(Recipe.prices.get(customer.getRequestName()));
 					request = null;
 					customerController.customerServed(this);
-					gameScreen.powerUpHandler.usePowerUp();
 				}
 			}
 		}
 	}
-
 
 	/**
 	 * Renders the {@link Customer} that is at the {@link ServingStation}.
