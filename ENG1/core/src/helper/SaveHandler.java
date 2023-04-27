@@ -17,10 +17,8 @@ import stations.Station;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SaveHandler {
-    public static Array<String> saveFileNames;
     public GameScreen gameScreen;
     public SaveHandler(GameScreen gs){
         this.gameScreen = gs;
@@ -100,6 +98,7 @@ public class SaveHandler {
             else {
                 lockedStats[i] = false;
             }
+
             if (ints.get(i) instanceof PreparationStation){
                 if (((PreparationStation) ints.get(i)).isInUse()){
                     System.out.println("Saving one interaction at" +ints.get(i).getX()+" "+ints.get(i).getY());

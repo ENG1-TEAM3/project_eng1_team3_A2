@@ -20,7 +20,7 @@ import java.util.Random;
 public class CustomerController {
 
 	/** An {@link Array} of {@link Customer}s currently waiting. */
-	public Array<Customer> customers;
+	private Array<Customer> customers;
 	/** The {@link Sprite} of the {@link Customer}. */
 	private static Sprite customerSprite;
 	/**
@@ -101,7 +101,7 @@ public class CustomerController {
 
 		customers.add(newCustomer);
 
-		this.initialCus(newCustomer, gameScreen.getTotalSecondsRunningGame(), patience);
+		this.setupCustomer(newCustomer, gameScreen.getTotalSecondsRunningGame(), patience);
 
 		newCustomer.randomRecipe();
 		chosenStation.setCustomer(newCustomer);
@@ -118,7 +118,7 @@ public class CustomerController {
                 servingStations.get(stationIndex).getCustomerY()));
         customers.add(newCust);
 
-        this.initialCus(newCust, spawntime, deadtime - spawntime);
+        this.setupCustomer(newCust, spawntime, deadtime - spawntime);
         newCust.setRequestName(order);
         servingStations.get(stationIndex).setCustomer(newCust);
         gameScreen.getGameHud().addRecipeToRender(stationIndex,
@@ -306,7 +306,7 @@ public class CustomerController {
 		}
 	}
 
-	public void initialCus(Customer cus, int spawnTime, int patience) {
+	public void setupCustomer(Customer cus, int spawnTime, int patience) {
 		cus.setTimings(spawnTime, spawnTime + patience);
 		System.out.println("Customer added with spawntime " + spawnTime + " deadtime " + (spawnTime + patience));
 	}

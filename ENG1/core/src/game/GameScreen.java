@@ -26,7 +26,6 @@ import powerups.PowerUp;
 import powerups.PowerUpHandler;
 import stations.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -101,7 +100,7 @@ public class GameScreen extends ScreenAdapter {
 		this.sv = new SaveHandler(this);
 
 		powerUpHandler = new PowerUpHandler(this);
-		gameHud.setMoneyLabel(money);
+		gameHud.updateMoneyLabel(money);
 	}
 
 
@@ -128,14 +127,8 @@ public class GameScreen extends ScreenAdapter {
         minutesPassed = (totalSecs - (3600*hoursPassed)) / 60;
         secondsPassed = totalSecs - (3600 * hoursPassed) - (60* minutesPassed);
     }
-
-
 	public int getTotalSecondsRunningGame() {
 		return hoursPassed * 60 * 60 + minutesPassed * 60 + secondsPassed;
-	}
-
-	public void setTime(int seconds) {
-
 	}
 
 	public int getReputation() {
@@ -347,7 +340,7 @@ public class GameScreen extends ScreenAdapter {
 					minutesPassed, secondsPassed);
 		}
 
-		gameHud.setReputationPoints(reputation);
+		gameHud.updateReputationLabel(reputation);
 	}
 
 	public void addMoney(int amount) {
@@ -355,7 +348,7 @@ public class GameScreen extends ScreenAdapter {
 			amount *= 2;
 		}
 		money += amount;
-		gameHud.setMoneyLabel(money);
+		gameHud.updateMoneyLabel(money);
 	}
 
 	public boolean spendMoney(int amount) {
@@ -365,23 +358,9 @@ public class GameScreen extends ScreenAdapter {
 		}
 		money -= amount;
 
-		gameHud.setMoneyLabel(money);
+		gameHud.updateMoneyLabel(money);
 
 		return true;
-	}
-
-	public void setMoney(int amount) {
-		money = amount;
-	}
-
-	/**
-	 * Returns the number of customers remaining before the game is finished.
-	 *
-	 * @return {@code int} : The value of
-	 *         {@link CustomerController#getCustomersLeft()}.
-	 */
-	public int getCustomerCount() {
-		return customerController.getCustomersLeft();
 	}
 
 	/**
@@ -404,14 +383,6 @@ public class GameScreen extends ScreenAdapter {
 	 */
 	public void setPreviousSecond(long newSecond) {
 		previousSecond = newSecond;
-	}
-
-	public long getTotalTimePaused() {
-		return totalTimePaused;
-	}
-
-	public void setTotalTimePaused(long newTime) {
-		totalTimePaused = newTime;
 	}
 
 	public void addToTimePaused(long amount) {
@@ -530,7 +501,7 @@ public class GameScreen extends ScreenAdapter {
                                 float[] burnprogresses, int[] stepnums, FoodItem.FoodID[] foods) {
 
         this.money = moneyAmount;
-        gameHud.setMoneyLabel(moneyAmount);
+        gameHud.updateMoneyLabel(moneyAmount);
         this.reputation = repPoints;
         this.customerController.setCustomersLeft(customersLeft);
         this.customerController.setCustomersServed(customersServed);
