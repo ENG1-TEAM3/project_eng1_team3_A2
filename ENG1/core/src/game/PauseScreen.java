@@ -137,7 +137,7 @@ public class PauseScreen extends ScreenAdapter {
         }
         else if (Interactions.isJustPressed(InputKey.InputTypes.SAVE) && shouldResetSaveLabel) {
             try {
-                gameScreen.getSaveHandler().saveToFile(currentSave.toString().toLowerCase() + ".txt");
+                gameScreen.getSaveHandler().saveToFile(currentSave.toString().toLowerCase() + ".txt", screenController.getPauseStartTime());
             } catch (IOException io) {
                 throw new RuntimeException(io);
             }
@@ -185,12 +185,4 @@ public class PauseScreen extends ScreenAdapter {
 
         this.update(delta, true);
     }
-
-    public void setShouldResetSaveLabel(boolean b){
-        shouldResetSaveLabel = b;
-    }
-    public boolean getShouldResetSaveLabel(){
-        return shouldResetSaveLabel;
-    }
-
 }

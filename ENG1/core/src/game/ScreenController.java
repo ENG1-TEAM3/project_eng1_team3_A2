@@ -118,5 +118,8 @@ public class ScreenController {
         gameScreen.addToTimePaused(TimeUtils.millis() - pauseStartTime);
         setScreen(ScreenID.GAME);
     }
+    public long getPauseStartTime(){
+        return pauseStartTime;
+    }
 
 }

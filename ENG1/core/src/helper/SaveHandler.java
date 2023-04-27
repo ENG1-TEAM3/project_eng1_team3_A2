@@ -5,8 +5,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import cooks.Cook;
 import cooks.GameEntity;
+import customers.Customer;
 import food.FoodItem;
 import game.GameScreen;
+import game.MenuScreen;
 import stations.CookInteractable;
 
 import java.io.*;
@@ -19,14 +21,14 @@ public class SaveHandler {
     public SaveHandler(GameScreen gs){
         this.gameScreen = gs;
     }
-    public void saveToFile(String fileName) throws IOException {
+    public void saveToFile(String fileName, long timeOfPause) throws IOException {
         String localpath = Gdx.files.getLocalStoragePath();
         String totalpath = localpath + fileName;
         String tilemap = Constants.mapPath;
         Array<Cook> cks = gameScreen.getCooks();
         Array<GameEntity> ents = gameScreen.getGameEntities();
         Array<CookInteractable> ints = gameScreen.getInteractables();
-
+        Array<Customer> custs = gameScreen.getCustomerController().getCustomers();
 
         int[] cookIDs = new int[cks.size];
         Cook.Facing[] ckfacings = new Cook.Facing[cks.size];
@@ -44,12 +46,20 @@ public class SaveHandler {
             ctr ++;
         }
 
-        long smallTimeDiff = TimeUtils.millis() - gameScreen.getPreviousSecond();
+        long smallTimeDiff = timeOfPause - gameScreen.getPreviousSecond();
         int totalSecondsPassed = gameScreen.getTotalSecondsRunningGame();
         int repPointsLeft = gameScreen.getReputation();
         int money = gameScreen.getMoney();
         int amountCustomersServed = gameScreen.getCustomerController().getCustomersServed();
         int amountCustomersLeft = gameScreen.getCustomerController().getCustomersLeft();
+        int amountCustomersTotal = gameScreen.getCustomerController().getTotalCustomersToServe();
+
+        MenuScreen.difficulty currentDif = gameScreen.getCurrentDifficulty();
+        MenuScreen.mode currentMod = gameScreen.getCurrentMode();
+
+        System.out.println("Saving seconds amount " + totalSecondsPassed);
+        System.out.println("Saving smalltimedif " + smallTimeDiff);
+
         try (FileOutputStream fos = new FileOutputStream(totalpath)){
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
@@ -60,12 +70,15 @@ public class SaveHandler {
             oos.writeObject(money);
             oos.writeObject(amountCustomersServed);
             oos.writeObject(amountCustomersLeft);
+            oos.writeObject(amountCustomersTotal);
+
+            oos.writeObject(currentDif);
+            oos.writeObject(currentMod);
 
             oos.writeObject(cookIDs);
             oos.writeObject(ckfacings);
             oos.writeObject(foodstacks);
             oos.writeObject(cookPositions);
-
 
             oos.flush();
             oos.close();
@@ -85,9 +98,12 @@ public class SaveHandler {
         int money = (int) ois.readObject();
         int amountCustomersServed = (int) ois.readObject();
         int amountCustomersLeft = (int) ois.readObject();
+        int amountCustomersTot = (int) ois.readObject();
+        System.out.println("Loading seconds amount " + totalSecondsPassed);
+        System.out.println("Loading smalltimedif " + smallTimeDiff);
 
-
-
+        MenuScreen.difficulty currentDiff = (MenuScreen.difficulty) ois.readObject();
+        MenuScreen.mode currentMd = (MenuScreen.mode) ois.readObject();
 
         int[] cookIDS = (int[]) ois.readObject();
         Cook.Facing[] cookFacings = (Cook.Facing[]) ois.readObject();
@@ -101,8 +117,9 @@ public class SaveHandler {
             System.out.println(minilist);
         }
         ois.close();
-        this.gameScreen.restoreFromData(smallTimeDiff, totalSecondsPassed, repPointsLeft,
-                money, amountCustomersServed, amountCustomersLeft,
+        this.gameScreen.restoreFromData(smallTimeDiff, totalSecondsPassed, repPointsLeft, money,
+                amountCustomersServed, amountCustomersLeft, amountCustomersTot,
+                currentDiff, currentMd,
                 cookPositions, foodstacks, cookFacings);
     }
 

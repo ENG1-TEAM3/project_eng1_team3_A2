@@ -1,5 +1,6 @@
 package interactions;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
@@ -50,7 +51,7 @@ public class Interactions {
 	 * desired change in an ingredient, as well as the speed at which it progresses
 	 * to change, and to specify at what percentages a user input is required.
 	 */
-	public static class InteractionResult {
+	public static class InteractionResult implements Serializable {
 		private FoodID result;
 		private float[] steps;
 		private float speed, burnSpeed;
