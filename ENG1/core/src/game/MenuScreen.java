@@ -14,11 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import cooks.Cook;
 import game.ScreenController.ScreenID;
 import helper.Constants;
 import interactions.InputKey;
 import interactions.Interactions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -195,7 +197,6 @@ public class MenuScreen extends ScreenAdapter {
 
 
 
-
         // AS2 NEW CHANGE - Addition of null check for testing
 
         if (this.batch != null) {
@@ -277,12 +278,23 @@ public class MenuScreen extends ScreenAdapter {
         }
         else if (currentState == menuState.LOAD_SELECT){
             if (Interactions.isJustPressed(InputKey.InputTypes.COOK_UP)){
-                currentSave = cycleSaves(1);
+                currentSave = cycleSaves(currentSave, 1, true);
             }
             else if (Interactions.isJustPressed(InputKey.InputTypes.COOK_DOWN)){
-                currentSave = cycleSaves(-1);
+                currentSave = cycleSaves(currentSave, -1, true);
             }
             loadSelectLabel.setText("FILE SELECTED: " + currentSave.toString());
+            if (Interactions.isJustPressed(InputKey.InputTypes.LOAD)) {
+                GameScreen gs = ((GameScreen) screenController.getScreen(ScreenID.GAME));
+                gs.startGame(100, difficulty.EASY, mode.SCENARIO);
+                screenController.setScreen(ScreenID.GAME);
+                try {
+                    gs.getSaveHandler().loadFromFile(currentSave.toString().toLowerCase()+".txt");
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                setCurrentScreenState(menuState.MAIN_MENU);
+            }
 
         }
 
@@ -412,7 +424,7 @@ public class MenuScreen extends ScreenAdapter {
         }
     }
 
-    public ArrayList<saveFileSelectionChoice> findSaves(){
+    public static ArrayList<saveFileSelectionChoice> findSaves(){
         ArrayList<saveFileSelectionChoice> savesThatExist = new ArrayList<>();
         if (Gdx.files.local("save1.txt").exists()){
             savesThatExist.add(saveFileSelectionChoice.SAVE1);
@@ -426,27 +438,33 @@ public class MenuScreen extends ScreenAdapter {
         return savesThatExist;
     }
 
-    public saveFileSelectionChoice cycleSaves(int direction){
-        ArrayList<saveFileSelectionChoice> existingSaves = this.findSaves();
+    public static saveFileSelectionChoice cycleSaves(saveFileSelectionChoice currentSave, int direction, boolean checkExistence){
+        ArrayList<saveFileSelectionChoice> existingSaves = findSaves();
         if (direction >= 0){
-            if (currentSave == saveFileSelectionChoice.SAVE1 && existingSaves.contains(saveFileSelectionChoice.SAVE2)){
+            if (currentSave == saveFileSelectionChoice.SAVE1 &&
+                    (!checkExistence || existingSaves.contains(saveFileSelectionChoice.SAVE2))){
                 return saveFileSelectionChoice.SAVE2;
             }
-            else if (currentSave == saveFileSelectionChoice.SAVE2 && existingSaves.contains(saveFileSelectionChoice.SAVE3)){
+            else if (currentSave == saveFileSelectionChoice.SAVE2 &&
+                    (!checkExistence || existingSaves.contains(saveFileSelectionChoice.SAVE3))){
                 return saveFileSelectionChoice.SAVE3;
             }
-            else if (currentSave == saveFileSelectionChoice.SAVE3 && existingSaves.contains(saveFileSelectionChoice.SAVE1)){
+            else if (currentSave == saveFileSelectionChoice.SAVE3 &&
+                    (!checkExistence || existingSaves.contains(saveFileSelectionChoice.SAVE1))){
                 return saveFileSelectionChoice.SAVE1;
             }
         }
         else{
-            if (currentSave == saveFileSelectionChoice.SAVE1 && existingSaves.contains(saveFileSelectionChoice.SAVE3)){
+            if (currentSave == saveFileSelectionChoice.SAVE1 &&
+                    (!checkExistence || existingSaves.contains(saveFileSelectionChoice.SAVE3))){
                 return saveFileSelectionChoice.SAVE3;
             }
-            else if (currentSave == saveFileSelectionChoice.SAVE2 && existingSaves.contains(saveFileSelectionChoice.SAVE1)){
+            else if (currentSave == saveFileSelectionChoice.SAVE2 &&
+                    (!checkExistence || existingSaves.contains(saveFileSelectionChoice.SAVE1))){
                 return saveFileSelectionChoice.SAVE1;
             }
-            else if (currentSave == saveFileSelectionChoice.SAVE3 && existingSaves.contains(saveFileSelectionChoice.SAVE2)){
+            else if (currentSave == saveFileSelectionChoice.SAVE3 &&
+                    (!checkExistence || existingSaves.contains(saveFileSelectionChoice.SAVE2))){
                 return saveFileSelectionChoice.SAVE2;
             }
         }

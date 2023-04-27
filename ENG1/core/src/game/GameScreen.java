@@ -207,20 +207,8 @@ public class GameScreen extends ScreenAdapter {
 		if (Interactions.isJustPressed(InputKey.InputTypes.PAUSE)) {
 			screenController.pauseGameScreen();
 		}
-		if (Interactions.isJustPressed(InputKey.InputTypes.SAVE)) {
-			try {
-				sv.saveToFile("save1.txt");
-			} catch (IOException io) {
-				throw new RuntimeException(io);
-			}
-		}
-		if (Interactions.isJustPressed(InputKey.InputTypes.LOAD)) {
-			try {
-				sv.loadFromFile("save1.txt");
-			} catch (IOException | ClassNotFoundException e) {
-				throw new RuntimeException(e);
-			}
-		}
+
+
 		world.step(1 / 60f, 6, 2);
 
 		for (GameEntity entity : gameEntities) {
@@ -325,6 +313,10 @@ public class GameScreen extends ScreenAdapter {
 	public World getWorld() {
 		return world;
 	}
+
+    public SaveHandler getSaveHandler(){
+        return this.sv;
+    }
 
 	public Array<GameEntity> getGameEntities() {
 		return this.gameEntities;

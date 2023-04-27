@@ -25,13 +25,10 @@ public class InputKey {
         CREDITS,
         /** Quitting the game. */
         QUIT,
-
         MODE_SELECT,
         LOAD_SELECT,
         SAVE,
         LOAD,
-
-
         // COOK_INTERACT
         /** Put down an item onto a {@link stations.Station} in the {@link cooks.Cook}'s hands. */
         PUT_DOWN,
