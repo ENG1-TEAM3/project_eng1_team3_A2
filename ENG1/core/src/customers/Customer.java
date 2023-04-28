@@ -6,11 +6,13 @@ import com.badlogic.gdx.math.Vector2;
 import food.Recipe;
 import helper.Constants;
 
+import java.io.Serializable;
+
 /**
  * A {@link Customer} has a request that they want
  * to be served by the player.
  */
-public class Customer {
+public class Customer implements Serializable {
 
     /** The position of the Customer. */
     public Vector2 position; // TestUPDATE
@@ -22,7 +24,7 @@ public class Customer {
 
     public int spawnTime, deadTime;
 
-    public int index;
+    private int stationIndex;
     /**
      * The constructor for the {@link Customer}.
      * <br>Randomly picks out a {@link Recipe} as a request.
@@ -43,9 +45,10 @@ public class Customer {
      * @param sprite The {@link Sprite} of the {@link Customer}.
      * @param position A {@link Vector2} position of the {@link Customer}.
      */
-    public Customer(Sprite sprite, Vector2 position) {
+    public Customer(Sprite sprite, int index, Vector2 position) {
         this(sprite);
         this.position = position;
+        this.stationIndex = index;
     }
 
     public void randomRecipe() {
@@ -86,6 +89,9 @@ public class Customer {
         return request;
     }
 
+    public void setRequestName(String req){
+        this.request = req;
+    }
     public void setTimings(int spnTime, int dedTime){
         this.spawnTime = spnTime;
         this.deadTime = dedTime;
@@ -98,4 +104,6 @@ public class Customer {
     public int getDeadTime(){
         return this.deadTime;
     }
+
+    public int getStationIndex() {return this.stationIndex;}
 }

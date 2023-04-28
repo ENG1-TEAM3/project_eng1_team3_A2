@@ -236,11 +236,11 @@ public class GameHud extends Hud {
 		customersServedLabel.setText(String.format("CUSTOMERS SERVED SUCCESSFULLY: %d", amountCustomers));
 	}
 
-	public void setReputationPoints(int reputation) {
+	public void updateReputationLabel(int reputation) {
 		reputationLabel.setText(String.format("Reputation: %d", reputation));
 	}
 
-	public void setMoneyLabel(int amount) {
+	public void updateMoneyLabel(int amount) {
 		int pounds = amount / 100;
 		int pennies = amount - pounds * 100;
 		moneyLabel.setText(String.format("Money: £%d.%d", pounds, pennies));

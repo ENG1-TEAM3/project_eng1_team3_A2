@@ -12,7 +12,6 @@ public class InputKey {
     /** All the different inputs available in the game. */
     public enum InputTypes {
         // MENU
-        /** Starting the game, {@link GameScreen#startGame(int)}. */
         START_GAME,
         /** Resetting the game, {@link ScreenController#resetGameScreen()} and {@link GameScreen#reset()}. */
         RESET_GAME,
@@ -26,12 +25,10 @@ public class InputKey {
         CREDITS,
         /** Quitting the game. */
         QUIT,
-
         MODE_SELECT,
+        LOAD_SELECT,
         SAVE,
         LOAD,
-
-
         // COOK_INTERACT
         /** Put down an item onto a {@link stations.Station} in the {@link cooks.Cook}'s hands. */
         PUT_DOWN,

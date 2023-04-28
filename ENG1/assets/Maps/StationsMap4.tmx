@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="64" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="82">
+ <tileset firstgid="1" source="Stations.tsx"/>
+ <tileset firstgid="101" source="Stations1.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="20" height="15">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,101,101,101,101,101,
+1,16,16,16,16,1,1,1,1,1,1,1,1,1,1,111,111,101,101,101,
+0,0,0,0,0,125,129,145,122,124,123,130,143,127,144,141,142,108,101,101,
+1,0,0,0,0,135,139,155,132,134,133,140,153,137,154,151,152,118,101,101,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,128,101,101,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,138,101,101,
+0,101,126,126,126,126,126,126,111,111,126,126,126,126,126,126,101,101,101,101,
+1,101,136,136,136,136,136,136,111,111,136,136,136,136,136,136,101,101,101,101,
+0,101,0,0,0,0,0,0,111,111,0,0,0,0,0,0,101,101,101,101,
+1,101,0,0,0,0,0,0,111,111,0,0,0,0,0,0,101,101,101,101,
+0,101,0,0,0,0,0,0,111,111,0,0,0,0,0,0,101,101,101,101,
+1,101,108,126,126,126,126,108,111,111,108,126,126,126,126,108,101,101,101,111,
+0,111,118,136,136,136,136,118,111,111,118,136,136,136,136,118,101,101,101,111,
+1,0,0,0,0,0,0,0,111,111,0,0,0,0,0,101,101,101,101,111,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,101,111,101,101,111
+</data>
+ </layer>
+ <objectgroup id="4" name="Object Layer 1">
+  <object id="4" name="StationServe" x="64" y="0" width="63.9957" height="64.0149"/>
+  <object id="20" name="StationServe" x="128" y="0" width="63.9489" height="63.8026"/>
+  <object id="25" name="StationServe" x="192" y="0" width="63.9957" height="64.0149"/>
+  <object id="26" name="StationServe" x="256" y="0" width="64.0036" height="63.9667"/>
+  <object id="27" name="Cook" x="285" y="282" width="57" height="34"/>
+  <object id="28" name="Cook" x="799.5" y="280" width="57" height="34"/>
+  <object id="34" name="PantryOnion" x="640" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="35" name="PantryLettuce" x="512" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="36" name="PantryTomato" x="576" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="37" name="PantryBun" x="320" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="38" name="PantryMeat" x="832" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="39" name="StationBin" x="1088" y="128" width="64" height="64"/>
+  <object id="40" name="PantryDough" x="384" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="41" name="PantryBeans" x="960" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="42" name="PantryCheese" x="704" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="43" name="PantryChili" x="1024" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="44" name="PantryPepperoni" x="768" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="45" name="PantryMushroom" x="896" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="46" name="PantryPotato" x="448" y="64" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="47" name="StationCut" x="192" y="352" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="48" name="StationCut" x="256" y="352" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="49" name="StationCut" x="384" y="352" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="50" name="StationCut" x="320" y="352" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="51" name="StationFry" x="704" y="352" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="52" name="StationFry" x="768" y="352" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="53" name="StationFry" x="832" y="352" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="54" name="StationFry" x="896" y="352" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="55" name="StationCounter" x="128" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="56" name="StationCounter" x="192" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="58" name="StationCounter" x="256" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="59" name="StationCounter" x="320" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="60" name="StationCounter" x="384" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="61" name="StationCounter" x="448" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="62" name="StationCounter" x="640" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="63" name="StationCounter" x="704" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="64" name="StationCounter" x="768" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="65" name="StationCounter" x="832" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="66" name="StationCounter" x="896" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="67" name="StationCounter" x="960" y="192" width="64" height="64">
+   <properties>
+    <property name="locked" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="68" name="CookStart" x="183.75" y="108" width="42.5" height="20"/>
+  <object id="70" x="0" y="0">
+   <polygon points="0,0 0,479.991 64,479.991 64,0"/>
+  </object>
+  <object id="71" x="64" y="191.938">
+   <polygon points="0,0 0,288.053 64,288.053 64,0"/>
+  </object>
+  <object id="72" x="512.416" y="192.242">
+   <polygon points="0,0 0,223.627 127.835,223.627 127.835,0"/>
+  </object>
+  <object id="74" x="320.136" y="0">
+   <polygon points="0,0 959.864,0 959.864,64 179.974,64 0,64"/>
+  </object>
+  <object id="75" x="1024" y="192">
+   <polygon points="0,0 0,223.627 256.683,223.627 256.683,0"/>
+  </object>
+  <object id="77" x="1152.18" y="64.7273">
+   <polygon points="0,0 0,126.9 128.501,126.9 128.501,0"/>
+  </object>
+  <object id="78" x="128" y="352">
+   <polygon points="0,0 0,64.002 63.9965,64.002 63.9965,0"/>
+  </object>
+  <object id="79" x="448" y="352">
+   <polygon points="0,0 0,64.002 63.9965,64.002 63.9965,0"/>
+  </object>
+  <object id="80" x="640" y="352">
+   <polygon points="0,0 0,64.002 63.9965,64.002 63.9965,0"/>
+  </object>
+  <object id="81" x="960" y="352">
+   <polygon points="0,0 0,64.002 63.9965,64.002 63.9965,0"/>
+  </object>
+ </objectgroup>
+</map>

@@ -1,5 +1,6 @@
 package interactions;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
@@ -50,7 +51,7 @@ public class Interactions {
 	 * desired change in an ingredient, as well as the speed at which it progresses
 	 * to change, and to specify at what percentages a user input is required.
 	 */
-	public static class InteractionResult {
+	public static class InteractionResult implements Serializable {
 		private FoodID result;
 		private float[] steps;
 		private float speed, burnSpeed;
@@ -143,6 +144,7 @@ public class Interactions {
 						new InputKey(InputKey.InputTypes.CREDITS, Input.Keys.C),
 						new InputKey(InputKey.InputTypes.QUIT, Input.Keys.Q),
 						new InputKey(InputKey.InputTypes.MODE_SELECT, Input.Keys.G),
+                        new InputKey(InputKey.InputTypes.LOAD_SELECT, Input.Keys.T),
 						new InputKey(InputKey.InputTypes.SAVE, Input.Keys.O),
 						new InputKey(InputKey.InputTypes.LOAD, Input.Keys.P) }));
 		inputs.put(InputID.COOK_MOVEMENT,
@@ -170,7 +172,7 @@ public class Interactions {
 				new Array<>(new InputKey.InputTypes[] { InputKey.InputTypes.INSTRUCTIONS,
 						InputKey.InputTypes.RESET_GAME, InputKey.InputTypes.START_GAME, InputKey.InputTypes.PAUSE,
 						InputKey.InputTypes.UNPAUSE, InputKey.InputTypes.CREDITS, InputKey.InputTypes.QUIT,
-						InputKey.InputTypes.MODE_SELECT, InputKey.InputTypes.SAVE, InputKey.InputTypes.LOAD }));
+						InputKey.InputTypes.MODE_SELECT, InputKey.InputTypes.LOAD_SELECT,InputKey.InputTypes.SAVE, InputKey.InputTypes.LOAD }));
 		inputGroups.put(InputID.COOK_MOVEMENT, new Array<>(new InputKey.InputTypes[] { InputKey.InputTypes.COOK_UP,
 				InputKey.InputTypes.COOK_LEFT, InputKey.InputTypes.COOK_DOWN, InputKey.InputTypes.COOK_RIGHT, }));
 		inputGroups.put(InputID.COOK_INTERACT, new Array<>(new InputKey.InputTypes[] { InputKey.InputTypes.USE,

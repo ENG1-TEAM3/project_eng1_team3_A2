@@ -43,29 +43,45 @@ playGameScreen()
 
 
 class GameScreen{
+PowerUpHandler powerUpHandler
 GameScreen(ScreenController screenController, OrthographicCamera camera)
 updateTiming()
+setTiming(int totalSecs)
+int getTotalSecondsRunningGame()
+int getReputation()
+int getMoney()
+Cook getCurrentCook()
 update(float delta, boolean shouldResetKeys)
 cameraUpdate()
 render(float delta)
 renderGame(float delta)
 World getWorld()
+SaveHandler getSaveHandler()
+Array<GameEntity> getGameEntities()
+Array<Cook> getCooks()
 Cook setCook()
 int addCook()
-setCustomerHud()
-int getCustomerCount()
+loseReputation()
+addMoney()
+spendMoney()
 long getPreviousSecond()
 setPreviousSecond()
-getNextCustomerSecond()
-setNextCustomerSecond()
+addToTimePaused(long amount)
 Array<CookInteractable> getInteractables()
+addInteractable(CookInteractable cookInteractable)
 addGameEntity(GameEntity entity)
 addServingStation()
 reset()
 startGame(int customers)
+restoreFromData(Lots of variables go here, omitted for space)
 CustomerController getCustomerController()
 GameHud getGameHud()
 InstructionHud getInstructionHud()
+MenuScreen.difficulty getCurrentDifficulty()
+MenuScreen.mode getCurrentMode()
+int getSecondsPassed()
+int getMinutesPassed()
+int getHoursPassed()
 }
 
 ScreenController --> GameScreen : Stores instance of
@@ -79,12 +95,16 @@ setPrevScreenID(ScreenID scID)
 
 ScreenController --> CreditsScreen : Stores instance of
 CreditsScreen --> ScreenController : Stores instance of
+
 class GameOverScreen{
 GameOverScreen(ScreenController screenController, OrthographicCamera camera)
 update(float delta, boolean shouldResetKeys)
 render(float delta)
 setTime(int hours, int minutes, int seconds)
+setTextLabel(String text)
 }
+
+
 ScreenController --> GameOverScreen : Stores instance of
 GameOverScreen --> ScreenController : Stores instance of
 class InstructionScreen{
@@ -101,21 +121,27 @@ enum menuState
 enum modeSelectionState
 enum mode
 enum difficulty
+enum saveFileSelectionChoice
 
 menuState currentState
 modeSelectionState currentSelectionType
 mode currentModeSelection
 difficulty currentDifficultySelection
+saveFileSelectionChoice currentSave
 
 MenuScreen(ScreenController screenController, OrthographicCamera camera)
 update(float delta, boolean shouldResetKeys)
 render(float delta)
-menuState getOtherScreenState()
+menuState getCorrectSwapModeSelect()
+menuState getCorrectSwapLoadSelect()
 setCurrentScreenState(menuState ms)
 Stage getCurrentScreenStage()
-String getSelectionSTring()
+String getSelectionString()
 difficulty cycleDifficulty(int direction)
 mode cycleMode()
+{static} ArrayList<saveFileSelectionChoice> findSaves()
+{static} saveFileSelectionChoice cycleSaves(saveFileSelectionChoice currentSave, int direction, boolean checkExistence)
+
 
 }
 
@@ -131,6 +157,7 @@ render(float delta)
 ScreenController --> PauseScreen : Stores instance of
 PauseScreen --> ScreenController : Stores instance of
 PauseScreen --> GameScreen : Stores instance of
+
 
 
 

@@ -127,7 +127,6 @@ public class PowerUpHandler {
 	}
 
 	public static PowerUp activePowerUp() {
-
 		return activePowerUp;
 	}
 	

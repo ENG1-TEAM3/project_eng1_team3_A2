@@ -179,4 +179,34 @@ public class ScreenTests {
         cooksunsort.sort(dq1);
         assertEquals(cooksort,cooksunsort);
     }
+
+    @Test
+    public void testSetTimeFromSeconds(){
+        Boot b1 = Boot.getInstance();
+        b1.createHeadless();
+        GameScreen gs1 = (GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME);
+        gs1.setTiming(0);
+        assertEquals("This test asserts that 0 secs in converted into hr,min,sec properly",
+                0, gs1.getSecondsPassed());
+        assertEquals("This test asserts that 0 secs in converted into hr,min,sec properly",
+                0, gs1.getMinutesPassed());
+        assertEquals("This test asserts that 0 secs in converted into hr,min,sec properly",
+                0, gs1.getHoursPassed());
+
+        gs1.setTiming(60);
+        assertEquals("This test asserts that 60 secs in converted into hr,min,sec properly",
+                0, gs1.getSecondsPassed());
+        assertEquals("This test asserts that 60 secs in converted into hr,min,sec properly",
+                1, gs1.getMinutesPassed());
+        assertEquals("This test asserts that 60 secs in converted into hr,min,sec properly",
+                0, gs1.getHoursPassed());
+
+        gs1.setTiming(4761);
+        assertEquals("This test asserts that 4761 secs in converted into hr,min,sec properly",
+                21, gs1.getSecondsPassed());
+        assertEquals("This test asserts that 4761 secs in converted into hr,min,sec properly",
+                19, gs1.getMinutesPassed());
+        assertEquals("This test asserts that 4761 secs in converted into hr,min,sec properly",
+                1, gs1.getHoursPassed());
+    }
 }

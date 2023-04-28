@@ -23,8 +23,12 @@ class Constants{
 }
 class GameHud{
 # Label timeLabel
-# Label CustomerLabel
-# Label CustomerScore
+# Label customersLeftLabel
+# Label customersServedLabel
+# Label waveProgressLabel
+# Label reputationLabel
+# Label moneyLabel
+
 GameHud(SpriteBatch batch, GameScreen gameScreen)
 render()
 addRecipeToRender(Integer num, FoodStack fs)
@@ -33,7 +37,10 @@ setServingStations(Array<ServingStation> srvs)
 updateTime(int secondsPassed)
 updateTime(int minutesPassed, int secondsPassed)
 updateTime(int hoursPassed, int minutesPassed, int secondsPassed)
-setCustomerCount(int customerCount)
+updateCustomersLeftLabel(int amountCustomers)
+updateCustomersServedLabel(int amountCustomers)
+updateReputationLabel(int reputation)
+updateMoneyLabel(int amount)
 }
 class Hud{
 # Stage stage
@@ -66,4 +73,11 @@ class Util{
 {static} float distancePoints(float x1, float y1, float x2, float y2)
 {static} String formatTime(int hours, int minutes, int seconds)
 }
+
+class SaveHandler{
+GameScreen gameScreen
+saveToFile(String fileName, long timeOfPause)
+loadFromFile(String filename)
+}
+
 @enduml

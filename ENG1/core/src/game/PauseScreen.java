@@ -19,6 +19,8 @@ import helper.Constants;
 import interactions.InputKey;
 import interactions.Interactions;
 
+import java.io.IOException;
+
 /**
  * A {@link ScreenAdapter} that is used when the game is paused.
  * It renders the {@link GameScreen} behind it, so the user can still
@@ -34,12 +36,18 @@ public class PauseScreen extends ScreenAdapter {
     private GameScreen gameScreen;
     private ShapeRenderer shape;
 
+    private MenuScreen.saveFileSelectionChoice currentSave;
+    private Label[] lblLabels;
+    private boolean shouldResetSaveLabel;
+
     /**
      * The constructor for the {@link PauseScreen}.
      * @param screenController The {@link ScreenController} of the {@link ScreenAdapter}.
      * @param orthographicCamera The {@link OrthographicCamera} that the game should use.
      */
     public PauseScreen(ScreenController screenController, OrthographicCamera orthographicCamera) {
+        shouldResetSaveLabel = true;
+        currentSave = MenuScreen.saveFileSelectionChoice.SAVE1;
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
         Table table = new Table();
         table.center();
@@ -48,6 +56,7 @@ public class PauseScreen extends ScreenAdapter {
         String[] strLabels = new String[] {
                 "PAUSED",
                 String.format("Press %s to continue",Interactions.getKeyString(InputKey.InputTypes.UNPAUSE)),
+                String.format("Press %s to save : saving to " + currentSave.toString() + " (Press arrow keys to cycle this)",Interactions.getKeyString(InputKey.InputTypes.SAVE)),
                 String.format("Press %s for instructions",Interactions.getKeyString(InputKey.InputTypes.INSTRUCTIONS)),
                 String.format("Press %s for credits",Interactions.getKeyString(InputKey.InputTypes.CREDITS)),
                 String.format("Press %s to reset",Interactions.getKeyString(InputKey.InputTypes.RESET_GAME)),
@@ -72,7 +81,7 @@ public class PauseScreen extends ScreenAdapter {
         */
 
         /** Contains the Labels objects for the PauseScreen */
-        Label[] lblLabels = new Label[strLabels.length];
+        lblLabels = new Label[strLabels.length];
 
         for (int j = 0; j < lblLabels.length; j++) {
             String strLabel = strLabels[j];
@@ -105,6 +114,7 @@ public class PauseScreen extends ScreenAdapter {
         // Check if the Unpause key was pressed.
         if (Interactions.isJustPressed(InputKey.InputTypes.UNPAUSE)) {
             screenController.playGameScreen();
+            shouldResetSaveLabel = true;
             return;
         }
         if (Interactions.isJustPressed(InputKey.InputTypes.INSTRUCTIONS)) {
@@ -119,9 +129,31 @@ public class PauseScreen extends ScreenAdapter {
             screenController.resetGameScreen();
             screenController.setScreen(ScreenID.MENU);
         }
+        else if (Interactions.isJustPressed(InputKey.InputTypes.COOK_UP)){
+            currentSave = MenuScreen.cycleSaves(currentSave,1, false);
+        }
+        else if (Interactions.isJustPressed(InputKey.InputTypes.COOK_DOWN)){
+            currentSave = MenuScreen.cycleSaves(currentSave,-1, false);
+        }
+        else if (Interactions.isJustPressed(InputKey.InputTypes.SAVE) && shouldResetSaveLabel) {
+            try {
+                gameScreen.getSaveHandler().saveToFile(currentSave.toString().toLowerCase() + ".txt", screenController.getPauseStartTime());
+            } catch (IOException io) {
+                throw new RuntimeException(io);
+            }
+            shouldResetSaveLabel = false;
+        }
+
         else if (Interactions.isJustPressed(InputKey.InputTypes.QUIT)) {
             Gdx.app.exit();
         }
+        if (shouldResetSaveLabel){
+            lblLabels[2].setText(String.format("Press %s to save : saving to " + currentSave.toString() + " (Press arrow keys to cycle this)", Interactions.getKeyString(InputKey.InputTypes.SAVE)));
+        }
+        else {
+            lblLabels[2].setText("Game Saved");
+        }
+
     }
 
     /**
@@ -152,6 +184,5 @@ public class PauseScreen extends ScreenAdapter {
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
         this.update(delta, true);
-
     }
 }
