@@ -21,6 +21,7 @@ public class Constants {
 
     public static final int STAFF_COST = 1000;
 
+    public static final int MONEY_START = 2000;
 	public static final String mapPath = "Maps/StationsMap3.tmx";
 
 	/** Layer used to retrieve the map width and height in pixels */

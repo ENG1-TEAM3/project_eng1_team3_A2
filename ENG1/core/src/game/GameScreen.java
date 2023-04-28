@@ -55,7 +55,7 @@ public class GameScreen extends ScreenAdapter {
 	private Cook cook;
 	private int cookIndex;
 	private CustomerController customerController;
-	private int reputation = 3, money = 2000;
+	private int reputation = 3, money = Constants.MONEY_START;
 	private SaveHandler sv;
 	private MenuScreen.difficulty currentDifficulty;
 	private MenuScreen.mode currentMode;
@@ -447,6 +447,10 @@ public class GameScreen extends ScreenAdapter {
 		secondsPassed = 0;
 		minutesPassed = 0;
 		hoursPassed = 0;
+        reputation = 3;
+
+        money = Constants.MONEY_START;
+        gameHud.updateMoneyLabel(money);
 
 		cooks.clear();
 		gameEntities.clear();
