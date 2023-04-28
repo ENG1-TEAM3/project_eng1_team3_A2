@@ -166,6 +166,10 @@ public class GameSprites {
         Texture ts13 = new Texture(Gdx.files.internal("foods/Potato_Cooked.png"));
         Sprite ns13 = new Sprite(ts13);
         spriteMap.put(spriteKey(SpriteID.FOOD, "potatoCook"), ns13);
+
+        Texture ts14 = new Texture(Gdx.files.internal("cooks/normal down2.png"));
+        Sprite ns14 = new Sprite(ts14);
+        spriteMap.put(spriteKey(SpriteID.FOOD, "cook"), ns14);
     }
 
 

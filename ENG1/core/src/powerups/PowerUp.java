@@ -2,7 +2,7 @@ package powerups;
 
 public enum PowerUp {
 
-	AUTO_STATION(1, 500, "auto_station.png"), DOUBLE_MONEY(1, 500, "double_money.png"),
+	AUTO_STATION(1, 1000, "auto_station.png"), DOUBLE_MONEY(1, 500, "double_money.png"),
 	SATISFIED_CUSTOMER(1, -1, "satisfied_customer.png"), BONUS_TIME(1, -2, "bonus_time.png"),
 	FASTER_COOKS(1, 500, "faster_cooks.png");
 

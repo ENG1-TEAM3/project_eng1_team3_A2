@@ -257,6 +257,9 @@ public class MapHelper {
                         case "Potato":
                             pantry.setItem(FoodItem.FoodID.potato);
                             break;
+                        case "Cook":
+                            pantry.setItem(FoodItem.FoodID.cook);
+                            break;
 					    default:
 						    pantry.setItem(FoodItem.FoodID.none);
 						    break;

@@ -129,9 +129,26 @@ public class PowerUpHandler {
 	public static PowerUp activePowerUp() {
 		return activePowerUp;
 	}
+    public PowerUp getCurrentPowerUp(int index){
+        return currentPowerUps[index];
+    }
 	
 	public int cooldown() {
 		return cooldown;
 	}
+
+    public PowerUp[] getCurrentPowerUps() {
+        return currentPowerUps;
+    }
+
+    public void restoreFromData(int cldown, PowerUp activPowerUp, PowerUp[] puSlots){
+        cooldown = cldown;
+        activePowerUp = activPowerUp;
+        this.currentPowerUps = puSlots;
+    }
+
+
+
+
 
 }

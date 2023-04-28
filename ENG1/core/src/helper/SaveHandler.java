@@ -1,6 +1,7 @@
 package helper;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import cooks.Cook;
@@ -10,6 +11,8 @@ import food.FoodItem;
 import game.GameScreen;
 import game.MenuScreen;
 import interactions.Interactions;
+import powerups.PowerUp;
+import powerups.PowerUpHandler;
 import stations.CookInteractable;
 import stations.CounterStation;
 import stations.PreparationStation;
@@ -60,7 +63,7 @@ public class SaveHandler {
         MenuScreen.mode currentMod = gameScreen.getCurrentMode();
 
         ArrayList<ArrayList<FoodItem.FoodID>> stationFoodStacks = new ArrayList<>();
-        System.out.println(ints.size);
+
         for(int i = 0; i < ints.size; i++){
             if (ints.get(i) instanceof CounterStation){
                 stationFoodStacks.add(((CounterStation) ints.get(i)).getFoodStack().toArrayList());
@@ -88,6 +91,7 @@ public class SaveHandler {
         float[] progs = new float[ints.size];
         float[] burnprogs = new float[ints.size];
         int[] stps = new int[ints.size];
+        boolean[] autocks = new boolean[ints.size];
         FoodItem.FoodID[] foodItems = new FoodItem.FoodID[ints.size];
 
         boolean[] lockedStats = new boolean[ints.size];
@@ -107,10 +111,17 @@ public class SaveHandler {
                     burnprogs[i] = ((PreparationStation) ints.get(i)).getBurnProgress();
                     stps[i] = ((PreparationStation) ints.get(i)).getStepNum();
                     foodItems[i] = ((PreparationStation) ints.get(i)).getFoodItem();
+                    }
+                autocks[i] = ((PreparationStation) ints.get(i)).hasAutoCook();
+                if (((PreparationStation) ints.get(i)).hasAutoCook()){
+                    System.out.println("one autocook found");
                 }
             }
         }
 
+        int powerUpCooldown = gameScreen.powerUpHandler.cooldown();
+        PowerUp activePower = PowerUpHandler.activePowerUp();
+        PowerUp[] curPowerUps = gameScreen.powerUpHandler.getCurrentPowerUps();
 
 
         try (FileOutputStream fos = new FileOutputStream(totalpath)){
@@ -148,7 +159,11 @@ public class SaveHandler {
             oos.writeObject(burnprogs);
             oos.writeObject(stps);
             oos.writeObject(foodItems);
+            oos.writeObject(autocks);
 
+            oos.writeObject(powerUpCooldown);
+            oos.writeObject(activePower);
+            oos.writeObject(curPowerUps);
 
             oos.flush();
             oos.close();
@@ -191,7 +206,6 @@ public class SaveHandler {
         int[] custIndices = (int[]) ois.readObject();
         int[] custSpawnTimes= (int[]) ois.readObject();
         int[] custDeadTimes = (int[]) ois.readObject();
-
         boolean[] lockdstats = (boolean[]) ois.readObject();
 
         Interactions.InteractionResult[] inters = (Interactions.InteractionResult[]) ois.readObject();
@@ -199,6 +213,13 @@ public class SaveHandler {
         float[] burnprogresses = (float[]) ois.readObject();
         int[] stepnums = (int[]) ois.readObject();
         FoodItem.FoodID[] foods = (FoodItem.FoodID[]) ois.readObject();
+        boolean[] autoCooks = (boolean[]) ois.readObject();
+
+
+        int cldown = (int) ois.readObject();
+        PowerUp activePowerup = (PowerUp) ois.readObject();
+        PowerUp[] currentPowerups = (PowerUp[]) ois.readObject();
+
 
         ois.close();
         this.gameScreen.restoreFromData(smallTimeDiff, totalSecondsPassed, repPointsLeft, money,
@@ -207,8 +228,9 @@ public class SaveHandler {
                 cookPositions, foodstacks, cookFacings, counterStationFoodStacks,
                 lastCustomerSpawnTime,
                 custOrder,custIndices,custSpawnTimes,custDeadTimes,
-                lockdstats,
-                inters, progresses, burnprogresses, stepnums, foods);
+                lockdstats, autoCooks,
+                inters, progresses, burnprogresses, stepnums, foods,
+                cldown, activePowerup, currentPowerups);
     }
 
 }

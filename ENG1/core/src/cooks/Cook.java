@@ -290,10 +290,19 @@ public class Cook extends GameEntity implements Serializable {
 				drawY += 5F;
 				continue;
 			}
-			foodSprite.setScale(2F);
-			foodSprite.setPosition(drawX - foodSprite.getWidth() / 2 + xOffset,
-					drawY + foodSprite.getHeight() / 2F + yOffset);
-			foodSprite.draw(batch);
+            if (foodList.get(i) != FoodID.cook) {
+                foodSprite.setScale(2F);
+                foodSprite.setPosition(drawX - foodSprite.getWidth() / 2 + xOffset,
+                        drawY + foodSprite.getHeight() / 2F + yOffset);
+                foodSprite.draw(batch);
+            }
+            else{
+                foodSprite.setSize(47.5F, 70);
+                foodSprite.setPosition(drawX - foodSprite.getWidth() / 2F + xOffset,
+                        drawY + (foodSprite.getHeight() / (280F/47.5F)) + yOffset);
+                foodSprite.draw(batch);
+            }
+
 			drawY += drawInc;
 		}
 	}

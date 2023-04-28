@@ -51,6 +51,8 @@ public class FoodItem {
         mushroomChop,
         potato,
         potatoCook,
+
+        cook,
         /** Default */
         none
     }
@@ -85,6 +87,7 @@ public class FoodItem {
         foodHeights.put(FoodID.mushroomChop, 20F);
         foodHeights.put(FoodID.potato, 20F);
         foodHeights.put(FoodID.potatoCook, 20F);
+        foodHeights.put(FoodID.cook, 60F);
     }
 
 }

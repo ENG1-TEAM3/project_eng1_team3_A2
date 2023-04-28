@@ -161,7 +161,8 @@ public class Interactions {
 				new Array<>(new InputKey[] { new InputKey(InputKey.InputTypes.USE, Input.Keys.F),
 						new InputKey(InputKey.InputTypes.PICK_UP, Input.Keys.E),
 						new InputKey(InputKey.InputTypes.PUT_DOWN, Input.Keys.Q),
-						new InputKey(InputKey.InputTypes.BUY_POWERUP, Input.Keys.SPACE) }));
+						new InputKey(InputKey.InputTypes.BUY_POWERUP, Input.Keys.ALT_LEFT),
+                        new InputKey(InputKey.InputTypes.ACTIVATE_POWERUP, Input.Keys.SPACE)}));
 		inputs.put(InputID.COOK_MISC,
 				new Array<>(new InputKey[] { new InputKey(InputKey.InputTypes.COOK_SWAP, Input.Keys.TAB) }));
 	}

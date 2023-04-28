@@ -26,6 +26,9 @@ public class PreparationStation extends Station {
 	private int stepNum;
 	private StationState state;
 
+    private int timeMemory;
+    private boolean hasAutoCook;
+
 	/**
 	 * The constructor for the {@link PreparationStation}.
 	 * 
@@ -50,6 +53,9 @@ public class PreparationStation extends Station {
 	 */
 	@Override
 	public void update(float delta) {
+        if (hasAutoCook && gameScreen.getTotalSecondsRunningGame() != timeMemory){
+            interact(gameScreen.getCurrentCook(), InputKey.InputTypes.USE);
+        }
 		if (inUse) {
 			if (progress < 100) {
 				float[] steps = interaction.getSteps();
@@ -69,9 +75,7 @@ public class PreparationStation extends Station {
 							inUse = false;
 						}
 					}
-
 				}
-
 				if (stepNum < steps.length) {
 					// -1 instant case
 					if (interaction.getSpeed() == -1) {
@@ -97,7 +101,7 @@ public class PreparationStation extends Station {
 				state = StationState.FINISHED;
 			}
 		}
-
+        timeMemory = gameScreen.getTotalSecondsRunningGame();
 	}
 
 	/**
@@ -128,6 +132,13 @@ public class PreparationStation extends Station {
 			renderItem.setPosition(x - renderItem.getWidth() / 2, y);
 			renderItem.draw(batch);
 		}
+        if (hasAutoCook){
+            Sprite renderCook;
+            renderCook = gameSprites.getSprite(GameSprites.SpriteID.FOOD, "cook");
+            renderCook.setSize(47.5F, 70);
+            renderCook.setPosition(x - renderCook.getWidth()/2, y + 30F);
+            renderCook.draw(batch);
+        }
 	}
 
 	private enum StationState {
@@ -196,6 +207,11 @@ public class PreparationStation extends Station {
 		if (!locked) {
 			// If the Cook is holding a food item, and they use the "Put down" control...
 			if (cook.foodStack.size() > 0 && inputType == InputKey.InputTypes.PUT_DOWN) {
+                if (cook.foodStack.peekStack() == FoodItem.FoodID.cook && !hasAutoCook){
+                    cook.foodStack.popStack();
+                    hasAutoCook = true;
+                    return;
+                }
 				// Start by getting the possible interaction result
 				Interactions.InteractionResult newInteraction = interactions.Interactions
 						.interaction(cook.foodStack.peekStack(), stationID);
@@ -271,14 +287,20 @@ public class PreparationStation extends Station {
 	}
 
     public void restoreStationFromSave(Interactions.InteractionResult inter, float progress, float burnProg, int stepNum,
-                                       FoodItem.FoodID foodItem){
-        this.interaction = inter;
-        this.progress = progress;
-        this.burnMeter = burnProg;
-        this.stepNum = stepNum;
-        this.foodItem = foodItem;
-        this.inUse = true;
-        System.out.println("Restoring an interaction at" + x +" "+ y+ foodItem.toString());
+                                       FoodItem.FoodID foodItem, boolean hasAutoCook){
+        if (inter != null) {
+            this.interaction = inter;
+            this.progress = progress;
+            this.burnMeter = burnProg;
+            this.stepNum = stepNum;
+            this.foodItem = foodItem;
+            this.inUse = true;
+            System.out.println("Restoring an interaction at" + x +" "+ y+ foodItem.toString());
+        }
+        if (hasAutoCook) {
+            this.hasAutoCook = hasAutoCook;
+            System.out.println("Restoring an autocook at" + x +" "+ y);
+        }
     }
 
 	public float getProgress() {
@@ -298,5 +320,9 @@ public class PreparationStation extends Station {
 
     public Interactions.InteractionResult getInteraction(){
         return interaction;
+    }
+
+    public boolean hasAutoCook(){
+        return hasAutoCook;
     }
 }

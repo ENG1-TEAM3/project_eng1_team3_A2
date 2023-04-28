@@ -200,11 +200,13 @@ public class GameScreen extends ScreenAdapter {
 //				System.out.println(powerUpHandler.activatePower(0));
 //			}
 			powerUpHandler.updateCoolDown(delta);
-		} else if (Interactions.isJustPressed(InputKey.InputTypes.BUY_POWERUP) && money >= 500) {
-			spendMoney(500);
-			powerUpHandler.addPowerUp(false);
-			System.out.println(powerUpHandler.activatePower(0));
-		}
+		} else if (Interactions.isJustPressed(InputKey.InputTypes.BUY_POWERUP) && money >= Constants.POWERUP_COST) {
+			spendMoney(Constants.POWERUP_COST);
+			powerUpHandler.addPowerUp(true);
+		} else if (Interactions.isJustPressed(InputKey.InputTypes.ACTIVATE_POWERUP)) {
+            powerUpHandler.activatePower(0);
+        }
+
 	}
 
 	/**
@@ -501,9 +503,10 @@ public class GameScreen extends ScreenAdapter {
                                 Cook.Facing[] cookFacings,
                                 ArrayList<?> stationFoodStacks, int lastCustomerSpawnTime,
                                 String[] custOrders, int[] cusIndices, int[] cusSpawnTimes, int[] custDeadTimes,
-                                boolean[] lockedStations,
+                                boolean[] lockedStations, boolean[] autoCooks,
                                 Interactions.InteractionResult[] inters, float[] progresses,
-                                float[] burnprogresses, int[] stepnums, FoodItem.FoodID[] foods) {
+                                float[] burnprogresses, int[] stepnums, FoodItem.FoodID[] foods,
+                                int powerUpCooldown, PowerUp activePowerup, PowerUp[] currentPowerUps) {
 
         this.money = moneyAmount;
         gameHud.updateMoneyLabel(moneyAmount);
@@ -531,10 +534,9 @@ public class GameScreen extends ScreenAdapter {
                 ((CounterStation) this.interactables.get(i)).getFoodStack().setFoodStackFromArrayList(minilist);
             }
             if (this.interactables.get(i) instanceof PreparationStation){
-                if (inters[i] != null) {
-                    ((PreparationStation) this.interactables.get(i)).restoreStationFromSave(inters[i], progresses[i],
-                            burnprogresses[i], stepnums[i], foods[i]);
-                }
+                ((PreparationStation) this.interactables.get(i)).restoreStationFromSave(inters[i], progresses[i],
+                        burnprogresses[i], stepnums[i], foods[i], autoCooks[i]);
+
             }
         }
 
@@ -543,6 +545,8 @@ public class GameScreen extends ScreenAdapter {
             this.customerController.restoreCustomerFromSave(cusIndices[i],
                      cusSpawnTimes[i], custDeadTimes[i],custOrders[i]);
         }
+
+        this.powerUpHandler.restoreFromData(powerUpCooldown, activePowerup, currentPowerUps);
 
         this.previousSecond = TimeUtils.millis() - smallTimeDifference;
         this.setTiming(totalSeconds);

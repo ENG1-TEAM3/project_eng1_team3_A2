@@ -16,6 +16,8 @@ import food.FoodStack;
 import food.Recipe;
 import game.GameScreen;
 import game.GameSprites;
+import interactions.InputKey;
+import interactions.Interactions;
 import powerups.PowerUpHandler;
 import stations.ServingStation;
 
@@ -76,7 +78,7 @@ public class GameHud extends Hud {
 		moneyLabel = new Label("Money: £0.00", new Label.LabelStyle(btfont, Color.BLACK));
 		moneyLabel.setPosition(10, 76 * Constants.V_Height / 100.0f);
 
-		powerupTimerLabel = new Label("[SPACE] to buy powerup!", new Label.LabelStyle(btfont, Color.BLACK));
+		powerupTimerLabel = new Label(String.format("%s to buy powerup!", Interactions.getKeyString(InputKey.InputTypes.BUY_POWERUP)), new Label.LabelStyle(btfont, Color.BLACK));
 		powerupTimerLabel.setPosition(Constants.V_Width / 2.0f, Constants.V_Height * .75f + 64);
 
 		if (batch != null) {
@@ -108,6 +110,8 @@ public class GameHud extends Hud {
 		shape.rect(0, Constants.V_Height - Constants.V_Height / 8f,
 				Constants.V_Width * gs.getCustomerController().returnFractionProgressUntilNextCustomer(),
 				Constants.V_Height / 8f, Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
+
+
 		for (ServingStation ss : this.servingStations) {
 			if (ss.hasCustomer()) {
 				int dedtime = ss.getCustomer().getDeadTime();
@@ -119,17 +123,27 @@ public class GameHud extends Hud {
 		}
 		shape.end();
 
-		if (PowerUpHandler.activePowerUp() != null) {
+		if (gs.powerUpHandler.getCurrentPowerUps()[0] != null) {
 			batch.begin();
 			activePowerUpSprite.setTexture(
-					new Texture(Gdx.files.internal("powerups/" + PowerUpHandler.activePowerUp().spritePath())));
+					new Texture(Gdx.files.internal("powerups/" + gs.powerUpHandler.getCurrentPowerUp(0).spritePath())));
 			batch.draw(activePowerUpSprite.getTexture(), Constants.V_Width / 2.0f, Constants.V_Height * .75f, 64, 64);
 			batch.end();
-			powerupTimerLabel.setText(String.format("%s \nuses: %d",
-					PowerUpHandler.activePowerUp().spritePath().replace(".png", "").replace("_", " ").toUpperCase(),
-					gs.powerUpHandler.cooldown()));
-		} else {
-			powerupTimerLabel.setText(String.format("[SPACE] to buy powerup!"));
+			powerupTimerLabel.setText(String.format("%s : Press [%s] to activate, Press [%s to reroll] (Costs %s)", gs.powerUpHandler.getCurrentPowerUp(0).spritePath().replace(".png", "").replace("_", " ").toUpperCase(),
+                    Interactions.getKeyString(InputKey.InputTypes.ACTIVATE_POWERUP),
+                    Interactions.getKeyString(InputKey.InputTypes.BUY_POWERUP),
+                    Constants.POWERUP_COST));
+        } else if (PowerUpHandler.activePowerUp() != null) {
+            batch.begin();
+            activePowerUpSprite.setTexture(
+                    new Texture(Gdx.files.internal("powerups/" + PowerUpHandler.activePowerUp().spritePath())));
+            batch.draw(activePowerUpSprite.getTexture(), Constants.V_Width / 2.0f, Constants.V_Height * .75f, 64, 64);
+            batch.end();
+            powerupTimerLabel.setText(String.format("%s \nuses: %d",
+                    PowerUpHandler.activePowerUp().spritePath().replace(".png", "").replace("_", " ").toUpperCase(),
+                    gs.powerUpHandler.cooldown()));
+        } else {
+			powerupTimerLabel.setText(String.format("[%s] to buy powerup! (Costs %s)", Interactions.getKeyString(InputKey.InputTypes.BUY_POWERUP) , Constants.POWERUP_COST));
 		}
 
 		super.render();

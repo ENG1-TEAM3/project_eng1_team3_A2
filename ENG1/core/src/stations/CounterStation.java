@@ -118,11 +118,18 @@ public class CounterStation extends Station {
 				drawY += 5F;
 				continue;
 			}
-			foodSprite.setScale(2F);
-			foodSprite.setPosition(drawX - foodSprite.getWidth() / 2 + xOffset,
-					drawY + foodSprite.getHeight() / 2F + yOffset);
-			foodSprite.draw(batch);
-			drawY += drawInc;
+            if (foodList.get(i) != FoodItem.FoodID.cook) {
+                foodSprite.setScale(2F);
+                foodSprite.setPosition(drawX - foodSprite.getWidth() / 2 + xOffset,
+                        drawY + foodSprite.getHeight() / 2F + yOffset);
+                foodSprite.draw(batch);
+            }
+            else{
+                foodSprite.setSize(47.5F, 70);
+                foodSprite.setPosition(drawX - foodSprite.getWidth() / 2 + xOffset,
+                        drawY + foodSprite.getHeight() / 2F + yOffset);
+                foodSprite.draw(batch);
+            }
 		}
         if (locked) {
             batch.draw(lockedSymbol, x - 64 / 2f, y - 32, 64, 64);

@@ -38,7 +38,7 @@ public class InputKey {
         USE,
         
         BUY_POWERUP,
-
+        ACTIVATE_POWERUP,
         // COOK_MOVEMENT
         /** Player moving up. */
         COOK_UP,

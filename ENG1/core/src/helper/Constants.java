@@ -17,6 +17,10 @@ public class Constants {
 	/** The ViewPort / Window Height. */
 	public static final int V_Height = 1080;
 
+    public static final int POWERUP_COST = 200;
+
+    public static final int STAFF_COST = 1000;
+
 	public static final String mapPath = "Maps/StationsMap3.tmx";
 
 	/** Layer used to retrieve the map width and height in pixels */

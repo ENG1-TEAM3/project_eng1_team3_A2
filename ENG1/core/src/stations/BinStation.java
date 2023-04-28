@@ -2,7 +2,9 @@ package stations;
 
 import com.badlogic.gdx.math.Rectangle;
 import cooks.Cook;
+import food.FoodItem;
 import game.GameScreen;
+import helper.Constants;
 import interactions.InputKey;
 
 /** The Bin Station Class.
@@ -32,7 +34,9 @@ public class BinStation extends Station {
     public void interact(Cook cook, InputKey.InputTypes inputType) {
         // Only bin if user inputs USE or PUT_DOWN
         if (inputType == InputKey.InputTypes.USE || inputType == InputKey.InputTypes.PUT_DOWN) {
-            cook.foodStack.popStack();
+            if (cook.foodStack.popStack() == FoodItem.FoodID.cook){
+                gameScreen.addMoney(Constants.STAFF_COST);
+            }
         }
     }
 }

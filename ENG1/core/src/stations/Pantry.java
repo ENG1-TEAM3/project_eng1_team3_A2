@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import cooks.Cook;
 import food.FoodItem;
 import game.GameScreen;
+import helper.Constants;
 import interactions.InputKey;
 
 /**
@@ -48,6 +49,14 @@ public class Pantry extends Station {
         if (inputType == InputKey.InputTypes.PICK_UP || inputType == InputKey.InputTypes.USE) {
             // Add the new FoodItem onto the stack.
             FoodItem.FoodID addedFood = foodID;
+            if (addedFood == FoodItem.FoodID.cook){
+                if (gameScreen.getMoney() >= Constants.STAFF_COST) {
+                    gameScreen.spendMoney(Constants.STAFF_COST);
+                }
+                else {
+                    return;
+                }
+            }
             // If the foodID is "bun", check which bun it should add.
             if (foodID == FoodItem.FoodID.bun) {
                 boolean bottom = true;
