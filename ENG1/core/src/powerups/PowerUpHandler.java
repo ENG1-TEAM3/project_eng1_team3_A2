@@ -3,9 +3,16 @@ package powerups;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+
 import food.FoodStack;
 import food.Recipe;
 import game.GameScreen;
+import game.GameSprites;
 import interactions.InputKey.InputTypes;
 import stations.CookInteractable;
 import stations.PreparationStation;
@@ -38,6 +45,7 @@ public class PowerUpHandler {
 
 	public PowerUpHandler(GameScreen gameScreen) {
 		this.gameScreen = gameScreen;
+		activePowerUpSprite = new Sprite();
 	}
 
 	public PowerUp activatePower(int slot) {
@@ -50,6 +58,7 @@ public class PowerUpHandler {
 		}
 
 		activePowerUp = currentPowerUps[slot];
+		activePowerUpSprite.setTexture(new Texture(Gdx.files.internal("powerups/" + activePowerUp.spritePath())));
 		cooldown = Math.abs(activePowerUp.duration());
 
 		currentPowerUps[slot] = null;
@@ -58,7 +67,7 @@ public class PowerUpHandler {
 
 	public static boolean usePowerUp() {
 		cooldown--;
-		
+
 		if (activePowerUp == null) {
 			return false;
 		}
@@ -69,6 +78,8 @@ public class PowerUpHandler {
 
 		return true;
 	}
+
+	Sprite activePowerUpSprite;
 
 	public boolean updateCoolDown(float dt) {
 
@@ -102,9 +113,13 @@ public class PowerUpHandler {
 		return false;
 	}
 
-	public void addPowerUp() {
+	public void render(SpriteBatch batch, Vector2 pos) {
+		batch.draw(activePowerUpSprite, pos.x * 32 - 16, pos.y * 32 - 16, 32, 32);
+	}
+
+	public void addPowerUp(boolean reset) {
 		for (int i = 0; i < POWERUP_SLOTS; i++) {
-			if (currentPowerUps[i] == null) {
+			if (currentPowerUps[i] == null || reset) {
 				currentPowerUps[i] = powerUps.get(random.nextInt(powerUps.size()));
 				return;
 			}
@@ -114,6 +129,10 @@ public class PowerUpHandler {
 	public static PowerUp activePowerUp() {
 
 		return activePowerUp;
+	}
+	
+	public int cooldown() {
+		return cooldown;
 	}
 
 }

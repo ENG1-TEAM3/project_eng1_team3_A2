@@ -228,10 +228,15 @@ public class GameScreen extends ScreenAdapter {
 		}
 
 		if (PowerUpHandler.activePowerUp() != null) {
+//			if (Interactions.isJustPressed(InputKey.InputTypes.BUY_POWERUP) && money >= 500) {
+//				spendMoney(250);
+//				powerUpHandler.addPowerUp(true);
+//				System.out.println(powerUpHandler.activatePower(0));
+//			}
 			powerUpHandler.updateCoolDown(delta);
-		} else if (Interactions.isPressed(InputKey.InputTypes.BUY_POWERUP) && money >= 500) {
+		} else if (Interactions.isJustPressed(InputKey.InputTypes.BUY_POWERUP) && money >= 500) {
 			spendMoney(500);
-			powerUpHandler.addPowerUp();
+			powerUpHandler.addPowerUp(false);
 			System.out.println(powerUpHandler.activatePower(0));
 		}
 	}
