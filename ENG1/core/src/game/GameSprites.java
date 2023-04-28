@@ -78,8 +78,8 @@ public class GameSprites {
             for (TextureAtlas.AtlasRegion spriteRegion : thisAtlas.getRegions()) {
                 spriteMap.put(spriteKey(spriteID,spriteRegion.name),thisAtlas.createSprite(spriteRegion.name));
             }
-            createNonAtlasResources();
         }
+        createNonAtlasResources();
     }
 
     /**
@@ -170,6 +170,33 @@ public class GameSprites {
         Texture ts14 = new Texture(Gdx.files.internal("cooks/normal down2.png"));
         Sprite ns14 = new Sprite(ts14);
         spriteMap.put(spriteKey(SpriteID.FOOD, "cook"), ns14);
+
+
+        String path = "cooks/";
+        String[] directions = new String[] {"up", "left", "right", "down"};
+        String[] types = new String[] {"normal","hold"};
+        String[] hashTypes = new String[] {"","h"};
+        String[] cookFileNums = new String[] {"1","3"};
+        String[] cookIdents = new String[] {"c1","c2"};
+        String direction;
+        String type;
+        String cookNumber;
+
+
+        for (int i = 0; i < 2; i++){
+            cookNumber = cookFileNums[i];
+            for (int j = 0; j<4; j++) {
+                direction = directions[j];
+                for (int k = 0; k < 2; k++) {
+                    type = types[k];
+                    Texture text1 = new Texture(path+type+" "+direction+cookNumber+".png");
+                    Sprite spr1 = new Sprite(text1);
+                    spriteMap.put(spriteKey(SpriteID.COOK, cookIdents[i] + hashTypes[k] + direction.toUpperCase()),spr1);
+                }
+            }
+        }
+
+
     }
 
 

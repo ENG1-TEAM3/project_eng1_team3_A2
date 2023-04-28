@@ -166,12 +166,22 @@ public class Cook extends GameEntity implements Serializable {
 	 */
 	private void setSprite() {
 		// Set up sprite string
-		String spriteName = "";
+        String spriteName;
+        if (this.ID == 1) {
+            spriteName = "c1";
+        }
+        else if (this.ID == 2) {
+            spriteName = "c2";
+        }
+        else{
+            spriteName = "";
+        }
 		// If holding something, add "h" to the start of the sprite name.
 		if (foodStack.size() > 0) {
 			spriteName += "h";
 		}
 		sprite = gameSprites.getSprite(GameSprites.SpriteID.COOK, spriteName + dir);
+
 	}
 
 	public void setFacing(Cook.Facing face) {

@@ -101,6 +101,9 @@ public class GameScreen extends ScreenAdapter {
 
 		powerUpHandler = new PowerUpHandler(this);
 		gameHud.updateMoneyLabel(money);
+
+        this.cooks.get(1).setCookID(1);
+        this.cooks.get(2).setCookID(2);
 	}
 
 
@@ -460,6 +463,8 @@ public class GameScreen extends ScreenAdapter {
 			this.orthogonalTiledMapRenderer = mapHelper.getOrthoRenderer();
 		}
 		cookIndex = -1;
+        this.cooks.get(1).setCookID(1);
+        this.cooks.get(2).setCookID(2);
 	}
 
 	/**
