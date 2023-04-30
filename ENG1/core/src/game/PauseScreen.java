@@ -104,7 +104,8 @@ public class PauseScreen extends ScreenAdapter {
             screenController.setScreen(ScreenID.CREDITS);
         }
         else if (Interactions.isJustPressed(InputKey.InputTypes.RESET_GAME)) {
-            screenController.resetGameScreen();
+            screenController.
+                    resetGameScreen();
             screenController.setScreen(ScreenID.MENU);
         }
 

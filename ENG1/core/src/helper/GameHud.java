@@ -151,6 +151,7 @@ public class GameHud extends Hud {
                     Constants.POWERUP_COST));
 
         } else if (PowerUpHandler.activePowerUp() != null) {
+            batch.setProjectionMatrix(o2.combined);
             batch.begin();
             activePowerUpSprite.setTexture(
                     new Texture(Gdx.files.internal("powerups/" + PowerUpHandler.activePowerUp().spritePath())));

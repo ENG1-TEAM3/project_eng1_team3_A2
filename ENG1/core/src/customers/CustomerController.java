@@ -53,7 +53,6 @@ public class CustomerController {
 		customerSprite.setSize(42.5F, 70);
 		servingStations = new Array<>();
 		this.gameScreen = gameScreen;
-		this.lastCustomerSpawnTime = gameScreen.getTotalSecondsRunningGame();
 	}
 
 	/**

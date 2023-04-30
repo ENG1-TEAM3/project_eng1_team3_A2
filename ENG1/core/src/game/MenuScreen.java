@@ -272,6 +272,7 @@ public class MenuScreen extends ScreenAdapter {
                 screenController.setScreen(ScreenID.GAME);
                 ((GameScreen) screenController.getScreen(ScreenID.GAME)).startGame(customer, currentDifficultySelection,
                         currentModeSelection, false);
+                ((GameScreen) screenController.getScreen(ScreenID.GAME)).getCustomerController().setLastCustomerSpawnTime(0);
                 setCurrentScreenState(menuState.MAIN_MENU);
             }
             modeSelectLabel.setText(getSelectionString());
@@ -285,11 +286,13 @@ public class MenuScreen extends ScreenAdapter {
             }
             loadSelectLabel.setText("FILE SELECTED: " + currentSave.toString());
             if (Interactions.isJustPressed(InputKey.InputTypes.LOAD)) {
-                GameScreen gs = ((GameScreen) screenController.getScreen(ScreenID.GAME));
-                try {
-                    gs.getSaveHandler().loadFromFile(currentSave.toString().toLowerCase()+".txt");
-                } catch (IOException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
+                if (currentSave != saveFileSelectionChoice.NO_SAVES) {
+                    GameScreen gs = ((GameScreen) screenController.getScreen(ScreenID.GAME));
+                    try {
+                        gs.getSaveHandler().loadFromFile(currentSave.toString().toLowerCase() + ".txt");
+                    } catch (IOException | ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 screenController.setScreen(ScreenID.GAME);
                 setCurrentScreenState(menuState.MAIN_MENU);
