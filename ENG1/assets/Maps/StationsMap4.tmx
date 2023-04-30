@@ -21,11 +21,42 @@
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,101,111,101,101,111
 </data>
  </layer>
- <objectgroup id="4" name="Object Layer 1">
+ <objectgroup id="4" name="Objects">
   <object id="4" name="StationServe" x="64" y="0" width="63.9957" height="64.0149"/>
   <object id="20" name="StationServe" x="128" y="0" width="63.9489" height="63.8026"/>
   <object id="25" name="StationServe" x="192" y="0" width="63.9957" height="64.0149"/>
   <object id="26" name="StationServe" x="256" y="0" width="64.0036" height="63.9667"/>
+  <object id="70" x="0" y="0">
+   <polygon points="0,0 0,479.991 64,479.991 64,0"/>
+  </object>
+  <object id="71" x="64" y="191.938">
+   <polygon points="0,0 0,288.053 64,288.053 64,0"/>
+  </object>
+  <object id="72" x="512.416" y="192.242">
+   <polygon points="0,0 0,223.627 127.835,223.627 127.835,0"/>
+  </object>
+  <object id="74" x="320.136" y="0">
+   <polygon points="0,0 959.864,0 959.864,64 179.974,64 0,64"/>
+  </object>
+  <object id="75" x="1024" y="192">
+   <polygon points="0,0 0,223.627 256.683,223.627 256.683,0"/>
+  </object>
+  <object id="77" x="1152.18" y="64.7273">
+   <polygon points="0,0 0,126.9 128.501,126.9 128.501,0"/>
+  </object>
+  <object id="78" x="128" y="352">
+   <polygon points="0,0 0,64.002 63.9965,64.002 63.9965,0"/>
+  </object>
+  <object id="79" x="448" y="352">
+   <polygon points="0,0 0,64.002 63.9965,64.002 63.9965,0"/>
+  </object>
+  <object id="80" x="640" y="352">
+   <polygon points="0,0 0,64.002 63.9965,64.002 63.9965,0"/>
+  </object>
+  <object id="81" x="960" y="352">
+   <polygon points="0,0 0,64.002 63.9965,64.002 63.9965,0"/>
+  </object>
+  <object id="68" name="CookStart" x="183.75" y="108" width="42.5" height="20"/>
   <object id="27" name="Cook" x="285" y="282" width="57" height="34"/>
   <object id="28" name="Cook" x="799.5" y="280" width="57" height="34"/>
   <object id="34" name="PantryOnion" x="640" y="64" width="64" height="64">
@@ -188,37 +219,6 @@
    <properties>
     <property name="locked" type="bool" value="false"/>
    </properties>
-  </object>
-  <object id="68" name="CookStart" x="183.75" y="108" width="42.5" height="20"/>
-  <object id="70" x="0" y="0">
-   <polygon points="0,0 0,479.991 64,479.991 64,0"/>
-  </object>
-  <object id="71" x="64" y="191.938">
-   <polygon points="0,0 0,288.053 64,288.053 64,0"/>
-  </object>
-  <object id="72" x="512.416" y="192.242">
-   <polygon points="0,0 0,223.627 127.835,223.627 127.835,0"/>
-  </object>
-  <object id="74" x="320.136" y="0">
-   <polygon points="0,0 959.864,0 959.864,64 179.974,64 0,64"/>
-  </object>
-  <object id="75" x="1024" y="192">
-   <polygon points="0,0 0,223.627 256.683,223.627 256.683,0"/>
-  </object>
-  <object id="77" x="1152.18" y="64.7273">
-   <polygon points="0,0 0,126.9 128.501,126.9 128.501,0"/>
-  </object>
-  <object id="78" x="128" y="352">
-   <polygon points="0,0 0,64.002 63.9965,64.002 63.9965,0"/>
-  </object>
-  <object id="79" x="448" y="352">
-   <polygon points="0,0 0,64.002 63.9965,64.002 63.9965,0"/>
-  </object>
-  <object id="80" x="640" y="352">
-   <polygon points="0,0 0,64.002 63.9965,64.002 63.9965,0"/>
-  </object>
-  <object id="81" x="960" y="352">
-   <polygon points="0,0 0,64.002 63.9965,64.002 63.9965,0"/>
   </object>
  </objectgroup>
 </map>

@@ -25,7 +25,7 @@ public class Constants {
     /** The amount of money (in pennies) that you start with */
     public static final int MONEY_START = 2000;
     /** The path of the tilemap to load*/
-	public static final String mapPath = "Maps/StationsMap3.tmx";
+	public static final String mapPath = "Maps/StationsMap4.tmx";
 
 	/** Layer used to retrieve the map width and height in pixels */
 	private static final TiledMapTileLayer tl = ((TiledMapTileLayer) (new TmxMapLoader().load(mapPath).getLayers().get(0)));
