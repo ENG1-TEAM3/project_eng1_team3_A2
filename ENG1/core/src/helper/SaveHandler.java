@@ -1,9 +1,7 @@
 package helper;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import cooks.Cook;
 import cooks.GameEntity;
 import customers.Customer;
@@ -21,11 +19,28 @@ import stations.Station;
 import java.io.*;
 import java.util.ArrayList;
 
+
+/**
+ * A class to handle loading and saving the game
+ */
 public class SaveHandler {
+    /** The gameScreen to save and load to*/
     public GameScreen gameScreen;
+
+    /**
+     * The SaveHandler Constructor
+     * @param gs The gameScreen to save and load to
+     */
     public SaveHandler(GameScreen gs){
         this.gameScreen = gs;
     }
+
+    /**
+     * Save the game to a file
+     * @param fileName - Should be "save1.txt" or "save2.txt" or "save3.txt"
+     * @param timeOfPause - The time in ms when the game was paused last
+     * @throws IOException Something goes wrong with the file system
+     */
     public void saveToFile(String fileName, long timeOfPause) throws IOException {
         String localpath = Gdx.files.getLocalStoragePath();
         String totalpath = localpath + fileName;
@@ -119,7 +134,7 @@ public class SaveHandler {
             }
         }
 
-        int powerUpCooldown = gameScreen.powerUpHandler.cooldown();
+        int powerUpCooldown = gameScreen.powerUpHandler.getCooldown();
         PowerUp activePower = PowerUpHandler.activePowerUp();
         PowerUp[] curPowerUps = gameScreen.powerUpHandler.getCurrentPowerUps();
 
@@ -169,9 +184,14 @@ public class SaveHandler {
             oos.close();
         }
 
-
-
     }
+
+    /**
+     * Load the game into the gameScreen this class stores
+     * @param filename The filename - Should be one of the options specified in the filename of the saveToFile method description
+     * @throws IOException - If something in the file system goes wrong (e.g. file does not exist)
+     * @throws ClassNotFoundException - If a class cannot be read from the file correctly
+     */
     public void loadFromFile(String filename) throws IOException, ClassNotFoundException{
         FileInputStream fis = new FileInputStream(Gdx.files.getLocalStoragePath() + filename);
         ObjectInputStream ois = new ObjectInputStream(fis);
@@ -214,7 +234,6 @@ public class SaveHandler {
         int[] stepnums = (int[]) ois.readObject();
         FoodItem.FoodID[] foods = (FoodItem.FoodID[]) ois.readObject();
         boolean[] autoCooks = (boolean[]) ois.readObject();
-
 
         int cldown = (int) ois.readObject();
         PowerUp activePowerup = (PowerUp) ois.readObject();

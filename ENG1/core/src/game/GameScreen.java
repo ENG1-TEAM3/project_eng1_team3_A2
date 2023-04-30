@@ -46,17 +46,16 @@ public class GameScreen extends ScreenAdapter {
 	private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 	private MapHelper mapHelper;
 	private final Array<CookInteractable> interactables;
-	private final CollisionHelper collisionHelper;
-	private final Array<GameEntity> gameEntities;
+    private final Array<GameEntity> gameEntities;
 	private final DrawQueueComparator drawQueueComparator;
 
 	// Objects
-	private Array<Cook> cooks;
+	private final Array<Cook> cooks;
 	private Cook cook;
 	private int cookIndex;
-	private CustomerController customerController;
+	private final CustomerController customerController;
 	private int reputation = 3, money = Constants.MONEY_START;
-	private SaveHandler sv;
+	private final SaveHandler sv;
 	private MenuScreen.difficulty currentDifficulty;
 	private MenuScreen.mode currentMode;
 	public PowerUpHandler powerUpHandler;
@@ -70,11 +69,12 @@ public class GameScreen extends ScreenAdapter {
 	 *                         use.
 	 */
 	public GameScreen(ScreenController screenController, OrthographicCamera camera) {
+
 		this.previousSecond = TimeUtils.millis();
 		this.cooks = new Array<>();
 		this.interactables = new Array<>();
-		this.collisionHelper = CollisionHelper.getInstance();
-		this.collisionHelper.setGameScreen(this);
+        CollisionHelper collisionHelper = CollisionHelper.getInstance();
+		collisionHelper.setGameScreen(this);
 		this.cookIndex = -1;
 		this.camera = camera;
 		this.screenController = screenController;
@@ -97,17 +97,20 @@ public class GameScreen extends ScreenAdapter {
 		this.gameHud = new GameHud(batch, shape, this);
 		this.gameHud.setServingStations(this.customerController.getServingStations());
 		this.instructionHUD = new InstructionHud(batch);
-		this.sv = new SaveHandler(this);
 
+        // New classes for assessment 2
+		this.sv = new SaveHandler(this);
 		powerUpHandler = new PowerUpHandler(this);
 		gameHud.updateMoneyLabel(money);
-
         this.cooks.get(1).setCookID(1);
         this.cooks.get(2).setCookID(2);
 	}
 
+    //Fixed for assessment 2 - originally the timer ran too slow
 
-
+    /**
+     * Update the seconds, minutes and hours passed.
+     */
 	public void updateTiming() {
 		long diffInMillis = TimeUtils.timeSinceMillis(previousSecond);
 		if (diffInMillis >= (1000 - msPast1s)) {
@@ -125,23 +128,45 @@ public class GameScreen extends ScreenAdapter {
 		}
 		gameHud.updateTime(hoursPassed, minutesPassed, secondsPassed);
 	}
+
+    /**
+     * Set the seconds, minutes and hours passed based on an amount of seconds
+     * @param totalSecs The amount of seconds passed
+     */
     public void setTiming(int totalSecs){
         hoursPassed = totalSecs / 3600;
         minutesPassed = (totalSecs - (3600*hoursPassed)) / 60;
         secondsPassed = totalSecs - (3600 * hoursPassed) - (60* minutesPassed);
     }
+
+    /**
+     * Get the amount of time the game has spent running (this stops while paused)
+     * @return The amount of time specified in line above
+     */
 	public int getTotalSecondsRunningGame() {
 		return hoursPassed * 60 * 60 + minutesPassed * 60 + secondsPassed;
 	}
 
+    /**
+     * Get the current reputation
+     * @return the reputation value
+     */
 	public int getReputation() {
 		return reputation;
 	}
 
+    /**
+     * Get the current amount of money
+     * @return the money value
+     */
 	public int getMoney() {
 		return money;
 	}
 
+    /**
+     * Get the current selected cook
+     * @return the cook selected
+     */
 	public Cook getCurrentCook() {
 		return cook;
 	}
@@ -166,8 +191,8 @@ public class GameScreen extends ScreenAdapter {
 			((GameOverScreen) screenController.getScreen(ScreenController.ScreenID.GAMEOVER)).setTextLabel("YOU WIN!");
 		}
 
+        // A copy is taken here as the below for loop may remove elements from the array.
 		Array<Customer> customersCopy = new Array<>(customerController.getCustomers());
-
 		for (Customer cus : customersCopy) {
 			customerController.removeCustomerIfExpired(cus);
 		}
@@ -196,16 +221,15 @@ public class GameScreen extends ScreenAdapter {
 			entity.update(delta);
 		}
 
+        //Added for Assessment 2 - Power up related code
+
 		if (PowerUpHandler.activePowerUp() != null) {
-//			if (Interactions.isJustPressed(InputKey.InputTypes.BUY_POWERUP) && money >= 500) {
-//				spendMoney(250);
-//				powerUpHandler.addPowerUp(true);
-//				System.out.println(powerUpHandler.activatePower(0));
-//			}
 			powerUpHandler.updateCoolDown(delta);
+
 		} else if (Interactions.isJustPressed(InputKey.InputTypes.BUY_POWERUP) && money >= Constants.POWERUP_COST) {
 			spendMoney(Constants.POWERUP_COST);
 			powerUpHandler.addPowerUp(true);
+
 		} else if (Interactions.isJustPressed(InputKey.InputTypes.ACTIVATE_POWERUP)) {
             powerUpHandler.activatePower(0);
         }
@@ -302,14 +326,26 @@ public class GameScreen extends ScreenAdapter {
 		return world;
 	}
 
+    /**
+     * Get the saveHandler
+     * @return the saveHandler instance
+     */
     public SaveHandler getSaveHandler(){
         return this.sv;
     }
 
+    /**
+     * Get the array of GameEntities
+     * @return the Array of GameEntities
+     */
 	public Array<GameEntity> getGameEntities() {
 		return this.gameEntities;
 	}
 
+    /**
+     * Get the array of Cooks
+     * @return the array of Cooks
+     */
 	public Array<Cook> getCooks() {
 		return this.cooks;
 	}
@@ -340,7 +376,11 @@ public class GameScreen extends ScreenAdapter {
 		return cooks.size - 1;
 	}
 
-	public void loseReputation() {
+
+    /**
+     * Lose a reputation point if possible. If we cant then the game ends
+     */
+    public void loseReputation() {
 		if (reputation > 1) {
 			reputation--;
 		} else {
@@ -353,6 +393,10 @@ public class GameScreen extends ScreenAdapter {
 		gameHud.updateReputationLabel(reputation);
 	}
 
+    /**
+     * Add a certain amount of money to the current amount
+     * @param amount The amount of money to add
+     */
 	public void addMoney(int amount) {
 		if (PowerUpHandler.activePowerUp() == PowerUp.DOUBLE_MONEY) {
 			amount *= 2;
@@ -361,6 +405,11 @@ public class GameScreen extends ScreenAdapter {
 		gameHud.updateMoneyLabel(money);
 	}
 
+    /**
+     * Spend a certain amount of money
+     * @param amount The amount money to spend
+     * @return true if the money could be spent, false otherwise
+     */
 	public boolean spendMoney(int amount) {
 		System.out.println("AMOUNT OF MONEY SPENT: " + amount);
 		if (money - amount < 0) {
@@ -395,6 +444,10 @@ public class GameScreen extends ScreenAdapter {
 		previousSecond = newSecond;
 	}
 
+    /**
+     * Add an amount of milliseconds to the total time paused
+     * @param amount The amount defined in the line above
+     */
 	public void addToTimePaused(long amount) {
 		totalTimePaused += amount;
 	}
@@ -505,6 +558,38 @@ public class GameScreen extends ScreenAdapter {
         }
 	}
 
+    // Added for Assessment 2
+    /**
+     * Restore the gameScreen to another state using the passed in data - Called by SaveHandler
+     * @param smallTimeDifference - The amount of milliseconds past the amount of seconds in the next parameter
+     * @param totalSeconds - Amount of seconds passed of the game running
+     * @param repPoints - Reputation amount
+     * @param moneyAmount - Amount of money
+     * @param customersServed - Amount of customers served
+     * @param customersLeft - Amount of customers left to serve
+     * @param customersToServe - Amount of customers total to serve
+     * @param loadedDiff - The difficulty (only makes a difference if the mode is scenario)
+     * @param loadedMode - The mode
+     * @param cookPositions - An array of cook positions, in form [x,y,x1,y1,x2,y2]
+     * @param cookFoodStacks - An Arraylist of ArrayLists that stores the cooks' food stacks
+     * @param cookFacings - An array of cook facings
+     * @param stationFoodStacks - An Arraylist of ArrayLists that stores the counter stations inventories
+     * @param lastCustomerSpawnTime - The time in seconds of the last customer spawn
+     * @param custOrders - An array of strings corresponding to the customers orders
+     * @param cusIndices - An array of integers corresponding to the customers indexes
+     * @param cusSpawnTimes - An array of integers corresponding to the customers spawn times in seconds
+     * @param custDeadTimes - An array of integers corresponding to the customers leave times in seconds
+     * @param lockedStations - An array of booleans indicating whether a station is locked or not
+     * @param autoCooks - An array of booleans indicating whether a station has an AutoCook or not
+     * @param inters - An array of InteractionResults corresponding to current food items being prepared on stations
+     * @param progresses - An array of floats corresponding to the progress of existing food item preparations
+     * @param burnprogresses - An array of floats corresponding to the burn levels of current cooking preparations
+     * @param stepnums - An array of integers corresponding to the current cooking steps of preparations
+     * @param foods - An array of FoodItems corresponding to the current storage of preparation stations
+     * @param powerUpCooldown - The cooldown of the current powerUp
+     * @param activePowerup- The current active powerUp
+     * @param currentPowerUps - The array of current stored powerUps (just one value in this implementation)
+     */
     public void restoreFromData(long smallTimeDifference, int totalSeconds, int repPoints, int moneyAmount,
                                 int customersServed, int customersLeft, int customersToServe,
                                 MenuScreen.difficulty loadedDiff, MenuScreen.mode loadedMode,

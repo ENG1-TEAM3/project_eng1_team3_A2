@@ -28,6 +28,7 @@ public class Interactions {
 				new InteractionResult(FoodID.tomatoChop, new float[] { 25, 50, 75 }, -1, -1));
 		interactions.put(InteractionKey(FoodID.onion, StationID.cut),
 				new InteractionResult(FoodID.onionChop, new float[] { 25, 50, 75 }, -1, -1));
+        // New interactions added for assessment 2 (not meat)
 		interactions.put(InteractionKey(FoodID.mushroom, StationID.cut),
 				new InteractionResult(FoodID.mushroomChop, new float[] { 25, 50, 75 }, -1, -1));
 		interactions.put(InteractionKey(FoodID.pepperoni, StationID.cut),
@@ -52,9 +53,10 @@ public class Interactions {
 	 * to change, and to specify at what percentages a user input is required.
 	 */
 	public static class InteractionResult implements Serializable {
-		private FoodID result;
-		private float[] steps;
-		private float speed, burnSpeed;
+		private final FoodID result;
+		private final float[] steps;
+		private final float speed;
+        private final float burnSpeed;
 
 		/**
 		 * InteractionResult Constructor

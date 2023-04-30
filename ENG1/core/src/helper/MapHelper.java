@@ -158,14 +158,14 @@ public class MapHelper {
 				if (rectangleName.equals("CookStart")) {
 					Body body = makeBody(rectangle, false);
 					int cookInd = gameScreen
-							.addCook(new Cook(rectangle.getWidth(), rectangle.getHeight(), body, gameScreen));
+							.addCook(new Cook(rectangle.getWidth(), rectangle.getHeight(), body));
 					gameScreen.setCook(cookInd);
 					continue;
 				}
 
 				if (rectangleName.equals("Cook")) {
 					Body body = makeBody(rectangle, false);
-					gameScreen.addCook(new Cook(rectangle.getWidth(), rectangle.getHeight(), body, gameScreen));
+					gameScreen.addCook(new Cook(rectangle.getWidth(), rectangle.getHeight(), body));
 					continue;
 				}
 
@@ -173,8 +173,8 @@ public class MapHelper {
 				normalRect.setX(normalRect.getX() * PPM);
 				normalRect.setY(normalRect.getY() * PPM);
 
-				boolean locked = mapObject.getProperties().get("locked") == null ? false
-						: (boolean) mapObject.getProperties().get("locked");
+                // New for assessment 2
+				boolean locked = mapObject.getProperties().get("locked") != null && (boolean) mapObject.getProperties().get("locked");
 
 				if (rectangleName.startsWith("Station")) {
 					// Stations
@@ -236,6 +236,7 @@ public class MapHelper {
 					    case "Bun":
 						    pantry.setItem(FoodItem.FoodID.bun);
 						    break;
+                        // New food types for Assessment 2 below
                         case "Dough":
                             pantry.setItem(FoodItem.FoodID.dough);
                             break;

@@ -143,19 +143,27 @@ public class Station extends CookInteractable {
 
 	}
 
+    /**
+     * Check if the station is locked
+     * @return true if it is locked, false otherwise
+     */
 	public boolean isLocked() {
 		return locked;
 	}
 
+    /**
+     * Check whether the station is in use
+     * @return true if it is in use, false otherwise
+     */
 	public boolean isInUse() {
 		return inUse;
 	}
 
+    /**
+     * Set the station to be locked or not
+     * @param lock Boolean whether the station is locked or not
+     */
 	public void setLocked(boolean lock) {
 		this.locked = lock;
-	}
-
-	public void setUsage(boolean isUsed) {
-		this.inUse = isUsed;
 	}
 }

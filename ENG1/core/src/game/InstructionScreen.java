@@ -24,11 +24,8 @@ import interactions.Interactions;
 public class InstructionScreen extends ScreenAdapter {
 
     private ScreenID prevScreenID = ScreenID.MENU;
-    private OrthographicCamera camera;
-    private ScreenController screenController;
-    private FitViewport viewport;
+    private final ScreenController screenController;
     private Stage stage;
-    private SpriteBatch batch;
 
     /**
      * The constructor for the {@link PauseScreen}.
@@ -95,11 +92,10 @@ public class InstructionScreen extends ScreenAdapter {
         table.add(extraText);
 
         this.screenController = screenController;
-        this.camera = orthographicCamera;
-        this.batch = screenController.getSpriteBatch();
+        SpriteBatch batch = screenController.getSpriteBatch();
 
-        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
-        if (this.batch != null) {
+        FitViewport viewport = new FitViewport(Constants.V_Width, Constants.V_Height, orthographicCamera);
+        if (batch != null) {
             stage = new Stage(viewport, batch);
             stage.addActor(table);
         }

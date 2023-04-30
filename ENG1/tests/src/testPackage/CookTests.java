@@ -26,7 +26,7 @@ public class CookTests {
     public void testFoodRelativeMethods() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
         World w1 = new World(new Vector2(0,0), false);
-        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1), null);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1));
         // gameScreen is not used, needs refactoring
         Method privateFoodRelativeX = Cook.class.getDeclaredMethod("foodRelativeX", Cook.Facing.class);
         privateFoodRelativeX.setAccessible(true);
@@ -48,7 +48,7 @@ public class CookTests {
     public void testOpposite() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException{
         Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
         World w1 = new World(new Vector2(0,0), false);
-        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1), null);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1));
 
         Method privateOpposite = Cook.class.getDeclaredMethod("opposite", Cook.Facing.class);
         privateOpposite.setAccessible(true);
@@ -62,7 +62,7 @@ public class CookTests {
     public void testRotate() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException{
         Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
         World w1 = new World(new Vector2(0,0), false);
-        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1), null);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1));
 
         Method privateRotate = Cook.class.getDeclaredMethod("rotate90c", Cook.Facing.class);
         privateRotate.setAccessible(true);
@@ -78,7 +78,7 @@ public class CookTests {
         Interactions.resetKeys();
         Rectangle r1 = new Rectangle(0.0f,100.0f,42.50f,20.00f);
         World w1 = new World(new Vector2(0,0), false);
-        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1), null);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1));
 
         float prevpos = c1.getBody().getPosition().y;
         Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP, Input.Keys.W), false, false);
@@ -114,7 +114,7 @@ public class CookTests {
         Interactions.resetKeys();
         Rectangle r1 = new Rectangle(0.0f,100.0f,42.50f,20.00f);
         World w1 = new World(new Vector2(0,0), false);
-        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1), null);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1));
 
         assertEquals("This test asserts that the X position (pixel space) is calculated correctly on initialization", 0.0f, c1.getX(), 0.001);
         assertEquals("This test asserts that the Y position (pixel space) is calculated correctly on initialization",100.0f, c1.getY(), 0.001);
@@ -143,7 +143,7 @@ public class CookTests {
     public void testCookDirection(){
         Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
         World w1 = new World(new Vector2(0,0), false);
-        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1), null);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1));
 
         //============================================ONE=KEYPRESS======================================================
         Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_UP, Input.Keys.W), false, false);

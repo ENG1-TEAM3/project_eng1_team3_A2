@@ -14,14 +14,10 @@ import java.util.HashMap;
  */
 public class ScreenController {
 
-    private Boot boot;
-    private GameScreen gameScreen;
-    private MenuScreen menuScreen;
-    private GameOverScreen gameOverScreen;
-    private CreditsScreen creditsScreen;
-    private InstructionScreen instructionScreen;
-    private PauseScreen pauseScreen;
-    private HashMap<ScreenID, ScreenAdapter> screens;
+    private final Boot boot;
+    private final GameScreen gameScreen;
+    private final InstructionScreen instructionScreen;
+    private final HashMap<ScreenID, ScreenAdapter> screens;
     private long playTimeDiff;
     private long pauseStartTime;
 
@@ -36,20 +32,20 @@ public class ScreenController {
         this.boot = boot;
 
         this.gameScreen = new GameScreen(this,gameCam);
-        this.menuScreen = new MenuScreen(this,uiCam);
-        this.gameOverScreen = new GameOverScreen(this,uiCam);
+        MenuScreen menuScreen = new MenuScreen(this, uiCam);
+        GameOverScreen gameOverScreen = new GameOverScreen(this, uiCam);
         this.instructionScreen = new InstructionScreen(this,uiCam);
-        this.creditsScreen = new CreditsScreen(this,uiCam);
+        CreditsScreen creditsScreen = new CreditsScreen(this, uiCam);
 
         this.screens = new HashMap<>();
-        this.screens.put(ScreenID.MENU,menuScreen);
+        this.screens.put(ScreenID.MENU, menuScreen);
         this.screens.put(ScreenID.GAME,gameScreen);
         this.screens.put(ScreenID.GAMEOVER, gameOverScreen);
         this.screens.put(ScreenID.INSTRUCTIONS,instructionScreen);
-        this.screens.put(ScreenID.CREDITS,creditsScreen);
+        this.screens.put(ScreenID.CREDITS, creditsScreen);
 
-        this.pauseScreen = new PauseScreen(this,uiCam);
-        this.screens.put(ScreenID.PAUSE,pauseScreen);
+        PauseScreen pauseScreen = new PauseScreen(this, uiCam);
+        this.screens.put(ScreenID.PAUSE, pauseScreen);
     }
 
     /**
@@ -118,6 +114,11 @@ public class ScreenController {
         gameScreen.addToTimePaused(TimeUtils.millis() - pauseStartTime);
         setScreen(ScreenID.GAME);
     }
+
+    /**
+     * Return the unix time in ms of the last game pause
+     * @return The time defined above
+     */
     public long getPauseStartTime(){
         return pauseStartTime;
     }

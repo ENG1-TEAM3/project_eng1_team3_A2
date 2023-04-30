@@ -37,21 +37,35 @@ public class FoodItem {
         bottomBun,
         /** Top Bun -&gt; Highest bun on {@link FoodStack} is {@link #bottomBun} */
         topBun,
+        /** Dough */
         dough,
+        /** Cooked Dough (Pizza base) */
         doughCook,
+        /** Cheese */
         cheese,
+        /** Chopped cheese */
         cheeseChop,
+        /** Beans */
         beans,
+        /** Cooked Beans */
         beansCook,
+        /** Chilli */
         chili,
+        /** Cooked Chilli*/
         chiliCook,
+        /** Pepperoni */
         pepperoni,
+        /** Chopped pepperoni*/
         pepperoniChop,
+        /** Mushroom */
         mushroom,
+        /** Chopped Mushroom */
         mushroomChop,
+        /** Potato */
         potato,
+        /** Cooked Potato */
         potatoCook,
-
+        /** A cook - This is used to buy back cooks off leave (permanent auto station)-not used in any foods / recipes */
         cook,
         /** Default */
         none
@@ -72,7 +86,7 @@ public class FoodItem {
         foodHeights.put(FoodID.bun, 20F);
         foodHeights.put(FoodID.bottomBun, 10F);
         foodHeights.put(FoodID.topBun, 12F);
-
+        ///////////////////////////////ALL BELOW NEW FOR ASSESSMENT 2///////////////////////////////////////////////////
         foodHeights.put(FoodID.dough, 20F);
         foodHeights.put(FoodID.doughCook, 20F);
         foodHeights.put(FoodID.cheese, 20F);

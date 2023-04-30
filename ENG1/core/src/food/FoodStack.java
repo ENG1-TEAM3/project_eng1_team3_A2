@@ -106,6 +106,12 @@ public class FoodStack implements Serializable {
         return foodStack.toString();
     }
 
+    /////////////////////////////ALL METHODS BELOW NEW FOR ASSESSMENT 2/////////////////////////////////////////////////
+
+    /**
+     * Convert the Libgdx array food stack to an arrayList - Used for serialization as libgdx arrays are not serializable
+     * @return The ArrayList food stack
+     */
     public ArrayList<FoodID> toArrayList(){
         ArrayList<FoodID> retArrayList = new ArrayList<>();
         for (int i =0; i < foodStack.size; i++){
@@ -114,6 +120,10 @@ public class FoodStack implements Serializable {
         return retArrayList;
     }
 
+    /**
+     * Set the Array food stack using an ArrayList food stack
+     * @param foodArrayList the food stack ArrayList
+     */
     public void setFoodStackFromArrayList(ArrayList<?> foodArrayList){
         Array<FoodID> newFoodStack = new Array<>();
         for (Object fi: foodArrayList){

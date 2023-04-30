@@ -3,8 +3,6 @@ package testPackage;
 import static org.junit.Assert.*;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import cooks.Cook;
 import food.FoodItem;
 import game.Boot;
@@ -28,7 +26,7 @@ public class BinTests {
         m1.setGameScreen((GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME));
 
         Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
-        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, ((GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME)).getWorld()), null);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, ((GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME)).getWorld()));
 
 
         c1.foodStack.addStack(FoodItem.FoodID.bottomBun);

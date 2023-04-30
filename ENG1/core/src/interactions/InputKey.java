@@ -25,9 +25,13 @@ public class InputKey {
         CREDITS,
         /** Quitting the game. */
         QUIT,
+        /** Open / close the mode select screen */
         MODE_SELECT,
+        /** Open / close the load select screen */
         LOAD_SELECT,
+        /** Save the game */
         SAVE,
+        /** Load the game */
         LOAD,
         // COOK_INTERACT
         /** Put down an item onto a {@link stations.Station} in the {@link cooks.Cook}'s hands. */
@@ -36,8 +40,9 @@ public class InputKey {
         PICK_UP,
         /** Use the {@link stations.Station} in front of the Cook. */
         USE,
-        
+        /** Buy powerUp */
         BUY_POWERUP,
+        /** Activate powerUP */
         ACTIVATE_POWERUP,
         // COOK_MOVEMENT
         /** Player moving up. */
@@ -55,9 +60,9 @@ public class InputKey {
     }
 
     /** The key on the keyboard, represented as an int. */
-    private int key;
+    private final int key;
     /** The enum constant which is representing the key above. */
-    private InputTypes inputType;
+    private final InputTypes inputType;
 
     /**
      * The InputKey Constructor

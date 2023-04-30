@@ -5,7 +5,6 @@ import java.util.Random;
 
 import com.badlogic.gdx.utils.Array;
 
-import food.FoodStack;
 import food.FoodItem.FoodID;
 
 /**
@@ -31,10 +30,11 @@ public class Recipe {
 		recipes.put("Plain Burger", plainBurger);
 		prices.put("Plain Burger", 250);
 
-		Array<FoodID> topBunArray = new Array<FoodID>();
+		Array<FoodID> topBunArray = new Array<>();
 		topBunArray.add(FoodID.topBun);
-		Array<FoodID> bottomBunArray = new Array<FoodID>();
+		Array<FoodID> bottomBunArray = new Array<>();
 		bottomBunArray.add(FoodID.bottomBun);
+        // Some new recipes added for pizzas and potatoes
         Array<FoodID> emptyPrependArray = new Array<>();
         Array<FoodID> bottomCookedDough = new Array<>();
         bottomCookedDough.add(FoodID.doughCook);
@@ -104,8 +104,7 @@ public class Recipe {
 	}
 
 	/**
-	 * Creates an entry in {@link #recipes} of recipeName:(listOfFoodStacks as a
-	 * string)
+	 * Creates an entry in {@link #recipes} of recipeName: (listOfFoodStacks as a String)
 	 * 
 	 * @param recipeName       The name of the recipe
 	 * @param listOfFoodStacks All FoodStacks which equal this recipe.
@@ -122,7 +121,7 @@ public class Recipe {
 	}
 
 	/**
-	 * Generates all the combinations (think THE1 :D) of the stuff.length for the
+	 * Generates all the combinations (think THE1 :D) of the stuff length for the
 	 * stuff specified
 	 * 
 	 * @param <T>   Works for any type.
@@ -131,7 +130,7 @@ public class Recipe {
 	 */
 	@SafeVarargs
 	private static <T> Array<Array<T>> allCombos(T... stuff) {
-		return allCombosR(new Array<T>(), new Array<T>(Array.with(stuff)));
+		return allCombosR(new Array<T>(), new Array<>(Array.with(stuff)));
 	}
 
 	/**
@@ -143,16 +142,16 @@ public class Recipe {
 	 * @param <T>     Any type.
 	 * @param prepend The stuff which will appear before all combos.
 	 * @param append  The stuff which will appear after all combos.
-	 * @param stuff   The stuff to generate all combos of stuff.length of
-	 * @return An array of arrays containing all combinations with the prepend and
+	 * @param stuff   The stuff to generate all combos of stuff length of
+	 * @return An array of arrays containing all combinations with prepend and
 	 *         append.
 	 */
 	@SafeVarargs
 	private static <T> Array<Array<T>> allCombos(Array<T> prepend, Array<T> append, T... stuff) {
-		Array<Array<T>> combos = allCombosR(new Array<T>(), new Array<T>(Array.with(stuff)));
-		Array<Array<T>> newCombos = new Array<Array<T>>();
+		Array<Array<T>> combos = allCombosR(new Array<T>(), new Array<>(Array.with(stuff)));
+		Array<Array<T>> newCombos = new Array<>();
 		for (Array<T> combo : combos) {
-			Array<T> newCombo = new Array<T>();
+			Array<T> newCombo = new Array<>();
 			newCombo.addAll(prepend);
 			newCombo.addAll(combo);
 			newCombo.addAll(append);
@@ -175,20 +174,20 @@ public class Recipe {
 		// form
 		if (remaining.size == 0) {
 			// return new Array<Array<T>>(Array.with(myList));
-			Array<Array<T>> retArray = new Array<Array<T>>();
+			Array<Array<T>> retArray = new Array<>();
 			retArray.add(myList);
 			return retArray;
 		}
 		// We want to create a new branch for every single remaining item
 		// The newList and newRemaining is carried into each branch
-		Array<Array<T>> storage = new Array<Array<T>>();
+		Array<Array<T>> storage = new Array<>();
 		for (int i = 0; i < remaining.size; i++) {
 			// Create the newList for branch i
-			Array<T> newList = new Array<T>();
+			Array<T> newList = new Array<>();
 			newList.addAll(myList);
 			newList.add(remaining.get(i));
 			// Create the newRemaining for branch i
-			Array<T> newRemaining = new Array<T>();
+			Array<T> newRemaining = new Array<>();
 			newRemaining.addAll(remaining);
 			newRemaining.removeIndex(i);
 			// Create branch i and add its storage onto our storage
@@ -214,10 +213,6 @@ public class Recipe {
 		return false;
 	}
 
-	// public static Array<FoodStack> getRecipeCombos(String recipeName) {
-	// Array<FoodStack> recipeCombos = recipes.get(recipeName);
-	// return recipeCombos;
-	// }
 
 	public static String randomRecipe() {
 		Random random = new Random();

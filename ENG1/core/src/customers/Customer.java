@@ -89,21 +89,45 @@ public class Customer implements Serializable {
         return request;
     }
 
+    //////////////////////////////////ALL METHODS BELOW ADDED FOR ASSESSMENT 2//////////////////////////////////////////
+
+    /**
+     * Set the string request
+     * @param req the string
+     */
     public void setRequestName(String req){
         this.request = req;
     }
+
+    /**
+     * Set the timings for the customer
+     * @param spnTime - The time in seconds (of the game running) from game start when the customer appears
+     * @param dedTime - The time in seconds (of the game running) from game start when the customer should leave
+     */
     public void setTimings(int spnTime, int dedTime){
         this.spawnTime = spnTime;
         this.deadTime = dedTime;
     }
 
+    /**
+     * Get the spawn time of the customer
+     * @return The time in seconds of the customer spawn
+     */
     public int getSpawnTime(){
         return this.spawnTime;
     }
 
+    /**
+     * Get the leave time of the customer
+     * @return The time in seconds when the customer should leave
+     */
     public int getDeadTime(){
         return this.deadTime;
     }
 
+    /**
+     * Get the index in the stations list that the customerController uses that this customer corresponds to
+     * @return The index specified above
+     */
     public int getStationIndex() {return this.stationIndex;}
 }

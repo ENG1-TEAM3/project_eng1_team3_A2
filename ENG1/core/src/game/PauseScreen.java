@@ -27,17 +27,14 @@ import java.io.IOException;
  * see the game.
  */
 public class PauseScreen extends ScreenAdapter {
-    private ScreenController screenController;
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
+    private final ScreenController screenController;
 
-    private Viewport viewport;
     private Stage stage;
-    private GameScreen gameScreen;
+    private final GameScreen gameScreen;
     private ShapeRenderer shape;
 
     private MenuScreen.saveFileSelectionChoice currentSave;
-    private Label[] lblLabels;
+    private final Label[] lblLabels;
     private boolean shouldResetSaveLabel;
 
     /**
@@ -62,25 +59,8 @@ public class PauseScreen extends ScreenAdapter {
                 String.format("Press %s to reset",Interactions.getKeyString(InputKey.InputTypes.RESET_GAME)),
                 String.format("Press %s to quit",Interactions.getKeyString(InputKey.InputTypes.QUIT))
         };
-        /* OLD CODE
-        Label pauseLabel = new Label("PAUSED", font);
-        table.add(pauseLabel).expandX();
-        table.row();
 
-        Label continueLabel = new Label(String.format("Press %s to continue",Interactions.getKeyString(InputKey.InputTypes.UNPAUSE)), font);
-        table.add(continueLabel).expandX();
-        table.row();
-
-        Label instructionsLabel = new Label(String.format("Press %s for instructions",Interactions.getKeyString(InputKey.InputTypes.INSTRUCTIONS)), font);
-        table.add(instructionsLabel).expandX();
-        table.row();
-
-        Label resetLabel = new Label(String.format("Press %s to reset",Interactions.getKeyString(InputKey.InputTypes.RESET_GAME)), font);
-        table.add(resetLabel).expandX();
-        table.row();
-        */
-
-        /** Contains the Labels objects for the PauseScreen */
+        // Contains the Labels objects for the PauseScreen
         lblLabels = new Label[strLabels.length];
 
         for (int j = 0; j < lblLabels.length; j++) {
@@ -90,14 +70,12 @@ public class PauseScreen extends ScreenAdapter {
             table.row();
         }
 
-        // pauseLabel.setFontScale(4);
         lblLabels[0].setFontScale(4);
         this.screenController = screenController;
-        this.camera = orthographicCamera;
-        this.batch = screenController.getSpriteBatch();
+        SpriteBatch batch = screenController.getSpriteBatch();
         this.gameScreen = ((GameScreen) screenController.getScreen(ScreenID.GAME));
-        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, new OrthographicCamera());
-        if (this.batch != null) {
+        Viewport viewport = new FitViewport(Constants.V_Width, Constants.V_Height, orthographicCamera);
+        if (batch != null) {
             stage = new Stage(viewport, batch);
             stage.addActor(table);
             this.shape = new ShapeRenderer();
@@ -129,6 +107,8 @@ public class PauseScreen extends ScreenAdapter {
             screenController.resetGameScreen();
             screenController.setScreen(ScreenID.MENU);
         }
+
+        // Saving logic added for assessment 2
         else if (Interactions.isJustPressed(InputKey.InputTypes.COOK_UP)){
             currentSave = MenuScreen.cycleSaves(currentSave,1, false);
         }
