@@ -226,6 +226,12 @@ public class MenuScreen extends ScreenAdapter {
         }
         else if (Interactions.isJustPressed(InputKey.InputTypes.MODE_SELECT)) { // Set the screen to the mode select screen
             if (currentState != menuState.LOAD_SELECT) {
+                if (findSaves().size() > 0) {
+                    currentSave = findSaves().get(0);
+                }
+                else {
+                    currentSave = saveFileSelectionChoice.NO_SAVES;
+                }
                 setCurrentScreenState(this.getCorrectSwapModeSelect());
             }
         }
@@ -320,6 +326,7 @@ public class MenuScreen extends ScreenAdapter {
         batch.end();
         getCurrentScreenStage().draw();
         this.update(delta, true);
+
     }
 
     ////////////////////////////////ALL BELOW NEW FOR ASSESSMENT 2//////////////////////////////////////////////////////
