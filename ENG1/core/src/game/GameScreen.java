@@ -32,7 +32,7 @@ import java.util.Comparator;
 /** A {@link ScreenAdapter} containing certain elements of the game. */
 public class GameScreen extends ScreenAdapter {
 
-	private final OrthographicCamera camera;
+	public final OrthographicCamera camera;
 	private long msPast1s = 0;
 	private long previousSecond, totalTimePaused = 0;
 	private int secondsPassed = 0, minutesPassed = 0, hoursPassed = 0;
@@ -293,7 +293,7 @@ public class GameScreen extends ScreenAdapter {
 		}
 
 		shape.end();
-		// box2DDebugRenderer.render(world, camera.combined.scl(Constants.PPM));
+		//box2DDebugRenderer.render(world, camera.combined.scl(Constants.PPM));
 		gameHud.render();
 		instructionHUD.render();
 
@@ -669,6 +669,15 @@ public class GameScreen extends ScreenAdapter {
 	public InstructionHud getInstructionHUD() {
 		return instructionHUD;
 	}
+
+    /**
+     * Get the camera that uses the game space coordinates
+     * @return The gameScreens camera
+     */
+    public OrthographicCamera getGameCoordsCamera() {
+        camera.update();
+        return camera;
+    }
 
     public MenuScreen.difficulty getCurrentDifficulty(){
         return currentDifficulty;

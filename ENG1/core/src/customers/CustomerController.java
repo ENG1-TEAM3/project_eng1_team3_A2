@@ -79,6 +79,7 @@ public class CustomerController {
 	 * Add a {@link Customer} to a {@link ServingStation}.
 	 */
 	public void addCustomer(int patience) {
+        System.out.println("adding cust inside");
 		// Get a deep copy of all the ServingStations.
 		Array<ServingStation> emptyStations = new Array<>(servingStations);
 		// Loop through and remove all the stations that have a
@@ -306,6 +307,7 @@ public class CustomerController {
 				patience = 60;
 			}
 		}
+        System.out.println(lastCustomerSpawnTime + " " + gameScreen.getTotalSecondsRunningGame());
 		if ((gameScreen.getTotalSecondsRunningGame() - lastCustomerSpawnTime >= timeBetweenSpawnsSeconds)
 				&& canAddCustomer()) {
 			if (PowerUpHandler.activePowerUp() == PowerUp.BONUS_TIME) {

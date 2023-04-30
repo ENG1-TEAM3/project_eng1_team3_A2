@@ -20,6 +20,7 @@ import food.FoodStack;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 
 @RunWith(GdxTestRunner.class)
@@ -105,6 +106,41 @@ public class FoodStackTests {
         assertEquals("This test asserts that the return value of toString is correct for a multi value list",
                 "[onion, meatCook, bottomBun, bun]", fs1.toString());
     }
+
+    @Test
+    public void testFoodStackToArrayList(){
+        FoodStack fs1 = new FoodStack();
+        fs1.addStack(FoodItem.FoodID.topBun);
+        fs1.addStack(FoodItem.FoodID.meat);
+        fs1.addStack(FoodItem.FoodID.lettuce);
+        fs1.addStack(FoodItem.FoodID.bottomBun);
+        ArrayList<FoodItem.FoodID> fds = new ArrayList<>();
+        fds.add(FoodItem.FoodID.bottomBun); // These are reversed because addstack adds to the front of the array
+        fds.add(FoodItem.FoodID.lettuce);
+        fds.add(FoodItem.FoodID.meat);
+        fds.add(FoodItem.FoodID.topBun);
+        assertEquals("This test asserts that the foodstack gets converted to ArrayList properly",
+                fds, fs1.toArrayList());
+    }
+    @Test
+    public void testSetFoodStackFromArrayList(){
+        FoodStack fs1 = new FoodStack();
+        ArrayList<FoodItem.FoodID> fds = new ArrayList<>();
+        fds.add(FoodItem.FoodID.bottomBun);
+        fds.add(FoodItem.FoodID.lettuce);
+        fds.add(FoodItem.FoodID.meat);
+        fds.add(FoodItem.FoodID.topBun);
+        Array<FoodItem.FoodID> fds2 = new Array<>();
+        fds2.add(FoodItem.FoodID.bottomBun);
+        fds2.add(FoodItem.FoodID.lettuce);
+        fds2.add(FoodItem.FoodID.meat);
+        fds2.add(FoodItem.FoodID.topBun);
+        fs1.setFoodStackFromArrayList(fds);
+
+        assertEquals("This test asserts that the a correct foodstack is returned when constructed from an arraylist",
+                fds2, fs1.getStack());
+    }
+
 
 
 

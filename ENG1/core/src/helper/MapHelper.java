@@ -201,6 +201,7 @@ public class MapHelper {
 						station.setID(Station.StationID.bin);
 						break;
 					case "serving":
+                        System.out.println("adding serving station");
 						station = new ServingStation(rectangle, locked, gameScreen);
 						station.setID(Station.StationID.serving);
 						gameScreen.addGameEntity(station);

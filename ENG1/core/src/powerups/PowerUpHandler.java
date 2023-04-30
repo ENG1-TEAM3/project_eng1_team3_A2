@@ -140,7 +140,7 @@ public class PowerUpHandler {
 	}
 
     /**
-     * Add a powerUp to the storage
+     * Add a random powerUp to the storage
      * @param reset Whether the currently stored powerUp should be replaced
      */
 	public void addPowerUp(boolean reset) {

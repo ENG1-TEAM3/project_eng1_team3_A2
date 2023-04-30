@@ -130,6 +130,7 @@ public class CounterStation extends Station {
                         drawY + foodSprite.getHeight() / 2F + yOffset);
                 foodSprite.draw(batch);
             }
+            drawY += drawInc;
 		}
         if (locked) {
             batch.draw(lockedSymbol, x - 64 / 2f, y - 32, 64, 64);

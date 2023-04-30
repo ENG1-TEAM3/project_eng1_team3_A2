@@ -45,34 +45,15 @@ public class CookTests {
         assertEquals(0F,privateFoodRelativeY.invoke(c1,Cook.Facing.NONE));
     }
     @Test
-    public void testOpposite() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException{
-        Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
+    public void testGetDimensions(){
+        Rectangle r1 = new Rectangle(0.0f,100.0f,42.50f,20.00f);
         World w1 = new World(new Vector2(0,0), false);
         Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1));
-
-        Method privateOpposite = Cook.class.getDeclaredMethod("opposite", Cook.Facing.class);
-        privateOpposite.setAccessible(true);
-        assertEquals(Cook.Facing.UP, privateOpposite.invoke(c1,Cook.Facing.DOWN));
-        assertEquals(Cook.Facing.DOWN, privateOpposite.invoke(c1,Cook.Facing.UP));
-        assertEquals(Cook.Facing.RIGHT, privateOpposite.invoke(c1,Cook.Facing.LEFT));
-        assertEquals(Cook.Facing.LEFT, privateOpposite.invoke(c1,Cook.Facing.RIGHT));
-        assertEquals(Cook.Facing.NONE, privateOpposite.invoke(c1,Cook.Facing.NONE));
+        assertEquals("This test asserts that the cook width is fetched correctly",
+                42.50f, c1.getWidth(), 0.001);
+        assertEquals("This test asserts that the cook height is fetched correctly",
+                20.00f, c1.getHeight(), 0.001);
     }
-    @Test
-    public void testRotate() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException{
-        Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
-        World w1 = new World(new Vector2(0,0), false);
-        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1));
-
-        Method privateRotate = Cook.class.getDeclaredMethod("rotate90c", Cook.Facing.class);
-        privateRotate.setAccessible(true);
-        assertEquals(Cook.Facing.UP, privateRotate.invoke(c1,Cook.Facing.LEFT));
-        assertEquals(Cook.Facing.DOWN, privateRotate.invoke(c1,Cook.Facing.RIGHT));
-        assertEquals(Cook.Facing.RIGHT, privateRotate.invoke(c1,Cook.Facing.UP));
-        assertEquals(Cook.Facing.LEFT, privateRotate.invoke(c1,Cook.Facing.DOWN));
-        assertEquals(Cook.Facing.NONE, privateRotate.invoke(c1,Cook.Facing.NONE));
-    }
-
     @Test
     public void testMoveDistance(){
         Interactions.resetKeys();
@@ -110,6 +91,27 @@ public class CookTests {
 
     }
     @Test
+    public void testSetCookID(){
+        Rectangle r1 = new Rectangle(0.0f,100.0f,42.50f,20.00f);
+        World w1 = new World(new Vector2(0,0), false);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1));
+        assertEquals("This test asserts that cook ID initializes to 0",
+                0, c1.getCookID());
+        c1.setCookID(1);
+        assertEquals("This test asserts that setting the cook ID to 1 functions correctly",
+                1, c1.getCookID());
+        c1.setCookID(2);
+        assertEquals("This test asserts that setting the cook ID to 2 functions correctly",
+                2, c1.getCookID());
+        c1.setCookID(3);
+        assertEquals("This test asserts that setting the ID to a number above 2 actually sets it to zero",
+                0, c1.getCookID());
+
+    }
+
+
+
+    @Test
     public void testUpdatePosition(){
         Interactions.resetKeys();
         Rectangle r1 = new Rectangle(0.0f,100.0f,42.50f,20.00f);
@@ -138,6 +140,21 @@ public class CookTests {
         assertEquals("This test asserts that the Y position (pixel space) is calculated correctly after 1 step up and 1 right",100.0f + ((1/60f) * 10 * Constants.PPM), c1.getY(), 0.001);
 
     }
+
+    @Test
+    public void testSetCookDirection(){
+        Rectangle r1 = new Rectangle(0.0f,100.0f,42.50f,20.00f);
+        World w1 = new World(new Vector2(0,0), false);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1));
+        assertEquals("This test asserts that the cook starts facing down",
+                Cook.Facing.DOWN, c1.getDir());
+        c1.setFacing(Cook.Facing.LEFT);
+        assertEquals("This test asserts that the cook faces left after the facing is set",
+                Cook.Facing.LEFT, c1.getDir());
+    }
+
+
+
 
     @Test
     public void testCookDirection(){

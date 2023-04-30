@@ -4,11 +4,13 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 
@@ -41,6 +43,9 @@ public class GameHud extends Hud {
 	private final GameScreen gs;
 	private Array<ServingStation> servingStations;
     private final Sprite activePowerUpSprite;
+    private final OrthographicCamera o2 = new OrthographicCamera();
+
+    private Matrix4 worldMatrix;
 
 	// /** The time, in milliseconds, of the last recipe change. */
 	// private long lastChange;
@@ -53,6 +58,10 @@ public class GameHud extends Hud {
 	 */
 	public GameHud(SpriteBatch batch, ShapeRenderer shape, GameScreen gameScreen) {
 		super(batch);
+        o2.setToOrtho(false, Constants.V_Width, Constants.V_Height);
+        if (shape != null) {
+            worldMatrix = shape.getProjectionMatrix();
+        }
 		recipes = new HashMap<>();
 		this.gs = gameScreen;
         BitmapFont btfont = new BitmapFont();
@@ -102,25 +111,32 @@ public class GameHud extends Hud {
 	 */
 	@Override
 	public void render() {
+        shape.setProjectionMatrix(o2.combined);
+        shape.begin(ShapeRenderer.ShapeType.Filled);
+        // Debug square
+        //shape.rect(200,200,10,10,Color.GREEN,Color.GREEN,Color.GREEN,Color.GREEN);
 
-		shape.begin(ShapeRenderer.ShapeType.Filled);
-		shape.rect(0, Constants.V_Height - Constants.V_Height / 8f, Constants.V_Width, Constants.V_Height / 8f,
-				Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
-		shape.rect(0, Constants.V_Height - Constants.V_Height / 8f,
-				Constants.V_Width * gs.getCustomerController().returnFractionProgressUntilNextCustomer(),
-				Constants.V_Height / 8f, Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
+        shape.rect(0, Constants.V_Height - Constants.V_Height / 16f, Constants.V_Width, Constants.V_Height / 16f,
+                Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
+        shape.rect(0, Constants.V_Height - Constants.V_Height / 16f,
+                Constants.V_Width * gs.getCustomerController().returnFractionProgressUntilNextCustomer(),
+                Constants.V_Height / 16f, Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
 
+        shape.end();
+        shape.setProjectionMatrix(gs.getGameCoordsCamera().combined);
+        shape.begin(ShapeRenderer.ShapeType.Filled);
 
-		for (ServingStation ss : this.servingStations) {
-			if (ss.hasCustomer()) {
-				int dedtime = ss.getCustomer().getDeadTime();
-				int spawntime = ss.getCustomer().getSpawnTime();
-				float fractional = (gs.getTotalSecondsRunningGame() - spawntime) / (float) (dedtime - spawntime);
-				shape.rect(ss.getX() + 22, ss.getY() - 32, 5, 64 - (64 * fractional), Color.RED, Color.RED, Color.RED,
-						Color.RED);
-			}
-		}
-		shape.end();
+        for (ServingStation ss : this.servingStations) {
+            if (ss.hasCustomer()) {
+                int dedtime = ss.getCustomer().getDeadTime();
+                int spawntime = ss.getCustomer().getSpawnTime();
+                float fractional = (gs.getTotalSecondsRunningGame() - spawntime) / (float) (dedtime - spawntime);
+                System.out.println(fractional);
+                shape.rect(ss.getX() + 22, ss.getY() - 32, 5, 64 - (64 * fractional), Color.RED, Color.RED, Color.RED,
+                        Color.RED);
+            }
+        }
+        shape.end();
 
 		if (gs.powerUpHandler.getCurrentPowerUps()[0] != null) {
 			batch.begin();
@@ -146,7 +162,9 @@ public class GameHud extends Hud {
 		}
 
 		super.render();
-		batch.begin();
+
+
+        batch.begin();
 		GameSprites gameSprites = GameSprites.getInstance();
 		// AS2 CHANGE - Rewrote scaling code to allow for any map to render correctly in
 		// the middle of the screen.
