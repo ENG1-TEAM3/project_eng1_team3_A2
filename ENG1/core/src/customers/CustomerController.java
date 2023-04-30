@@ -307,7 +307,6 @@ public class CustomerController {
 				patience = 60;
 			}
 		}
-        System.out.println(lastCustomerSpawnTime + " " + gameScreen.getTotalSecondsRunningGame());
 		if ((gameScreen.getTotalSecondsRunningGame() - lastCustomerSpawnTime >= timeBetweenSpawnsSeconds)
 				&& canAddCustomer()) {
 			if (PowerUpHandler.activePowerUp() == PowerUp.BONUS_TIME) {
