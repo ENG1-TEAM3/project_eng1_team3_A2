@@ -293,9 +293,9 @@ public class MenuScreen extends ScreenAdapter {
                     } catch (IOException | ClassNotFoundException e) {
                         throw new RuntimeException(e);
                     }
+                    screenController.setScreen(ScreenID.GAME);
+                    setCurrentScreenState(menuState.MAIN_MENU);
                 }
-                screenController.setScreen(ScreenID.GAME);
-                setCurrentScreenState(menuState.MAIN_MENU);
             }
 
         }
