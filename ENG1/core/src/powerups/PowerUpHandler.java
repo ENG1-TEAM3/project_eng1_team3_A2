@@ -79,8 +79,8 @@ public class PowerUpHandler {
 	}
 
     /**
-     * Use up a powerUp that does not automatically remove itself
-     * @return true if the powerUp could be removed, false if there is no powerUp to remove
+     * Use up one use of a powerUp that does not disappear automatically
+     * @return true if the powerUp use could be removed, false if there is no powerUp to remove
      */
 	public static boolean usePowerUp() {
 		cooldown--;
