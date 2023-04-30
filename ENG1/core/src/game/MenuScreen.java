@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import cooks.Cook;
 import game.ScreenController.ScreenID;
 import helper.Constants;
 import interactions.InputKey;
@@ -30,11 +29,14 @@ import java.util.ArrayList;
  * play the game.
  */
 public class MenuScreen extends ScreenAdapter {
+    /** The current screen encoded as a state */
     public enum menuState {
         MAIN_MENU,
         MODE_SELECT,
         LOAD_SELECT
     }
+
+    /** The save file choices */
     public enum saveFileSelectionChoice{
         NO_SAVES,
         SAVE1,
@@ -42,17 +44,19 @@ public class MenuScreen extends ScreenAdapter {
         SAVE3
     }
 
-
+    /** The selection choices for the new game screen*/
     public enum modeSelectionState{
         SELECT_DIFFICULTY,
         SELECT_MODE
     }
 
+    /** The modes for the game */
     public enum mode {
         ENDLESS,
         SCENARIO
     }
 
+    /** The difficulties for the game */
     public enum difficulty{
         EASY,
         MEDIUM,
@@ -60,9 +64,7 @@ public class MenuScreen extends ScreenAdapter {
     }
 
     private final ScreenController screenController;
-    private final OrthographicCamera camera;
     private final SpriteBatch batch;
-    private final Viewport viewport;
 
     /** Stage used to contain the text for the main menu */
     private Stage mainMenuStage;
@@ -78,14 +80,13 @@ public class MenuScreen extends ScreenAdapter {
     public mode currentModeSelection;
     /** State used to contain the current difficulty selection (easy medium or hard)*/
     public difficulty currentDifficultySelection;
-
+    /** State used to contain the current save file selection */
     public saveFileSelectionChoice currentSave;
     private final Sprite backgroundSprite;
-    private final BitmapFont bitmapFont;
 
     private final Label modeSelectLabel, loadSelectLabel;
 
-    private int customer = 5;
+    private int customer = 5; // Default to 5 customers if it never gets set somehow
 
     /**
      * The constructor for the {@link MenuScreen}.
@@ -93,7 +94,7 @@ public class MenuScreen extends ScreenAdapter {
      * @param orthographicCamera The {@link OrthographicCamera} that the game should use.
      */
     public MenuScreen(ScreenController screenController, OrthographicCamera orthographicCamera) {
-        bitmapFont = new BitmapFont();
+        BitmapFont bitmapFont = new BitmapFont();
 
         currentState = menuState.MAIN_MENU;
         currentDifficultySelection = difficulty.EASY;
@@ -143,10 +144,9 @@ public class MenuScreen extends ScreenAdapter {
         welcomeLabel.setFontScale(4);
 
         this.screenController = screenController;
-        this.camera = orthographicCamera;
         this.batch = screenController.getSpriteBatch();
 
-        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
+        Viewport viewport = new FitViewport(Constants.V_Width, Constants.V_Height, orthographicCamera);
 
         // AS2 NEW CHANGE - MODE SELECT SCREEN
 
@@ -238,7 +238,7 @@ public class MenuScreen extends ScreenAdapter {
             Gdx.app.exit();
         }
 
-
+        // Extra logic below added for Assessment 2
         if (currentState == menuState.MODE_SELECT){ // If the game is on the mode select screen
             if (Interactions.isJustPressed(InputKey.InputTypes.COOK_LEFT)){ // Then the left key should change the selection
                 if (currentSelectionType == modeSelectionState.SELECT_DIFFICULTY){
@@ -268,7 +268,7 @@ public class MenuScreen extends ScreenAdapter {
                 }
             }
 
-            if (Interactions.isJustPressed(InputKey.InputTypes.START_GAME)) {
+            if (Interactions.isJustPressed(InputKey.InputTypes.START_GAME)) { // The start game key should start the game with selected difficulty and mode
                 screenController.setScreen(ScreenID.GAME);
                 ((GameScreen) screenController.getScreen(ScreenID.GAME)).startGame(customer, currentDifficultySelection,
                         currentModeSelection, false);
@@ -318,6 +318,12 @@ public class MenuScreen extends ScreenAdapter {
         getCurrentScreenStage().draw();
         this.update(delta, true);
     }
+
+    ////////////////////////////////ALL BELOW NEW FOR ASSESSMENT 2//////////////////////////////////////////////////////
+    /**
+     * A method used to swap the state from main menu to the mode select screen
+     * @return If on moin menu, return mode select state, otherwise return main menu state
+     */
     public menuState getCorrectSwapModeSelect(){
         if (currentState == menuState.MAIN_MENU){
             return menuState.MODE_SELECT;
@@ -327,6 +333,10 @@ public class MenuScreen extends ScreenAdapter {
         }
     }
 
+    /**
+     * A method used to swap the state from main menu to load select screen
+     * @return If on main menu, return load select state, otherwise return main menu state
+     */
     public menuState getCorrectSwapLoadSelect(){
         if (currentState == menuState.MAIN_MENU){
             return menuState.LOAD_SELECT;
@@ -336,6 +346,10 @@ public class MenuScreen extends ScreenAdapter {
         }
     }
 
+    /**
+     * Set the current screen state
+     * @param ms The state to set the screen to
+     */
     public void setCurrentScreenState(menuState ms){
         if (ms == menuState.MAIN_MENU){
             currentState = menuState.MAIN_MENU;
@@ -348,7 +362,10 @@ public class MenuScreen extends ScreenAdapter {
         }
     }
 
-
+    /**
+     * Get the stage to render corresponding to the current internal screen state
+     * @return The stage defined in line above
+     */
     public Stage getCurrentScreenStage(){
         if (currentState == menuState.MAIN_MENU){
             return mainMenuStage;
@@ -361,6 +378,10 @@ public class MenuScreen extends ScreenAdapter {
         }
     }
 
+    /**
+     * Get the selection string for new game mode selection depending on internal state
+     * @return The string defined in line above
+     */
     public String getSelectionString() {
         String outputstring = "";
         outputstring += "MODE:  ";
@@ -383,6 +404,11 @@ public class MenuScreen extends ScreenAdapter {
         return outputstring;
     }
 
+    /**
+     * Return the next / previous difficulty selection
+     * @param direction If positive or zero then go for the next hardest difficulty, if negative go for next easiest
+     * @return The difficulty defined in the line above
+     */
     public difficulty cycleDifficulty(int direction){
         if (direction >= 0){
             if (currentDifficultySelection == difficulty.EASY){
@@ -414,6 +440,10 @@ public class MenuScreen extends ScreenAdapter {
         }
     }
 
+    /**
+     * Return the other mode selection (There are only 2)
+     * @return the other mode selection
+     */
     public mode cycleMode(){
         if (currentModeSelection == mode.SCENARIO){
             return mode.ENDLESS;
@@ -423,6 +453,11 @@ public class MenuScreen extends ScreenAdapter {
         }
     }
 
+
+    /**
+     * Find the current existing save files, and return an arraylist containing enum values representing them
+     * @return The arraylist defined in the line above
+     */
     public static ArrayList<saveFileSelectionChoice> findSaves(){
         ArrayList<saveFileSelectionChoice> savesThatExist = new ArrayList<>();
         if (Gdx.files.local("save1.txt").exists()){
@@ -437,6 +472,15 @@ public class MenuScreen extends ScreenAdapter {
         return savesThatExist;
     }
 
+    /**
+     * Return the next / previous save file choice - Can depend on their existence or not
+     * @param currentSave - The current save file choice
+     * @param direction - If positive or zero then go for the next slot (ascending slot num),
+     *                  otherwise the previous slot (descending slot num)
+     * @param checkExistence - If true then this can only cycle through saves that exist,
+     *                      if false then this can cycle through all 3 saves
+     * @return The save file choice defined above
+     */
     public static saveFileSelectionChoice cycleSaves(saveFileSelectionChoice currentSave, int direction, boolean checkExistence){
         ArrayList<saveFileSelectionChoice> existingSaves = findSaves();
         if (direction >= 0){

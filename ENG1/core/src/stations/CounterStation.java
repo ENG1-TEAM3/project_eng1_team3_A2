@@ -136,6 +136,10 @@ public class CounterStation extends Station {
         }
 	}
 
+    /**
+     * Get the food stack that this CounterStation contains
+     * @return the food stack that this CounterStation contains
+     */
 	public FoodStack getFoodStack() {
 		return this.foodStack;
 	}

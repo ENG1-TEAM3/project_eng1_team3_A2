@@ -2,7 +2,6 @@ package cooks;
 
 import static helper.Constants.PPM;
 
-import java.io.Serializable;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.utils.Array;
 import food.FoodItem;
 import food.FoodItem.FoodID;
 import food.FoodStack;
-import game.GameScreen;
 import game.GameSprites;
 import interactions.InputKey;
 import interactions.Interactions;
@@ -22,13 +20,15 @@ import powerups.PowerUp;
 import powerups.PowerUpHandler;
 
 /** A {@link GameEntity} that the player controls to interact with the game. */
-public class Cook extends GameEntity implements Serializable {
+public class Cook extends GameEntity{
 	/** The cook's current sprite. */
 	private Sprite sprite;
 	/** The control arrow sprite. */
-	private Sprite controlSprite; // Inline Test Comment
-	private GameSprites gameSprites;
-	private CookInteractor cookInteractor;
+	private final Sprite controlSprite;
+    /** The reference to the gameSprites instance*/
+	private final GameSprites gameSprites;
+    /** The cookInteractor that corresponds to this cook */
+	private final CookInteractor cookInteractor;
 	// private GameScreen gameScreen;
 	/** The direction this cook is facing. */
 	private Facing dir;
@@ -41,7 +41,8 @@ public class Cook extends GameEntity implements Serializable {
 	 * The WASD/movement inputs currently being made. Note that if S and D are being
 	 * input at the same time, then inputs = { Facing.RIGHT, Facing.DOWN }
 	 */
-	private Array<Facing> inputs;
+	private final Array<Facing> inputs;
+    /** An ID that can be set after initialization to change the cook's sprite */
 	private int ID;
 
 	/** All possible directions the cook can be facing. */
@@ -50,20 +51,18 @@ public class Cook extends GameEntity implements Serializable {
 	}
 
 	/**
-	 * Cook Constructor.
-	 * 
-	 * @param width      Pixel Width of the {@link Cook}'s {@link Body}.
-	 * @param height     Pixel Height of the {@link Cook}'s {@link Body}.
-	 * @param body       The {@link World}.{@link Body} which will become the
-	 *                   {@link Cook}
-	 * @param gameScreen The {@link GameScreen} that creates the {@link Cook}.
-	 */
-	public Cook(float width, float height, Body body, GameScreen gameScreen) {
+     * Cook Constructor.
+     *
+     * @param width  Pixel Width of the {@link Cook}'s {@link Body}.
+     * @param height Pixel Height of the {@link Cook}'s {@link Body}.
+     * @param body   The {@link World}.{@link Body} which will become the
+     *               {@link Cook}
+     */
+	public Cook(float width, float height, Body body) {
 		super(width, height, body);
-		this.ID = 0;
+		this.ID = 0; //Cook defaults to sprite 0
 		this.dir = Facing.DOWN;
 		this.speed = 10f;
-		// this.gameScreen = gameScreen;
 		this.gameSprites = GameSprites.getInstance();
 		this.controlSprite = gameSprites.getSprite(GameSprites.SpriteID.COOK, "control");
 
@@ -83,10 +82,24 @@ public class Cook extends GameEntity implements Serializable {
 		this.cookInteractor = new CookInteractor(x, y, cookInteractorSize);
 	}
 
+    /**
+     * Set the cookID to change cook sprite     //////////////////////////ADDED_FOR_ASSESSMENT2/////////////////////////
+     * @param num The number to set the ID to (0,1,2)
+     *            Numbers other than these will just result in the ID being set to zero.
+     */
 	public void setCookID(int num) {
-		this.ID = num;
+        if (num == 0 || num == 1 || num ==2) {
+            this.ID = num;
+        }
+        else {
+            this.ID = 0;
+        }
 	}
 
+    /**
+     * Get the cookId
+     * @return cookID
+     */
 	public int getCookID() {
 		return this.ID;
 	}
@@ -133,13 +146,13 @@ public class Cook extends GameEntity implements Serializable {
 
 		setDir();
 
-		for (InputKey.InputTypes inputKeyType : Interactions.getInputTypes(Interactions.InputID.COOK_INTERACT)) {
-			if (Interactions.isJustPressed(inputKeyType)) {
-				cookInteractor.checkCollisions(this, inputKeyType);
-			}
-		}
-
-		if (PowerUpHandler.activePowerUp() == PowerUp.FASTER_COOKS) {
+        for (int i = 0; i < Interactions.getInputTypes(Interactions.InputID.COOK_INTERACT).size; i++){
+            if (Interactions.isJustPressed(Interactions.getInputTypes(Interactions.InputID.COOK_INTERACT).get(i))) {
+                cookInteractor.checkCollisions(this,
+                        Interactions.getInputTypes(Interactions.InputID.COOK_INTERACT).get(i));
+            }
+        }
+		if (PowerUpHandler.activePowerUp() == PowerUp.FASTER_COOKS) { // Double speed if faster cooks is active
 			body.setLinearVelocity(velX * speed * 2, velY * speed * 2);
 		} else {
 			body.setLinearVelocity(velX * speed, velY * speed);
@@ -184,6 +197,10 @@ public class Cook extends GameEntity implements Serializable {
 
 	}
 
+    /**
+     * Set the facing of the Cook - This method is used to restore from a save file
+     * @param face The facing to set the cook to
+     */
 	public void setFacing(Cook.Facing face) {
 		this.dir = face;
 	}
@@ -209,6 +226,10 @@ public class Cook extends GameEntity implements Serializable {
 		}
 	}
 
+    /**
+     * Render the control arrow over the currently controlled cook
+     * @param batch Spritebatch to render with
+     */
 	public void renderControlArrow(SpriteBatch batch) {
 		controlSprite.setSize(32, 22F);
 		controlSprite.setPosition(x - controlSprite.getWidth() / 2,
@@ -396,18 +417,35 @@ public class Cook extends GameEntity implements Serializable {
 		}
 	}
 
+    /**
+     * A method used to test that Junit is functioning correctly
+     * @param x an integer
+     * @return x + 1 One added to the input
+     */
 	public static int testTest(int x) {
 		return x + 1;
 	}
 
+    /**
+     * Get the current facing - Used in saving the game
+     * @return The current facing
+     */
 	public Facing getDir() {
 		return dir;
 	}
 
+    /**
+     * Get the cook width
+     * @return The current width
+     */
 	public float getWidth() {
 		return this.width;
 	}
 
+    /**
+     * Get the cook height
+     * @return The current height
+     */
 	public float getHeight() {
 		return this.height;
 	}

@@ -24,11 +24,8 @@ import interactions.Interactions;
  * {@link InputKey.InputTypes#RESET_GAME}.
  */
 public class GameOverScreen extends ScreenAdapter {
-	private Viewport viewport;
-	private final ScreenController screenController;
-	private OrthographicCamera camera;
-	private SpriteBatch batch;
-	private Stage stage;
+    private final ScreenController screenController;
+    private Stage stage;
 	private final Label timeLabel, gameOverLabel;
 
 	/**
@@ -72,12 +69,11 @@ public class GameOverScreen extends ScreenAdapter {
 		table.add(quitText);
 
 		this.screenController = screenController;
-		this.camera = orthographicCamera;
-		this.batch = screenController.getSpriteBatch();
+        SpriteBatch batch = screenController.getSpriteBatch();
 
-		viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
+        Viewport viewport = new FitViewport(Constants.V_Width, Constants.V_Height, orthographicCamera);
 
-		if (this.batch != null) {
+		if (batch != null) {
 			stage = new Stage(viewport, batch);
 			stage.addActor(table);
 		}
@@ -128,6 +124,13 @@ public class GameOverScreen extends ScreenAdapter {
 	public void setTime(int hours, int minutes, int seconds) {
 		timeLabel.setText(Util.formatTime(hours, minutes, seconds));
 	}
+
+    //////////////////////ADDITION FOR ASSESSMENT 2/////////////////////////////////////////////////////////////////////
+
+    /**
+     * Set the text label to some text
+     * @param text the String text to display
+     */
     public void setTextLabel(String text){
         this.gameOverLabel.setText(text);
     }

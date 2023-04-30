@@ -110,6 +110,11 @@ public class GameSprites {
         spriteMap.clear();
     }
 
+
+    //Added for Assessment 2
+    /**
+     * Add resources to the spriteMap that are not contained in atlas files
+     */
     public void createNonAtlasResources(){
         Texture ts0 = new Texture(Gdx.files.internal("foods/Beans_Canned.png"));
         Sprite ns0 = new Sprite(ts0);

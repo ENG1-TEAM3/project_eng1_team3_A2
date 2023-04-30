@@ -50,7 +50,7 @@ public class Pantry extends Station {
             // Add the new FoodItem onto the stack.
             FoodItem.FoodID addedFood = foodID;
             if (addedFood == FoodItem.FoodID.cook){
-                if (gameScreen.getMoney() >= Constants.STAFF_COST) {
+                if (gameScreen.getMoney() >= Constants.STAFF_COST) { // Buying cooks costs money
                     gameScreen.spendMoney(Constants.STAFF_COST);
                 }
                 else {

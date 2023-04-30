@@ -34,7 +34,7 @@ public class BinStation extends Station {
     public void interact(Cook cook, InputKey.InputTypes inputType) {
         // Only bin if user inputs USE or PUT_DOWN
         if (inputType == InputKey.InputTypes.USE || inputType == InputKey.InputTypes.PUT_DOWN) {
-            if (cook.foodStack.popStack() == FoodItem.FoodID.cook){
+            if (cook.foodStack.popStack() == FoodItem.FoodID.cook){ // Binning the cook item should refund the player
                 gameScreen.addMoney(Constants.STAFF_COST);
             }
         }

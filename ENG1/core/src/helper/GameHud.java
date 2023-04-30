@@ -33,16 +33,14 @@ public class GameHud extends Hud {
 	/**
 	 * The {@link SpriteBatch} of the GameHud. Use for drawing {@link food.Recipe}s.
 	 */
-	private SpriteBatch batch;
+	private final SpriteBatch batch;
 	/** The {@link FoodStack} that the {@link GameHud} should render. */
-	private ShapeRenderer shape;
-	private HashMap<Integer, FoodStack> recipes;
+	private final ShapeRenderer shape;
+	private final HashMap<Integer, FoodStack> recipes;
 	/** The Hashmap that contains all recipes to be rendered. */
-	private GameScreen gs;
+	private final GameScreen gs;
 	private Array<ServingStation> servingStations;
-	private BitmapFont btfont = new BitmapFont();
-
-	private Sprite activePowerUpSprite;
+    private final Sprite activePowerUpSprite;
 
 	// /** The time, in milliseconds, of the last recipe change. */
 	// private long lastChange;
@@ -57,7 +55,8 @@ public class GameHud extends Hud {
 		super(batch);
 		recipes = new HashMap<>();
 		this.gs = gameScreen;
-		timeLabel = new Label("TIMER :", new Label.LabelStyle(btfont, Color.BLACK));
+        BitmapFont btfont = new BitmapFont();
+        timeLabel = new Label("TIMER :", new Label.LabelStyle(btfont, Color.BLACK));
 		timeLabel.setPosition(10, 84 * Constants.V_Height / 100.0f);
 
 		updateTime(0, 0, 0);
@@ -141,7 +140,7 @@ public class GameHud extends Hud {
             batch.end();
             powerupTimerLabel.setText(String.format("%s \nuses: %d",
                     PowerUpHandler.activePowerUp().spritePath().replace(".png", "").replace("_", " ").toUpperCase(),
-                    gs.powerUpHandler.cooldown()));
+                    gs.powerUpHandler.getCooldown()));
         } else {
 			powerupTimerLabel.setText(String.format("[%s] to buy powerup! (Costs %s)", Interactions.getKeyString(InputKey.InputTypes.BUY_POWERUP) , Constants.POWERUP_COST));
 		}
@@ -190,6 +189,9 @@ public class GameHud extends Hud {
 		recipes.remove(num);
 	}
 
+    /**
+     * Removes all recipes from rendering
+     */
 	public void clearRecipes() {
 		recipes.clear();
 	}
@@ -234,9 +236,8 @@ public class GameHud extends Hud {
 	}
 
 	/**
-	 * Set the Customer Count label
-	 * 
-	 * @param amountCustomers New Customer Count
+	 * Set the customers left - If this is negative assume endless mode
+	 * @param amountCustomers The amount of customers left
 	 */
 	public void updateCustomersLeftLabel(int amountCustomers) {
 		if (amountCustomers >= 0) {
@@ -246,14 +247,26 @@ public class GameHud extends Hud {
 		}
 	}
 
+    /**
+     * Set the customers served label
+     * @param amountCustomers The amount of customers served
+     */
 	public void updateCustomersServedLabel(int amountCustomers) {
 		customersServedLabel.setText(String.format("CUSTOMERS SERVED SUCCESSFULLY: %d", amountCustomers));
 	}
 
+    /**
+     * Update the reputation label
+     * @param reputation The amount of reputation
+     */
 	public void updateReputationLabel(int reputation) {
 		reputationLabel.setText(String.format("Reputation: %d", reputation));
 	}
 
+    /**
+     * Update the money label
+     * @param amount The amount of money
+     */
 	public void updateMoneyLabel(int amount) {
 		int pounds = amount / 100;
 		int pennies = amount - pounds * 100;

@@ -286,6 +286,15 @@ public class PreparationStation extends Station {
 		}
 	}
 
+    /**
+     * Restore this Station from data
+     * @param inter - The interactionResult
+     * @param progress - The progress amount
+     * @param burnProg - The burn amount
+     * @param stepNum - The step number
+     * @param foodItem - The stored food item
+     * @param hasAutoCook - Whether this station has an autoCook
+     */
     public void restoreStationFromSave(Interactions.InteractionResult inter, float progress, float burnProg, int stepNum,
                                        FoodItem.FoodID foodItem, boolean hasAutoCook){
         if (inter != null) {
@@ -303,25 +312,50 @@ public class PreparationStation extends Station {
         }
     }
 
+    /**
+     * Get the current prep progress on this station
+     * @return progress defined in line above
+     */
 	public float getProgress() {
 		return progress;
 	}
 
+    /**
+     * Get the current burn progress on this station
+     * @return burn progress defined above
+     */
     public float getBurnProgress() {
         return burnMeter;
     }
 
+    /**
+     * Get the current step number
+     * @return The current step number
+     */
     public int getStepNum(){
         return stepNum;
     }
+
+    /**
+     * Get the stored food item
+     * @return the stored food item
+     */
     public FoodItem.FoodID getFoodItem() {
         return foodItem;
     }
 
+    /**
+     * Get the current InteractionResult
+     * @return the current InteractionResult
+     */
     public Interactions.InteractionResult getInteraction(){
         return interaction;
     }
 
+    /**
+     * Check whether the station has an autoCook
+     * @return boolean true if station has an autoCook - false otherwise
+     */
     public boolean hasAutoCook(){
         return hasAutoCook;
     }

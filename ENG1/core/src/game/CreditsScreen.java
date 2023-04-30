@@ -23,12 +23,10 @@ import interactions.Interactions;
  */
 public class CreditsScreen extends ScreenAdapter {
 
+    /** The screen that this one should return to after the correct input is pressed */
     private ScreenID prevScreenID = ScreenID.MENU;
-    private final OrthographicCamera camera;
     private final ScreenController screenController;
-    private final FitViewport viewport;
     private Stage stage;
-    private final SpriteBatch batch;
 
     /**
      * The constructor for the {@link CreditsScreen}.]
@@ -72,12 +70,11 @@ public class CreditsScreen extends ScreenAdapter {
         table.add(extraText);
 
         this.screenController = screenController;
-        this.camera = orthographicCamera;
-        this.batch = screenController.getSpriteBatch();
 
-        viewport = new FitViewport(Constants.V_Width, Constants.V_Height, camera);
+        SpriteBatch batch = screenController.getSpriteBatch();
+        FitViewport viewport = new FitViewport(Constants.V_Width, Constants.V_Height, orthographicCamera);
 
-        if (this.batch != null) {
+        if (batch != null) {
             stage = new Stage(viewport, batch);
             stage.addActor(table);
         }

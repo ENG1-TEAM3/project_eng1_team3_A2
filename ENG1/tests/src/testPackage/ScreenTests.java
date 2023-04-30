@@ -1,7 +1,5 @@
 package testPackage;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -9,7 +7,6 @@ import com.badlogic.gdx.utils.Array;
 import cooks.Cook;
 import game.*;
 import helper.BodyHelper;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
@@ -165,9 +162,9 @@ public class ScreenTests {
         Rectangle r2 = new Rectangle(0.0f,100.0f,42.50f,20.00f);
         Rectangle r3 = new Rectangle(0.0f,200.0f,42.50f,20.00f);
         World w1 = new World(new Vector2(0,0), false);
-        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1), null);
-        Cook c2 = new Cook(r2.getWidth(), r2.getHeight() , BodyHelper.createBody(r2.x,r2.y,r2.width,r2.height, false, w1), null);
-        Cook c3 = new Cook(r3.getWidth(), r3.getHeight() , BodyHelper.createBody(r3.x,r3.y,r3.width,r3.height, false, w1), null);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1));
+        Cook c2 = new Cook(r2.getWidth(), r2.getHeight() , BodyHelper.createBody(r2.x,r2.y,r2.width,r2.height, false, w1));
+        Cook c3 = new Cook(r3.getWidth(), r3.getHeight() , BodyHelper.createBody(r3.x,r3.y,r3.width,r3.height, false, w1));
         Array<Cook> cooksort = new Array<>();
         cooksort.add(c3);
         cooksort.add(c2);
