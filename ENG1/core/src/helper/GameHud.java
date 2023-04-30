@@ -114,7 +114,7 @@ public class GameHud extends Hud {
         shape.setProjectionMatrix(o2.combined);
         shape.begin(ShapeRenderer.ShapeType.Filled);
         // Debug square
-        //shape.rect(200,200,10,10,Color.GREEN,Color.GREEN,Color.GREEN,Color.GREEN);
+        // shape.rect(0,0,10,10,Color.GREEN,Color.GREEN,Color.GREEN,Color.GREEN); //DEBUG SQUARE 1
 
         shape.rect(0, Constants.V_Height - Constants.V_Height / 16f, Constants.V_Width, Constants.V_Height / 16f,
                 Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
@@ -125,6 +125,7 @@ public class GameHud extends Hud {
         shape.end();
         shape.setProjectionMatrix(gs.getGameCoordsCamera().combined);
         shape.begin(ShapeRenderer.ShapeType.Filled);
+        // shape.rect(0,0,10,10,Color.RED,Color.RED,Color.RED,Color.RED); //DEBUG SQUARE 2
 
         for (ServingStation ss : this.servingStations) {
             if (ss.hasCustomer()) {
