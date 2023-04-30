@@ -132,7 +132,6 @@ public class GameHud extends Hud {
                 int dedtime = ss.getCustomer().getDeadTime();
                 int spawntime = ss.getCustomer().getSpawnTime();
                 float fractional = (gs.getTotalSecondsRunningGame() - spawntime) / (float) (dedtime - spawntime);
-                System.out.println(fractional);
                 shape.rect(ss.getX() + 22, ss.getY() - 32, 5, 64 - (64 * fractional), Color.RED, Color.RED, Color.RED,
                         Color.RED);
             }
