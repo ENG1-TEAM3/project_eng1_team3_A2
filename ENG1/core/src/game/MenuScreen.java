@@ -106,7 +106,7 @@ public class MenuScreen extends ScreenAdapter {
         else {
             currentSave = saveFileSelectionChoice.NO_SAVES;
         }
-        this.backgroundSprite = new Sprite(new Texture("Maps/StartMenuBackground.png"));
+        this.backgroundSprite = new Sprite(new Texture("Maps/StartMenuBackground2.png"));
         backgroundSprite.setSize(Constants.V_Width, Constants.V_Height);
 
         Label.LabelStyle font = new Label.LabelStyle(bitmapFont, Color.WHITE);
@@ -114,34 +114,38 @@ public class MenuScreen extends ScreenAdapter {
         table.center();
         table.setFillParent(true);
 
-        Label welcomeLabel = new Label("UNDERCOOKED", font);
+        /*Label welcomeLabel = new Label("UNDERCOOKED", font);
         table.add(welcomeLabel).expandX();
-        table.row();
+        table.row();*/
 
         Label startLabel = new Label(String.format("PRESS %s TO SELECT GAME MODE",Interactions.getKeyString(InputKey.InputTypes.MODE_SELECT).toUpperCase()), font);
         table.add(startLabel).expandX();
         table.row();
 
-        Label saveLabel = new Label(String.format("PRESS %s TO LOAD A SAVE",Interactions.getKeyString(InputKey.InputTypes.LOAD_SELECT).toUpperCase()), font);
+        Label saveLabel = new Label(String.format("PRESS %s TO LOAD SAVE",Interactions.getKeyString(InputKey.InputTypes.LOAD_SELECT).toUpperCase()), font);
         table.add(saveLabel).expandX();
         table.row();
 
-        Label instructionLabel = new Label(String.format("PRESS %s FOR INSTRUCTIONS",Interactions.getKeyString(InputKey.InputTypes.INSTRUCTIONS).toUpperCase()), font);
+        Label instructionLabel = new Label(String.format("PRESS %s FOR TUTORIAL",Interactions.getKeyString(InputKey.InputTypes.INSTRUCTIONS).toUpperCase()), font);
         table.add(instructionLabel).expandX();
         table.row();
 
-        Label creditLabel = new Label(String.format("PRESS %s TO VIEW CREDITS",Interactions.getKeyString(InputKey.InputTypes.CREDITS).toUpperCase()), font);
+        Label creditLabel = new Label(String.format("PRESS %s FOR CREDITS",Interactions.getKeyString(InputKey.InputTypes.CREDITS).toUpperCase()), font);
         table.add(creditLabel).expandX();
         table.row();
-
-
 
         Label quitLabel = new Label(String.format("PRESS %s TO QUIT",Interactions.getKeyString(InputKey.InputTypes.QUIT).toUpperCase()), font);
         table.add(quitLabel).expandX();
 
 
 
-        welcomeLabel.setFontScale(4);
+        //welcomeLabel.setFontScale(4);
+        startLabel.setFontScale(2);
+        saveLabel.setFontScale(2);
+        instructionLabel.setFontScale(2);
+        creditLabel.setFontScale(2);
+        quitLabel.setFontScale(2);
+
 
         this.screenController = screenController;
         this.batch = screenController.getSpriteBatch();
@@ -153,7 +157,7 @@ public class MenuScreen extends ScreenAdapter {
         Table table2 = new Table();
         table2.center();
         table2.setFillParent(true);
-        Label l00 = new Label("Press the arrow keys to select a mode", font);
+        Label l00 = new Label("Press the Arrow Keys to select a mode", font);
         Label l01 = new Label(String.format("Press %s to go back",Interactions.getKeyString(InputKey.InputTypes.MODE_SELECT)), font);
         Label l0 = new Label("           ^                          ^", font);
         modeSelectLabel = new Label(getSelectionString(), font);
