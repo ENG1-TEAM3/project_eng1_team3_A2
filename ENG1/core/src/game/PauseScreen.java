@@ -52,12 +52,12 @@ public class PauseScreen extends ScreenAdapter {
 
         String[] strLabels = new String[] {
                 "PAUSED",
-                String.format("Press %s to continue",Interactions.getKeyString(InputKey.InputTypes.UNPAUSE)),
-                String.format("Press %s to save : saving to " + currentSave.toString() + " (Press arrow keys to cycle this)",Interactions.getKeyString(InputKey.InputTypes.SAVE)),
-                String.format("Press %s for instructions",Interactions.getKeyString(InputKey.InputTypes.INSTRUCTIONS)),
-                String.format("Press %s for credits",Interactions.getKeyString(InputKey.InputTypes.CREDITS)),
-                String.format("Press %s to reset",Interactions.getKeyString(InputKey.InputTypes.RESET_GAME)),
-                String.format("Press %s to quit",Interactions.getKeyString(InputKey.InputTypes.QUIT))
+                String.format("Press %s to Continue",Interactions.getKeyString(InputKey.InputTypes.UNPAUSE)),
+                String.format("Press %s to Save : saving to " + currentSave.toString() + " (Press Arrow Keys to cycle this)",Interactions.getKeyString(InputKey.InputTypes.SAVE)),
+                String.format("Press %s for Instructions",Interactions.getKeyString(InputKey.InputTypes.INSTRUCTIONS)),
+                String.format("Press %s for Credits",Interactions.getKeyString(InputKey.InputTypes.CREDITS)),
+                String.format("Press %s to Reset",Interactions.getKeyString(InputKey.InputTypes.RESET_GAME)),
+                String.format("Press %s to Quit",Interactions.getKeyString(InputKey.InputTypes.QUIT))
         };
 
         // Contains the Labels objects for the PauseScreen

@@ -23,8 +23,9 @@ public class InstructionHud extends Hud{
                 Interactions.getKeyString(InputKey.InputTypes.PICK_UP),
                 Interactions.getKeyString(InputKey.InputTypes.PUT_DOWN),
                 Interactions.getKeyString(InputKey.InputTypes.COOK_SWAP)
-                ), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
-        table.add(instructionsLabel).expandX().padTop(110).padRight(480);
+                ), new Label.LabelStyle(new BitmapFont(), Color.SLATE));
+        table.add(instructionsLabel).expandX().padTop(90).padRight(950);
+        instructionsLabel.setFontScale(1.25f);
     }
 
     /**

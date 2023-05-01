@@ -65,29 +65,36 @@ public class GameHud extends Hud {
 		recipes = new HashMap<>();
 		this.gs = gameScreen;
         BitmapFont btfont = new BitmapFont();
-        timeLabel = new Label("TIMER :", new Label.LabelStyle(btfont, Color.BLACK));
-		timeLabel.setPosition(10, 84 * Constants.V_Height / 100.0f);
+        timeLabel = new Label("Timer :", new Label.LabelStyle(btfont, Color.BLACK));
+		timeLabel.setPosition(10, 90 * Constants.V_Height / 100.0f);
+        timeLabel.setFontScale(2);
 
 		updateTime(0, 0, 0);
 
-		customersLeftLabel = new Label("CUSTOMERS LEFT: ", new Label.LabelStyle(btfont, Color.BLACK));
-		customersLeftLabel.setPosition(10, 82 * Constants.V_Height / 100.0f);
+		customersLeftLabel = new Label("Customers Left: ", new Label.LabelStyle(btfont, Color.BLACK));
+		customersLeftLabel.setPosition(10, 86 * Constants.V_Height / 100.0f);
+        customersLeftLabel.setFontScale(2);
 
-		customersServedLabel = new Label("CUSTOMERS SERVED SUCCESSFULLY: ", new Label.LabelStyle(btfont, Color.BLACK));
-		customersServedLabel.setPosition(10, 80 * Constants.V_Height / 100.0f);
+		customersServedLabel = new Label("Customers Served: ", new Label.LabelStyle(btfont, Color.BLACK));
+		customersServedLabel.setPosition(10, 82 * Constants.V_Height / 100.0f);
+        customersServedLabel.setFontScale(2);
 
-		waveProgressLabel = new Label("PROGRESS UNTIL NEXT WAVE", new Label.LabelStyle(btfont, Color.WHITE));
-		waveProgressLabel.setPosition(Constants.V_Width / 2.0f - (waveProgressLabel.getWidth() / 2),
+		waveProgressLabel = new Label("PROGRESS TILL NEXT WAVE", new Label.LabelStyle(btfont, Color.WHITE));
+		waveProgressLabel.setPosition(Constants.V_Width / 12.0f - (waveProgressLabel.getWidth() / 2),
 				Constants.V_Height - Constants.V_Height / 32.0f);
+        waveProgressLabel.setFontScale(2);
 
 		reputationLabel = new Label("Reputation: 3", new Label.LabelStyle(btfont, Color.BLACK));
 		reputationLabel.setPosition(10, 78 * Constants.V_Height / 100.0f);
+        reputationLabel.setFontScale(2);
 
 		moneyLabel = new Label("Money: £0.00", new Label.LabelStyle(btfont, Color.BLACK));
-		moneyLabel.setPosition(10, 76 * Constants.V_Height / 100.0f);
+		moneyLabel.setPosition(10, 74 * Constants.V_Height / 100.0f);
+        moneyLabel.setFontScale(2);
 
 		powerupTimerLabel = new Label(String.format("%s to buy powerup!", Interactions.getKeyString(InputKey.InputTypes.BUY_POWERUP)), new Label.LabelStyle(btfont, Color.BLACK));
-		powerupTimerLabel.setPosition(Constants.V_Width / 2.0f, Constants.V_Height * .75f + 64);
+		powerupTimerLabel.setPosition(Constants.V_Width / 2.0f, Constants.V_Height * .70f + 164);
+        powerupTimerLabel.setFontScale(2);
 
 		if (batch != null) {
 			stage.addActor(customersLeftLabel);
@@ -145,10 +152,11 @@ public class GameHud extends Hud {
 					new Texture(Gdx.files.internal("powerups/" + gs.powerUpHandler.getCurrentPowerUp(0).spritePath())));
 			batch.draw(activePowerUpSprite.getTexture(), Constants.V_Width / 2.0f, Constants.V_Height * .75f, 64, 64);
 			batch.end();
-			powerupTimerLabel.setText(String.format("%s : Press [%s] to activate, Press [%s to reroll] (Costs %s)", gs.powerUpHandler.getCurrentPowerUp(0).spritePath().replace(".png", "").replace("_", " ").toUpperCase(),
+			powerupTimerLabel.setText(String.format("%s : Press [%s] to activate \nPress [%s to reroll] \n(Costs %s)", gs.powerUpHandler.getCurrentPowerUp(0).spritePath().replace(".png", "").replace("_", " ").toUpperCase(),
                     Interactions.getKeyString(InputKey.InputTypes.ACTIVATE_POWERUP),
                     Interactions.getKeyString(InputKey.InputTypes.BUY_POWERUP),
                     Constants.POWERUP_COST));
+            powerupTimerLabel.setFontScale(2);
 
         } else if (PowerUpHandler.activePowerUp() != null) {
             batch.setProjectionMatrix(o2.combined);
@@ -253,7 +261,7 @@ public class GameHud extends Hud {
 	 * @param secondsPassed The number of seconds passed
 	 */
 	public void updateTime(int hoursPassed, int minutesPassed, int secondsPassed) {
-		timeLabel.setText("TIMER: " + String.format(Util.formatTime(hoursPassed, minutesPassed, secondsPassed)));
+		timeLabel.setText("Timer: " + String.format(Util.formatTime(hoursPassed, minutesPassed, secondsPassed)));
 	}
 
 	/**
@@ -262,7 +270,7 @@ public class GameHud extends Hud {
 	 */
 	public void updateCustomersLeftLabel(int amountCustomers) {
 		if (amountCustomers >= 0) {
-			customersLeftLabel.setText(String.format("CUSTOMERS LEFT: %d", amountCustomers));
+			customersLeftLabel.setText(String.format("Customers Left: %d", amountCustomers));
 		} else {
 			customersLeftLabel.setText("ENDLESS MODE");
 		}
@@ -273,7 +281,7 @@ public class GameHud extends Hud {
      * @param amountCustomers The amount of customers served
      */
 	public void updateCustomersServedLabel(int amountCustomers) {
-		customersServedLabel.setText(String.format("CUSTOMERS SERVED SUCCESSFULLY: %d", amountCustomers));
+		customersServedLabel.setText(String.format("Customers Served: %d", amountCustomers));
 	}
 
     /**
