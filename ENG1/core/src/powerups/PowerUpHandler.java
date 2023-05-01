@@ -25,7 +25,7 @@ public class PowerUpHandler {
 	private static final PowerUp[] potentialPowerups = { PowerUp.AUTO_STATION, PowerUp.DOUBLE_MONEY,
 			PowerUp.SATISFIED_CUSTOMER, PowerUp.BONUS_TIME, PowerUp.FASTER_COOKS };
     /** Construct an Arraylist that has more of the powerUps with higher weights than those with lower weights*/
-	public static final ArrayList<PowerUp> powerUps = new ArrayList<>();
+	private static final ArrayList<PowerUp> powerUps = new ArrayList<>();
 	static {
 		for (PowerUp powerUp : potentialPowerups) {
 			for (int i = 0; i < powerUp.weight(); i++) {

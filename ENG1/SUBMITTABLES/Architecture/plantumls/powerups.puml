@@ -1,0 +1,26 @@
+@startuml
+enum PowerUp{
+PowerUp(weight, duration, String spritePath)
+int weight()
+int duration()
+String spritePath()
+}
+
+class PowerUpHandler{
+PowerUpHandler(GameScreen gameScreen)
+PowerUp activatePower(int slot)
+{static} boolean usePowerUp()
+boolean updateCoolDown(float dt)
+render(SpriteBatch batch, Vector2 pos)
+addPowerUp(boolean reset)
+addSpecificPowerUp(PowerUp pu, boolean reset)
+{static} PowerUp activePowerUp()
+PowerUp getCurrentPowerUp(int index)
+int getCooldown()
+PowerUp[] getCurrentPowerUps()
+restoreFromData(int cldown, PowerUp activPowerUp, PowerUp[] puSlots)
+}
+
+PowerUpHandler --> PowerUp : Stores instances of
+
+@enduml

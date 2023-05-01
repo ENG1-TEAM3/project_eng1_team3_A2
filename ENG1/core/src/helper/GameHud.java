@@ -29,8 +29,12 @@ import stations.ServingStation;
 public class GameHud extends Hud {
 	/** The label with the current amount of time played. */
 
-	Label timeLabel, customersLeftLabel, customersServedLabel, waveProgressLabel, cuttingPriceLabel, fryingPriceLabel, cookPriceLabel, reputationLabel, moneyLabel,
-			powerupTimerLabel;
+	private final Label timeLabel;
+    private final Label customersLeftLabel;
+    private final Label customersServedLabel;
+    private final Label reputationLabel;
+    private final Label moneyLabel;
+    private final Label powerupTimerLabel;
 
 	/**
 	 * The {@link SpriteBatch} of the GameHud. Use for drawing {@link food.Recipe}s.
@@ -44,9 +48,6 @@ public class GameHud extends Hud {
 	private Array<ServingStation> servingStations;
     private final Sprite activePowerUpSprite;
     private final OrthographicCamera o2 = new OrthographicCamera();
-
-    private Matrix4 worldMatrix;
-
 	// /** The time, in milliseconds, of the last recipe change. */
 	// private long lastChange;
 
@@ -59,9 +60,6 @@ public class GameHud extends Hud {
 	public GameHud(SpriteBatch batch, ShapeRenderer shape, GameScreen gameScreen) {
 		super(batch);
         o2.setToOrtho(false, Constants.V_Width, Constants.V_Height);
-        if (shape != null) {
-            worldMatrix = shape.getProjectionMatrix();
-        }
 		recipes = new HashMap<>();
 		this.gs = gameScreen;
         BitmapFont btfont = new BitmapFont();
@@ -79,7 +77,7 @@ public class GameHud extends Hud {
 		customersServedLabel.setPosition(10, 82 * Constants.V_Height / 100.0f);
         customersServedLabel.setFontScale(2);
 
-		waveProgressLabel = new Label("PROGRESS TILL NEXT WAVE", new Label.LabelStyle(btfont, Color.WHITE));
+        Label waveProgressLabel = new Label("PROGRESS TILL NEXT WAVE", new Label.LabelStyle(btfont, Color.WHITE));
 		waveProgressLabel.setPosition(Constants.V_Width / 12.0f - (waveProgressLabel.getWidth() / 2),
 				Constants.V_Height - Constants.V_Height / 32.0f);
         waveProgressLabel.setFontScale(2);
@@ -96,17 +94,17 @@ public class GameHud extends Hud {
 		powerupTimerLabel.setPosition(Constants.V_Width / 2.0f, Constants.V_Height * .70f + 164);
         powerupTimerLabel.setFontScale(2);
 
-        fryingPriceLabel = new Label(String.format("Bonus Frying Station (%s)",Constants.STATIONS_COST), new Label.LabelStyle(btfont, Color.GREEN));
+        Label fryingPriceLabel = new Label(String.format("Unlock Frying Station (%s)", Constants.STATIONS_COST), new Label.LabelStyle(btfont, Color.GREEN));
         fryingPriceLabel.setPosition(Constants.V_Width / 2.0f + 75, Constants.V_Height * .15f + 25);
         fryingPriceLabel.setFontScale(1.5f);
 
-        cuttingPriceLabel = new Label(String.format("Bonus Cutting Station (%s)",Constants.STATIONS_COST), new Label.LabelStyle(btfont, Color.GREEN));
+        Label cuttingPriceLabel = new Label(String.format("Unlock Cutting Station (%s)", Constants.STATIONS_COST), new Label.LabelStyle(btfont, Color.GREEN));
         cuttingPriceLabel.setPosition(Constants.V_Width / 2.0f - 460, Constants.V_Height * .15f + 25);
         cuttingPriceLabel.setFontScale(1.5f);
 
-        cookPriceLabel = new Label(String.format("Bonus Cook (%s)",Constants.STAFF_COST), new Label.LabelStyle(btfont, Color.GREEN));
-        cookPriceLabel.setPosition(Constants.V_Width / 2.0f - 150, Constants.V_Height * .15f + 45);
-        cookPriceLabel.setFontScale(1.5f);
+        Label cookPriceLabel = new Label(String.format("Buy Auto Cook (%s)", Constants.STAFF_COST), new Label.LabelStyle(btfont, Color.GREEN));
+        cookPriceLabel.setPosition(Constants.V_Width / 2.0f - 140, Constants.V_Height * .15f + 140);
+        cookPriceLabel.setFontScale(1.1f);
 
 		if (batch != null) {
 			stage.addActor(customersLeftLabel);

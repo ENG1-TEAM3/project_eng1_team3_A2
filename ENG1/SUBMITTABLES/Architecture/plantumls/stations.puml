@@ -15,6 +15,9 @@ render(SpriteBatch batch)
 renderDebug(SpriteBatch batch)
 renderShape(ShapeRenderer shape)
 renderShapeDebug(ShapeRenderer shape)
+boolean isLocked()
+boolean isInUse()
+setLocked(boolean lock)
 }
 class BinStation{
 BinStation(Rectangle rectangle)
@@ -37,7 +40,13 @@ update(float delta)
 render(SpriteBatch batch)
 renderShape(ShapeRenderer shape)
 interact(Cook cook, InputKey.InputTypes inputType)
+restoreStationFromSave(Interactions.InteractionResult inter, float progress, float burnProg, int stepNum, FoodItem.FoodID foodItem, boolean hasAutoCook)
 float getProgress()
+float getBurnProgress()
+int getStepNum()
+FoodItem.FoodID getFoodItem()
+Interactions.InteractionResult getInteraction()
+boolean hasAutoCook()
 }
 class ServingStation{
 ServingStation(Rectangle rectangle)

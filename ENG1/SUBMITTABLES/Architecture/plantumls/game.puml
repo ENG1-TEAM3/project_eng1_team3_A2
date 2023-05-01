@@ -19,6 +19,7 @@ class GameSprites{
     createResources()
     String spriteKey(SpriteID spriteID, String spriteName)
     String getSprite(SpriteID spriteID, String spriteName)
+    createNonAtlasResources()
     dispose()
 }
 
@@ -39,6 +40,7 @@ ScreenAdapter getScreen(ScreenID screenID)
 resetGameScreen()
 pauseGameScreen()
 playGameScreen()
+getPauseStartTime()
 }
 
 

@@ -15,6 +15,10 @@ class Constants{
 {static} float PPM
 {static} int V_WIDTH
 {static} int V_HEIGHT
+{static} int POWERUP_COST
+{static} int STAFF_COST
+{static} int STATIONS_COST
+{static} int MONEY_START
 {static} String MAPPATH
 {static} int MAPWIDTH
 {static} int MAPHEIGHT
@@ -22,12 +26,6 @@ class Constants{
 {static} Vector2 GAMECAMERAOFFSET
 }
 class GameHud{
-# Label timeLabel
-# Label customersLeftLabel
-# Label customersServedLabel
-# Label waveProgressLabel
-# Label reputationLabel
-# Label moneyLabel
 
 GameHud(SpriteBatch batch, GameScreen gameScreen)
 render()
