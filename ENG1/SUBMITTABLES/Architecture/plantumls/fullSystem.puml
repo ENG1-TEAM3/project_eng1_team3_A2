@@ -1,0 +1,148 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class Cook
+class CookInteractor
+abstract class GameEntity
+
+class Customer
+class CustomerController
+
+class FoodItem
+class FoodStack
+class Recipe
+
+class Boot
+class CreditsScreen
+class GameOverScreen
+class GameOverScreen
+class GameSprites
+class InstructionScreen
+class MenuScreen
+class PauseScreen
+class ScreenController
+
+class BodyHelper
+class CollisionHelper
+class Constants
+note "Connects to many different classes when they need a constant" as n2
+n2 --> Constants
+class GameHud
+class Hud
+class InstructionHud
+class MapHelper
+class SaveHandler
+class Util
+
+class InputKey
+class Interactions
+
+enum PowerUp
+class PowerUpHandler
+
+class BinStation
+abstract class CookInteractable
+class CounterStation
+class Pantry
+class PreparationStation
+class ServingStation
+class Station
+
+
+Station --|> CookInteractable
+Pantry --|> Station
+BinStation --|> Station
+CounterStation --|> Station
+ServingStation --|> Station
+PreparationStation --|> Station
+
+CustomerController --> Customer
+Recipe --> FoodStack
+Cook --> CookInteractor
+Cook --|> GameEntity
+CookInteractor --> Cook
+Cook --> GameScreen
+
+Boot --> ScreenController
+Boot --> Boot
+ScreenController --> Boot
+
+ScreenController --> PauseScreen
+PauseScreen --> ScreenController
+
+ScreenController --> GameScreen
+GameScreen --> ScreenController
+
+ScreenController --> GameOverScreen
+GameOverScreen -- ScreenController
+
+ScreenController --> CreditsScreen
+CreditsScreen --> ScreenController
+
+ScreenController --> InstructionScreen
+InstructionScreen --> ScreenController
+
+PauseScreen --> GameScreen
+
+ScreenController --> MenuScreen
+MenuScreen --> ScreenController
+
+MapHelper --> MapHelper
+InstructionHud --|> Hud
+GameHud --|> Hud
+CollisionHelper --> CollisionHelper
+
+Interactions --> InputKey
+PowerUpHandler --> PowerUp
+
+GameScreen --> PowerUpHandler
+GameScreen --> CustomerController
+GameScreen --> SaveHandler
+GameScreen --> CookInteractable
+SaveHandler --> GameScreen
+CustomerController --> GameScreen
+
+GameScreen --> Cook
+
+MapHelper --> GameScreen
+
+GameScreen --> GameHud
+GameHud --> GameScreen
+MapHelper --> Station
+MapHelper --> Cook
+
+Customer --> Recipe
+ServingStation --> Customer
+FoodStack --> FoodItem
+GameScreen --> Interactions
+
+CounterStation --> FoodStack
+Pantry --> FoodItem
+
+
+GameOverScreen --> Util
+GameHud --> Util
+
+Cook --> GameSprites
+Station --> GameSprites
+CustomerController --> GameSprites
+
+Cook --> Station
+Cook --> FoodStack
+
+MapHelper --> BodyHelper
+
+CookInteractor --> CollisionHelper
+
+PreparationStation --> FoodStack
+Station --> Cook
+
+GameScreen --> InstructionHud
+
+Station --> GameSprites
+
+PreparationStation --> Interactions
+
+
+@enduml

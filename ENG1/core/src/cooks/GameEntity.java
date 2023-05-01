@@ -11,7 +11,7 @@ import java.io.Serializable;
 import static helper.Constants.PPM;
 
 /** The class for any object that can exist in the game world. */
-public abstract class GameEntity implements Serializable {
+public abstract class GameEntity {
 
 	/** X and Y position coordinates. */
 	protected float x, y;
