@@ -1,5 +1,6 @@
 package testPackage;
 
+import helper.Constants;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
@@ -67,5 +68,27 @@ public class CounterStationTests {
 
         assertEquals("This test asserts that the cook will pick up one item from the top of the stack on the counter",
                 "[bottomBun]", cs1.getFoodStack().toString());
+    }
+    @Test
+    public void testBuyLockedStation(){
+        Boot b1 = Boot.getInstance();
+        b1.createHeadless();
+
+        MapHelper m1 = MapHelper.getInstance();
+        GameScreen gs1 = (GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME);
+        m1.setGameScreen(gs1);
+
+        Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, ((GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME)).getWorld()));
+
+        CounterStation cs1 = new CounterStation(new Rectangle(100,100,100,100), true,(GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME));
+        int oldmoney = gs1.getMoney();
+        cs1.interact(c1, InputKey.InputTypes.USE);
+        assertEquals("This test asserts that money is spent to buy a locked station",
+                oldmoney - Constants.STAFF_COST, gs1.getMoney());
+        assertFalse("This test asserts that the station unlocks",
+                cs1.isLocked());
+
+
     }
 }

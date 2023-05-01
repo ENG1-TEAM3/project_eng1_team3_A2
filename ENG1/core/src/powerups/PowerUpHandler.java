@@ -152,6 +152,15 @@ public class PowerUpHandler {
 		}
 	}
 
+    public void addSpecificPowerUp(PowerUp pu, boolean reset){
+        for (int i = 0; i < POWERUP_SLOTS; i++) {
+            if (currentPowerUps[i] == null || reset) {
+                currentPowerUps[i] = pu;
+                return;
+            }
+        }
+    }
+
     /**
      * Return the active PowerUp
      * @return the active PowerUp

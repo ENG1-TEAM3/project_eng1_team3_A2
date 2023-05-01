@@ -145,14 +145,14 @@ public class GameHud extends Hud {
         }
         shape.end();
 
-		if (gs.powerUpHandler.getCurrentPowerUps()[0] != null) {
+		if (gs.getPowerUpHandler().getCurrentPowerUps()[0] != null) {
             batch.setProjectionMatrix(o2.combined);
 			batch.begin();
 			activePowerUpSprite.setTexture(
-					new Texture(Gdx.files.internal("powerups/" + gs.powerUpHandler.getCurrentPowerUp(0).spritePath())));
+					new Texture(Gdx.files.internal("powerups/" + gs.getPowerUpHandler().getCurrentPowerUp(0).spritePath())));
 			batch.draw(activePowerUpSprite.getTexture(), Constants.V_Width / 2.0f, Constants.V_Height * .75f, 64, 64);
 			batch.end();
-			powerupTimerLabel.setText(String.format("%s : Press [%s] to activate \nPress [%s to reroll] \n(Costs %s)", gs.powerUpHandler.getCurrentPowerUp(0).spritePath().replace(".png", "").replace("_", " ").toUpperCase(),
+			powerupTimerLabel.setText(String.format("%s : Press [%s] to activate \nPress [%s to reroll] \n(Costs %s)", gs.getPowerUpHandler().getCurrentPowerUp(0).spritePath().replace(".png", "").replace("_", " ").toUpperCase(),
                     Interactions.getKeyString(InputKey.InputTypes.ACTIVATE_POWERUP),
                     Interactions.getKeyString(InputKey.InputTypes.BUY_POWERUP),
                     Constants.POWERUP_COST));
@@ -167,7 +167,7 @@ public class GameHud extends Hud {
             batch.end();
             powerupTimerLabel.setText(String.format("%s \nuses: %d",
                     PowerUpHandler.activePowerUp().spritePath().replace(".png", "").replace("_", " ").toUpperCase(),
-                    gs.powerUpHandler.getCooldown()));
+                    gs.getPowerUpHandler().getCooldown()));
         } else {
 			powerupTimerLabel.setText(String.format("[%s] to buy powerup! (Costs %s)", Interactions.getKeyString(InputKey.InputTypes.BUY_POWERUP) , Constants.POWERUP_COST));
 		}

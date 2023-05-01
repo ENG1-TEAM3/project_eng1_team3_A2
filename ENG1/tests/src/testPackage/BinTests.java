@@ -9,6 +9,7 @@ import game.Boot;
 import game.GameScreen;
 import game.ScreenController;
 import helper.BodyHelper;
+import helper.Constants;
 import helper.MapHelper;
 import interactions.InputKey;
 import org.junit.Test;
@@ -23,7 +24,8 @@ public class BinTests {
         b1.createHeadless();
 
         MapHelper m1 = MapHelper.getInstance();
-        m1.setGameScreen((GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME));
+        GameScreen gs1 = (GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME);
+        m1.setGameScreen(gs1);
 
         Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
         Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, ((GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME)).getWorld()));
@@ -43,6 +45,17 @@ public class BinTests {
 
         bs1.interact(c1, InputKey.InputTypes.PUT_DOWN);
         assertEquals("This test asserts that the cooks stack is popped when interacting with a bin, using the put down key",1, c1.foodStack.size());
+
+
+        c1.foodStack.clearStack();
+        c1.foodStack.addStack(FoodItem.FoodID.cook);
+
+        int oldmoney = gs1.getMoney();
+        bs1.interact(c1, InputKey.InputTypes.PUT_DOWN);
+
+        assertEquals("This test asserts that the player is refunded for binning an autocook",
+                oldmoney+ Constants.STAFF_COST, gs1.getMoney());
+
 
     }
 }

@@ -134,9 +134,9 @@ public class SaveHandler {
             }
         }
 
-        int powerUpCooldown = gameScreen.powerUpHandler.getCooldown();
+        int powerUpCooldown = gameScreen.getPowerUpHandler().getCooldown();
         PowerUp activePower = PowerUpHandler.activePowerUp();
-        PowerUp[] curPowerUps = gameScreen.powerUpHandler.getCurrentPowerUps();
+        PowerUp[] curPowerUps = gameScreen.getPowerUpHandler().getCurrentPowerUps();
 
 
         try (FileOutputStream fos = new FileOutputStream(totalpath)){

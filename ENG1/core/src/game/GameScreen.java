@@ -58,7 +58,7 @@ public class GameScreen extends ScreenAdapter {
 	private final SaveHandler sv;
 	private MenuScreen.difficulty currentDifficulty;
 	private MenuScreen.mode currentMode;
-	public PowerUpHandler powerUpHandler;
+	private PowerUpHandler powerUpHandler;
 
 	/**
 	 * The constructor for the {@link GameScreen}.
@@ -686,6 +686,10 @@ public class GameScreen extends ScreenAdapter {
     }
     public MenuScreen.mode getCurrentMode(){
         return currentMode;
+    }
+
+    public PowerUpHandler getPowerUpHandler(){
+        return powerUpHandler;
     }
     public int getSecondsPassed(){
         return secondsPassed;

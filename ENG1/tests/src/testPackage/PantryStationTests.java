@@ -1,5 +1,6 @@
 package testPackage;
 
+import helper.Constants;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
@@ -54,6 +55,37 @@ public class PantryStationTests {
         p1.interact(c1, InputKey.InputTypes.USE);
         assertEquals("This test asserts that the cook will pick up another bottom bun after picking up a set of buns",
                 "[bottomBun, topBun, bottomBun, meat, meat]", c1.foodStack.toString());
+    }
+
+    @Test
+    public void testPickUpCook(){
+        Boot b1 = Boot.getInstance();
+        b1.createHeadless();
+
+        MapHelper m1 = MapHelper.getInstance();
+        GameScreen gs1 = (GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME);
+        m1.setGameScreen(gs1);
+
+        Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, ((GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME)).getWorld()));
+
+        Pantry p1 = new Pantry(new Rectangle(100,100,100,100), false,(GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME));
+        p1.setItem(FoodItem.FoodID.cook);
+
+        int oldmoney = gs1.getMoney();
+        p1.interact(c1, InputKey.InputTypes.PICK_UP);
+        assertEquals("This test asserts it costs the correct amount of money to buy an autocook",
+                oldmoney - Constants.STAFF_COST, gs1.getMoney());
+
+        int oldmoney2 = gs1.getMoney();
+        p1.interact(c1, InputKey.InputTypes.PICK_UP);
+        assertEquals("This test asserts it costs the correct amount of money to buy an autocook",
+                oldmoney2 - Constants.STAFF_COST, gs1.getMoney());
+
+        p1.interact(c1, InputKey.InputTypes.PICK_UP);
+        assertEquals("This test asserts that the cook cannot buy another cook if they dont have enough money",
+                "[cook, cook]",c1.foodStack.toString());
+
     }
 
 }

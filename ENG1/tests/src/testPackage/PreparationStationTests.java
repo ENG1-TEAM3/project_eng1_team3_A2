@@ -1,5 +1,6 @@
 package testPackage;
 
+import helper.Constants;
 import interactions.Interactions;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
@@ -14,6 +15,7 @@ import helper.BodyHelper;
 import helper.MapHelper;
 import interactions.InputKey;
 import org.junit.Test;
+import stations.CounterStation;
 import stations.PreparationStation;
 import stations.Station;
 
@@ -166,4 +168,47 @@ public class PreparationStationTests {
         ps1.interact(c1, InputKey.InputTypes.PICK_UP);
         assertEquals("This test asserts that the cook can pick up the cooked meat", "[meatCook]", c1.foodStack.toString());
     }
+    @Test
+    public void testBuyLockedStation(){
+        Boot b1 = Boot.getInstance();
+        b1.createHeadless();
+
+        MapHelper m1 = MapHelper.getInstance();
+        GameScreen gs1 = (GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME);
+        m1.setGameScreen(gs1);
+
+        Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, ((GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME)).getWorld()));
+
+        PreparationStation ps1 = new PreparationStation(new Rectangle(100,100,100,100), true,(GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME));
+        int oldmoney = gs1.getMoney();
+        ps1.interact(c1, InputKey.InputTypes.USE);
+        assertEquals("This test asserts that money is spent to buy a locked station",
+                oldmoney - Constants.STAFF_COST, gs1.getMoney());
+        assertFalse("This test asserts that the station unlocks",
+                ps1.isLocked());
+    }
+    @Test
+    public void testDeployAutoCook(){
+        Boot b1 = Boot.getInstance();
+        b1.createHeadless();
+
+        MapHelper m1 = MapHelper.getInstance();
+        GameScreen gs1 = (GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME);
+        m1.setGameScreen(gs1);
+
+        Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
+        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, ((GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME)).getWorld()));
+
+        PreparationStation ps1 = new PreparationStation(new Rectangle(100,100,100,100), false,(GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME));
+        c1.foodStack.addStack(FoodItem.FoodID.cook);
+        assertFalse("This test asserts that a station does not start with an autocook",
+                ps1.hasAutoCook());
+        ps1.interact(c1, InputKey.InputTypes.PUT_DOWN);
+        assertTrue("This test asserts that the station internal state changes when an autocook is placed",
+                ps1.hasAutoCook());
+
+    }
+
+
 }
