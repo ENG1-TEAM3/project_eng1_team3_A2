@@ -157,12 +157,12 @@ public class MenuScreen extends ScreenAdapter {
         Table table2 = new Table();
         table2.center();
         table2.setFillParent(true);
-        Label l00 = new Label("Press the Arrow Keys to select a mode", font);
-        Label l01 = new Label(String.format("Press %s to go back",Interactions.getKeyString(InputKey.InputTypes.MODE_SELECT)), font);
+        Label l00 = new Label("Press the Arrow Keys to Select A Mode", font);
+        Label l01 = new Label(String.format("Press %s to Go Back",Interactions.getKeyString(InputKey.InputTypes.MODE_SELECT)), font);
         Label l0 = new Label("           ^                          ^", font);
         modeSelectLabel = new Label(getSelectionString(), font);
         Label l2 = new Label("              V                                V", font);
-        Label l3 = new Label(String.format("Press %s to start game",Interactions.getKeyString(InputKey.InputTypes.START_GAME)), font);
+        Label l3 = new Label(String.format("Press %s to Start Game",Interactions.getKeyString(InputKey.InputTypes.START_GAME)), font);
         table2.add(l00).expandX();
         table2.row();
         table2.add(l01).expandX();

@@ -22,6 +22,8 @@ public class Constants {
     public static final int POWERUP_COST = 200;
     /** The cost (in pennies) to get a new staff member*/
     public static final int STAFF_COST = 1000;
+    /** The cost (in pennies) to get a new staff member*/
+    public static final int STATIONS_COST = 1000;
     /** The amount of money (in pennies) that you start with */
     public static final int MONEY_START = 2000;
     /** The path of the tilemap to load*/
