@@ -41,7 +41,7 @@ public class CreditsScreen extends ScreenAdapter {
         table.setFillParent(true);
 
         Label creditsLabel = new Label("Credits", font);
-        creditsLabel.setFontScale(3);
+        creditsLabel.setFontScale(5);
         table.add(creditsLabel).expandX();
 
         table.row();
