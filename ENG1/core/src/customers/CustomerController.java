@@ -347,6 +347,9 @@ public class CustomerController {
 	}
 
 
+    public void addCustomerManual(Customer cus) {
+        this.customers.add(cus);
+    }
     /**
      * Remove specified customer if it is past their leave time
      * @param customer The customer to check for removal

@@ -197,9 +197,4 @@ public class PowerUpHandler {
         activePowerUp = activPowerUp;
         this.currentPowerUps = puSlots;
     }
-
-
-
-
-
 }

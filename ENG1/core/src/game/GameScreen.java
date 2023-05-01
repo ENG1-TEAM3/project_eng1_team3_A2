@@ -619,6 +619,8 @@ public class GameScreen extends ScreenAdapter {
             ctr++;
         }
 
+
+
         for (int i = 0; i < this.interactables.size; i++){
             if (!lockedStations[i]){
                 ((Station) this.interactables.get(i)).setLocked(false);
