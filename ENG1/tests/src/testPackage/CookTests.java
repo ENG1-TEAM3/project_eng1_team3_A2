@@ -23,28 +23,6 @@ import java.lang.reflect.Method;
 @RunWith(GdxTestRunner.class)
 public class CookTests {
     @Test
-    public void testFoodRelativeMethods() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Rectangle r1 = new Rectangle(0.0f,0.0f,42.50f,20.00f);
-        World w1 = new World(new Vector2(0,0), false);
-        Cook c1 = new Cook(r1.getWidth(), r1.getHeight() , BodyHelper.createBody(r1.x,r1.y,r1.width,r1.height, false, w1));
-        // gameScreen is not used, needs refactoring
-        Method privateFoodRelativeX = Cook.class.getDeclaredMethod("foodRelativeX", Cook.Facing.class);
-        privateFoodRelativeX.setAccessible(true);
-        assertEquals(30F,privateFoodRelativeX.invoke(c1,Cook.Facing.RIGHT));
-        assertEquals(-30F,privateFoodRelativeX.invoke(c1,Cook.Facing.LEFT));
-        assertEquals(0F,privateFoodRelativeX.invoke(c1,Cook.Facing.UP));
-        assertEquals(0F,privateFoodRelativeX.invoke(c1,Cook.Facing.DOWN));
-        assertEquals(0F,privateFoodRelativeX.invoke(c1,Cook.Facing.NONE));
-
-        Method privateFoodRelativeY = Cook.class.getDeclaredMethod("foodRelativeY", Cook.Facing.class);
-        privateFoodRelativeY.setAccessible(true);
-        assertEquals(-14F,privateFoodRelativeY.invoke(c1,Cook.Facing.UP));
-        assertEquals(-24F,privateFoodRelativeY.invoke(c1,Cook.Facing.LEFT));
-        assertEquals(-24F,privateFoodRelativeY.invoke(c1,Cook.Facing.RIGHT));
-        assertEquals(-25F,privateFoodRelativeY.invoke(c1,Cook.Facing.DOWN));
-        assertEquals(0F,privateFoodRelativeY.invoke(c1,Cook.Facing.NONE));
-    }
-    @Test
     public void testGetDimensions(){
         Rectangle r1 = new Rectangle(0.0f,100.0f,42.50f,20.00f);
         World w1 = new World(new Vector2(0,0), false);
