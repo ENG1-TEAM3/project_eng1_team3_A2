@@ -28,14 +28,14 @@ public class CustomerController {
 	 */
 	private static Array<ServingStation> servingStations;
 
-	/** Integers corresponding to their names*/
+	/** Integers corresponding to their names */
 	private int customersLeft, customersServed, totalCustomersToServe;
 
 	/** The {@link game.GameScreen} to send the {@link #customersServed} to. */
 	private final GameScreen gameScreen;
-    /** Time in seconds of the last customer spawn*/
+	/** Time in seconds of the last customer spawn */
 	private int lastCustomerSpawnTime;
-    /** The cooldown time between customer spawns*/
+	/** The cooldown time between customer spawns */
 	private int timeBetweenSpawnsSeconds;
 
 	/**
@@ -78,7 +78,7 @@ public class CustomerController {
 	 * Add a {@link Customer} to a {@link ServingStation}.
 	 */
 	public void addCustomer(int patience) {
-        System.out.println("adding cust inside");
+		System.out.println("adding cust inside");
 		// Get a deep copy of all the ServingStations.
 		Array<ServingStation> emptyStations = new Array<>(servingStations);
 		// Loop through and remove all the stations that have a
@@ -91,12 +91,10 @@ public class CustomerController {
 		// Now that the only stations left are the ones without Customers,
 		// randomly pick one and add a customer to it.
 
-
 		Random random = new Random();
 		int randomStationIndex = random.nextInt(emptyStations.size);
 		ServingStation chosenStation = emptyStations.get(randomStationIndex);
-        int actualStationIndex = servingStations.indexOf(chosenStation, true);
-
+		int actualStationIndex = servingStations.indexOf(chosenStation, true);
 
 		Customer newCustomer = new Customer(customerSprite, actualStationIndex,
 				new Vector2(chosenStation.getCustomerX(), chosenStation.getCustomerY()));
@@ -114,29 +112,29 @@ public class CustomerController {
 		setCustomersLeft(customersLeft - 1);
 	}
 
-    ///////////////////////////////////////////NEW ASSESSMENT 2 ADDITION////////////////////////////////////////////////
+	/////////////////////////////////////////// NEW ASSESSMENT 2
+	/////////////////////////////////////////// ADDITION////////////////////////////////////////////////
 
-    /**
-     * Restore a customer from save
-     * @param stationIndex The index of the serving station that this customer corresponds to
-     * @param spawnTime The spawn time of the customer in seconds
-     * @param deadTime The leaving time of the customer in seconds
-     * @param order The string order name of the customer
-     */
-    public void restoreCustomerFromSave(int stationIndex, int spawnTime, int deadTime, String order){
-        Customer newCust = new Customer(customerSprite, stationIndex,
-                new Vector2(servingStations.get(stationIndex).getCustomerX(),
-                servingStations.get(stationIndex).getCustomerY()));
-        customers.add(newCust);
+	/**
+	 * Restore a customer from save
+	 * 
+	 * @param stationIndex The index of the serving station that this customer
+	 *                     corresponds to
+	 * @param spawnTime    The spawn time of the customer in seconds
+	 * @param deadTime     The leaving time of the customer in seconds
+	 * @param order        The string order name of the customer
+	 */
+	public void restoreCustomerFromSave(int stationIndex, int spawnTime, int deadTime, String order) {
+		Customer newCust = new Customer(customerSprite, stationIndex, new Vector2(
+				servingStations.get(stationIndex).getCustomerX(), servingStations.get(stationIndex).getCustomerY()));
+		customers.add(newCust);
 
-        this.setupCustomer(newCust, spawnTime, deadTime - spawnTime);
-        newCust.setRequestName(order);
-        servingStations.get(stationIndex).setCustomer(newCust);
-        gameScreen.getGameHud().addRecipeToRender(stationIndex,
-                Recipe.firstRecipeOption(newCust.getRequestName()));
-    }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+		this.setupCustomer(newCust, spawnTime, deadTime - spawnTime);
+		newCust.setRequestName(order);
+		servingStations.get(stationIndex).setCustomer(newCust);
+		gameScreen.getGameHud().addRecipeToRender(stationIndex, Recipe.firstRecipeOption(newCust.getRequestName()));
+	}
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Removes a customer from a {@link ServingStation}.
@@ -196,8 +194,6 @@ public class CustomerController {
 		return customersServed;
 	}
 
-
-
 	/**
 	 * Adds a {@link ServingStation} to the {@link Array} of {@link ServingStation}s
 	 * so that {@link Customer}s can be assigned to them.
@@ -245,39 +241,56 @@ public class CustomerController {
 		gameScreen.getGameHud().clearRecipes();
 	}
 
-    //////////////////////////////////////////ALL METHODS BELOW ADDED FOR ASSESSMENT 2//////////////////////////////////
+	////////////////////////////////////////// ALL METHODS BELOW ADDED FOR
+	////////////////////////////////////////// ASSESSMENT
+	////////////////////////////////////////// 2//////////////////////////////////
 
-    /**
-     * Set the total amount of customers to serve
-     * @param amount An integer amount of customers
-     */
-    public void setTotalCustomersToServe(int amount) {
-        this.totalCustomersToServe = amount;
-    }
+	/**
+	 * Set the total amount of customers to serve
+	 * 
+	 * @param amount An integer amount of customers
+	 */
+	public void setTotalCustomersToServe(int amount) {
+		this.totalCustomersToServe = amount;
+	}
 
+	/**
+	 * Get the total amount of customers to serve
+	 * 
+	 * @return The integer amount of customers defined above
+	 */
+	public int getTotalCustomersToServe() {
+		return this.totalCustomersToServe;
+	}
 
-    /**
-     * Get the total amount of customers to serve
-     * @return The integer amount of customers defined above
-     */
-    public int getTotalCustomersToServe() {
-        return this.totalCustomersToServe;
-    }
+	/**
+	 * Get the Array of customers that currently exist
+	 * 
+	 * @return The array defined above
+	 */
+	public Array<Customer> getCustomers() {
+		return this.customers;
+	}
 
+	public int timeMultiplier = 1;
 
-    /**
-     * Get the Array of customers that currently exist
-     * @return The array defined above
-     */
-    public Array<Customer> getCustomers() {
-        return this.customers;
-    }
+	public void multiplyTimeBetweenServes() {
+		timeMultiplier = 2;
+	}
 
-    /**
-     * Try to spawn a certain amount of customers every certain amount of time dictated by difficulty and mode
-     * @param msd The difficulty of the game - If the mode is endless this has no effect
-     * @param md The mode of the game - If it is endless the difficulty has no effect
-     */
+	public int timeBetweenSpawnsSeconds() {
+		return timeBetweenSpawnsSeconds / timeMultiplier;
+	}
+
+	/**
+	 * Try to spawn a certain amount of customers every certain amount of time
+	 * dictated by difficulty and mode
+	 * 
+	 * @param msd The difficulty of the game - If the mode is endless this has no
+	 *            effect
+	 * @param md  The mode of the game - If it is endless the difficulty has no
+	 *            effect
+	 */
 	public void tryToSpawnCustomer(MenuScreen.difficulty msd, MenuScreen.mode md) {
 		int patience;
 		if (md == MenuScreen.mode.SCENARIO) {
@@ -306,12 +319,17 @@ public class CustomerController {
 				patience = 60;
 			}
 		}
+		timeBetweenSpawnsSeconds *= timeMultiplier;
+//		if (PowerUpHandler.activePowerUp() == PowerUp.BONUS_TIME) {
+//			PowerUpHandler.usePowerUp();
+//			timeMultiplier = 2;
+//		} else {
+//			timeMultiplier = 1;
+//		}
+
 		if ((gameScreen.getTotalSecondsRunningGame() - lastCustomerSpawnTime >= timeBetweenSpawnsSeconds)
 				&& canAddCustomer()) {
-			if (PowerUpHandler.activePowerUp() == PowerUp.BONUS_TIME) {
-				PowerUpHandler.usePowerUp();
-				patience *= 2;
-			}
+			timeMultiplier = 1;
 			addCustomer(patience);
 			if (md == MenuScreen.mode.ENDLESS) {
 				if (this.customersServed > 8) {
@@ -335,51 +353,57 @@ public class CustomerController {
 		}
 	}
 
-    /**
-     * Set up the timings for a customer
-     * @param cus The customer to set up timings for
-     * @param spawnTime The time when the customer was spawned
-     * @param patience The amount of time the customer should wait before leaving
-     */
+	/**
+	 * Set up the timings for a customer
+	 * 
+	 * @param cus       The customer to set up timings for
+	 * @param spawnTime The time when the customer was spawned
+	 * @param patience  The amount of time the customer should wait before leaving
+	 */
 	public void setupCustomer(Customer cus, int spawnTime, int patience) {
 		cus.setTimings(spawnTime, spawnTime + patience);
-		//System.out.println("Customer added with spawntime " + spawnTime + " deadtime " + (spawnTime + patience));
+		// System.out.println("Customer added with spawntime " + spawnTime + " deadtime
+		// " + (spawnTime + patience));
 	}
 
-
-    /**
-     * Remove specified customer if it is past their leave time
-     * @param customer The customer to check for removal
-     */
+	/**
+	 * Remove specified customer if it is past their leave time
+	 * 
+	 * @param customer The customer to check for removal
+	 */
 	public void removeCustomerIfExpired(Customer customer) {
 		if (gameScreen.getTotalSecondsRunningGame() >= customer.getDeadTime()) {
-			//System.out.println("Removing customer");
+			// System.out.println("Removing customer");
 			removeCustomer(servingStations.get(customer.getStationIndex()));
 			gameScreen.loseReputation();
 		}
 	}
 
-    /**
-     * Return a float between 0.0 and 1.0, corresponding to the progress until next customer spawn
-     * @return The float specified in the line above
-     */
+	/**
+	 * Return a float between 0.0 and 1.0, corresponding to the progress until next
+	 * customer spawn
+	 * 
+	 * @return The float specified in the line above
+	 */
 	public float returnFractionProgressUntilNextCustomer() {
 		return (gameScreen.getTotalSecondsRunningGame() - lastCustomerSpawnTime) / (float) (timeBetweenSpawnsSeconds);
 	}
 
-    /**
-     * Set the last customer spawn time
-     * @param tm Time in seconds since game start
-     */
-    public void setLastCustomerSpawnTime(int tm){
-        this.lastCustomerSpawnTime =tm;
-    }
+	/**
+	 * Set the last customer spawn time
+	 * 
+	 * @param tm Time in seconds since game start
+	 */
+	public void setLastCustomerSpawnTime(int tm) {
+		this.lastCustomerSpawnTime = tm;
+	}
 
-    /**
-     * Get the last customer spawn time
-     * @return The time in seconds specified in the line above
-     */
-    public int getLastCustomerSpawnTime() {
-        return lastCustomerSpawnTime;
-    }
+	/**
+	 * Get the last customer spawn time
+	 * 
+	 * @return The time in seconds specified in the line above
+	 */
+	public int getLastCustomerSpawnTime() {
+		return lastCustomerSpawnTime;
+	}
 }

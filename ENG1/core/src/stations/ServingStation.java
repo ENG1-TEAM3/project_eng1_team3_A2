@@ -18,9 +18,9 @@ import powerups.PowerUpHandler;
  */
 public class ServingStation extends Station {
 
-    private Customer customer;
+	private Customer customer;
 	private final float customerX;
-    private final float customerY;
+	private final float customerY;
 	private final CustomerController customerController;
 
 	/**
@@ -71,8 +71,8 @@ public class ServingStation extends Station {
 			// First make sure there is actually a request on this counter.
 			if (hasCustomer()) {
 				// If there is a request, then compare the two.
-                String request;
-                if (Recipe.matchesRecipe(cook.foodStack, customer.getRequestName())) {
+				String request;
+				if (Recipe.matchesRecipe(cook.foodStack, customer.getRequestName())) {
 					gameScreen.addMoney(Recipe.prices.get(customer.getRequestName()));
 					// If it's correct, then the customer will take the food and leave.
 					request = null;
@@ -83,6 +83,12 @@ public class ServingStation extends Station {
 					gameScreen.addMoney(Recipe.prices.get(customer.getRequestName()));
 					request = null;
 					customerController.customerServed(this);
+				} else if (PowerUpHandler.activePowerUp() == PowerUp.BONUS_TIME) {
+					PowerUpHandler.usePowerUp();
+					customer.deadTime += customerController.timeBetweenSpawnsSeconds();
+					if (customerController.timeMultiplier == 1) {
+						customerController.multiplyTimeBetweenServes();
+					}
 				}
 			}
 		}
