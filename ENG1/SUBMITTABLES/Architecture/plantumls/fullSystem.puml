@@ -144,5 +144,7 @@ Station --> GameSprites
 
 PreparationStation --> Interactions
 
+CollisionHelper --> Util
+
 
 @enduml
