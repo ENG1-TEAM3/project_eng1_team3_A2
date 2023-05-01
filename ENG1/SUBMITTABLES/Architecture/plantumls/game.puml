@@ -43,7 +43,6 @@ playGameScreen()
 
 
 class GameScreen{
-PowerUpHandler powerUpHandler
 GameScreen(ScreenController screenController, OrthographicCamera camera)
 updateTiming()
 setTiming(int totalSecs)

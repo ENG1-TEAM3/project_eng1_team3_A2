@@ -32,7 +32,7 @@ import java.util.Comparator;
 /** A {@link ScreenAdapter} containing certain elements of the game. */
 public class GameScreen extends ScreenAdapter {
 
-	public final OrthographicCamera camera;
+	private final OrthographicCamera camera;
 	private long msPast1s = 0;
 	private long previousSecond, totalTimePaused = 0;
 	private int secondsPassed = 0, minutesPassed = 0, hoursPassed = 0;

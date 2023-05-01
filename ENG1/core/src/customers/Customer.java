@@ -21,9 +21,9 @@ public class Customer implements Serializable {
     /** The name of the {@link Recipe} that the {@link Customer}
      * is requesting. */
     private String request;
-
-    public int spawnTime, deadTime;
-
+    /** The spawn times and leave times of this customer*/
+    private int spawnTime, deadTime;
+    /** The station index that this customer is at */
     private int stationIndex;
     /**
      * The constructor for the {@link Customer}.
@@ -51,6 +51,9 @@ public class Customer implements Serializable {
         this.stationIndex = index;
     }
 
+    /**
+     * Set this customers order to a random recipe
+     */
     public void randomRecipe() {
         this.request = Recipe.randomRecipe();
     }

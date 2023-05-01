@@ -38,6 +38,7 @@ public class CustomerController {
 	/** The cooldown time between customer spawns */
 	private int timeBetweenSpawnsSeconds;
 
+    private int timeMultiplier = 1;
 	/**
 	 * Constructor for the {@link CustomerController}. <br>
 	 * It sets up the array that the {@link Customer}s will be stored in.
@@ -272,7 +273,7 @@ public class CustomerController {
 		return this.customers;
 	}
 
-	public int timeMultiplier = 1;
+
 
 	public void multiplyTimeBetweenServes() {
 		timeMultiplier = 2;
@@ -353,7 +354,15 @@ public class CustomerController {
 		}
 	}
 
-	/**
+    /**
+     * Get the timeMultiplier amount
+     * @return the timeMultiplier amount
+     */
+    public int getTimeMultiplier() {
+        return timeMultiplier;
+    }
+
+    /**
 	 * Set up the timings for a customer
 	 *
 	 * @param cus       The customer to set up timings for

@@ -417,14 +417,6 @@ public class Cook extends GameEntity{
 		}
 	}
 
-    /**
-     * A method used to test that Junit is functioning correctly
-     * @param x an integer
-     * @return x + 1 One added to the input
-     */
-	public static int testTest(int x) {
-		return x + 1;
-	}
 
     /**
      * Get the current facing - Used in saving the game

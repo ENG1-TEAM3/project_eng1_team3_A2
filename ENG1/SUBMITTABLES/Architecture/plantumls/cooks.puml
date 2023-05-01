@@ -36,6 +36,7 @@ class Cook{
 FoodStack foodStack
 enum facing
 Cook(float width, float height, Body body, GameScreen gameScreen)
+setCookID(int num)
 userInput()
 update(float delta)
 render(SpriteBatch batch)
@@ -45,6 +46,9 @@ renderShape(SpriteBatch batch)
 renderShapeDebug(SpriteBatch batch)
 renderFood(SpriteBatch batch)
 Facing getDir()
+setFacing(Cook.Facing face)
+float getWidth()
+float getHeight()
 }
 
 Cook --> CookInteractor : Stores instance of
