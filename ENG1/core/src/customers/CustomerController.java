@@ -283,16 +283,16 @@ public class CustomerController {
 		if (md == MenuScreen.mode.SCENARIO) {
 			switch (msd) {
 			case MEDIUM:
-				timeBetweenSpawnsSeconds = 25;
-				patience = 25;
+				timeBetweenSpawnsSeconds = 50;
+				patience = 50;
 				break;
 			case HARD:
-				timeBetweenSpawnsSeconds = 20;
-				patience = 20;
+				timeBetweenSpawnsSeconds = 40;
+				patience = 40;
 				break;
 			default:
-				timeBetweenSpawnsSeconds = 45;
-				patience = 45;
+				timeBetweenSpawnsSeconds = 60;
+				patience = 60;
 			}
 		} else {
 			if (this.customersServed < 5) { // Less than 5 customers spawn rules easy
