@@ -29,7 +29,7 @@ import stations.ServingStation;
 public class GameHud extends Hud {
 	/** The label with the current amount of time played. */
 
-	Label timeLabel, customersLeftLabel, customersServedLabel, waveProgressLabel, reputationLabel, moneyLabel,
+	Label timeLabel, customersLeftLabel, customersServedLabel, waveProgressLabel, cuttingPriceLabel, fryingPriceLabel, cookPriceLabel, reputationLabel, moneyLabel,
 			powerupTimerLabel;
 
 	/**
@@ -96,9 +96,24 @@ public class GameHud extends Hud {
 		powerupTimerLabel.setPosition(Constants.V_Width / 2.0f, Constants.V_Height * .70f + 164);
         powerupTimerLabel.setFontScale(2);
 
+        fryingPriceLabel = new Label(String.format("Bonus Frying Station (%s)",Constants.STATIONS_COST), new Label.LabelStyle(btfont, Color.GREEN));
+        fryingPriceLabel.setPosition(Constants.V_Width / 2.0f + 75, Constants.V_Height * .15f + 25);
+        fryingPriceLabel.setFontScale(1.5f);
+
+        cuttingPriceLabel = new Label(String.format("Bonus Cutting Station (%s)",Constants.STATIONS_COST), new Label.LabelStyle(btfont, Color.GREEN));
+        cuttingPriceLabel.setPosition(Constants.V_Width / 2.0f - 460, Constants.V_Height * .15f + 25);
+        cuttingPriceLabel.setFontScale(1.5f);
+
+        cookPriceLabel = new Label(String.format("Bonus Cook (%s)",Constants.STAFF_COST), new Label.LabelStyle(btfont, Color.GREEN));
+        cookPriceLabel.setPosition(Constants.V_Width / 2.0f - 150, Constants.V_Height * .15f + 45);
+        cookPriceLabel.setFontScale(1.5f);
+
 		if (batch != null) {
 			stage.addActor(customersLeftLabel);
 			stage.addActor(waveProgressLabel);
+            stage.addActor(fryingPriceLabel);
+            stage.addActor(cuttingPriceLabel);
+            stage.addActor(cookPriceLabel);
 			stage.addActor(reputationLabel);
 			stage.addActor(moneyLabel);
 			stage.addActor(timeLabel);

@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import cooks.Cook;
 import game.GameScreen;
 import game.GameSprites;
+import helper.Constants;
 import interactions.InputKey;
 
 /**
@@ -18,7 +19,7 @@ import interactions.InputKey;
  */
 public class Station extends CookInteractable {
 
-	public static final int cost = 1000;
+	public static final int cost = Constants.STATIONS_COST;
 
 	/** IDs of all the different possible types of stations. */
 	public enum StationID {
