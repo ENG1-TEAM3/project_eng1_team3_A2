@@ -182,6 +182,56 @@ public class AssetExistenceTests {
     }
 
     @Test
+    public void testForPowerupsSubfolderFilesExistence(){
+        assertTrue("This test asserts that auto_station.png exists",
+                Gdx.files.internal("powerups/auto_station.png").exists());
+
+        assertTrue("This test asserts that bonus_time.png exists",
+                Gdx.files.internal("powerups/bonus_time.png").exists());
+
+        assertTrue("This test asserts that double_money.png exists",
+                Gdx.files.internal("powerups/double_money.png").exists());
+
+        assertTrue("This test asserts that faster_cooks.png exists",
+                Gdx.files.internal("powerups/faster_cooks.png").exists());
+
+        assertTrue("This test asserts that satisfied_customer.png exists",
+                Gdx.files.internal("powerups/satisfied_customer.png").exists());
+
+    }
+    @Test
+    public void testForSpritesSubfolderFilesExistence(){
+        assertTrue("This test asserts that Burger.xcf exists",
+                Gdx.files.internal("Sprites/xcfs/Burger.xcf").exists());
+
+        assertTrue("This test asserts that Burger_Buns.xcf exists",
+                Gdx.files.internal("Sprites/xcfs/Burger_Buns.xcf").exists());
+
+        assertTrue("This test asserts that Cutting_Station.xcf exists",
+                Gdx.files.internal("Sprites/xcfs/Cutting_Station.xcf").exists());
+
+        assertTrue("This test asserts that Fryer.xcf exists",
+                Gdx.files.internal("Sprites/xcfs/Fryer.xcf").exists());
+
+        assertTrue("This test asserts that Lettuce.xcf exists",
+                Gdx.files.internal("Sprites/xcfs/Lettuce.xcf").exists());
+
+        assertTrue("This test asserts that MargheritaPizza.xcf exists",
+                Gdx.files.internal("Sprites/xcfs/MargheritaPizza.xcf").exists());
+
+        assertTrue("This test asserts that Meat.xcf exists",
+                Gdx.files.internal("Sprites/xcfs/Meat.xcf").exists());
+
+        assertTrue("This test asserts that Onion.xcf exists",
+                Gdx.files.internal("Sprites/xcfs/Onion.xcf").exists());
+
+        assertTrue("This test asserts that Table.xcf exists",
+                Gdx.files.internal("Sprites/xcfs/Table.xcf").exists());
+
+        assertTrue("This test asserts that Tomato.xcf exists",
+                Gdx.files.internal("Sprites/xcfs/Tomato.xcf").exists());
+    }
+    @Test
     public void testForMiscFilesExistence(){
         assertTrue("This test asserts that badlogic.jpg exists",
                 Gdx.files.internal("badlogic.jpg").exists());
