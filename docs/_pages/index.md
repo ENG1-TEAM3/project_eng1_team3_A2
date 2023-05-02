@@ -18,13 +18,11 @@ Welcome to our homepage for UnderCooked!
 
 All the contents for this website are on this page, the navigation bar in the header will take you to a specified heading on this page.
 
-## Download UnderCooked!
-> [{{page.download}}]({{page.download}})
-
 ## Our GitHub Repository
 Below is a link to the GitHub Repository we've been developing our game in:
+Download the game from the latest Actions Workflow!
 
-> [{{ page.github }}{{ site.repository }}]({{ page.github }}{{ site.repository }})
+> [REPOSITORY](https://github.com/ENG1-TEAM3/project_eng1_team3_A2)
 
 ## The Assessment 1 Team
 Details for all the team members can be found here:
@@ -50,19 +48,15 @@ Details for all the team members can be found here:
 
 
 ## Requirements:
-[Requirements Google Doc](https://docs.google.com/document/d/17tcN_Xeo0Gzz8ficlVVp_1x0h8Q2EDLzrCXvKtgHNlw/edit?usp=share_link)
+[Old Requirements Google Doc](https://docs.google.com/document/d/17tcN_Xeo0Gzz8ficlVVp_1x0h8Q2EDLzrCXvKtgHNlw/edit?usp=share_link)
 
-[Requirements PDF]({{page.req_pdf}})
+[Old Requirements PDF]({{page.req_pdf}})
 
 ## Architecture:
-[Architecture Google Doc](https://docs.google.com/document/d/11IZyqiyvOG_iuKlP9LPBgSTnA8E4lxPNE8mAL1pA26s/edit?usp=sharing)
+[Old Architecture Google Doc](https://docs.google.com/document/d/11IZyqiyvOG_iuKlP9LPBgSTnA8E4lxPNE8mAL1pA26s/edit?usp=sharing)
 
-[Architecture PDF]({{page.arch_pdf}})
+[Old Architecture PDF]({{page.arch_pdf}})
 
-Below are UML images showcasing our development process for the Final Architecture Design (for Assessment 1).
-You can also find all the images here:
-
-[Google Drive: https://drive.google.com/drive/folders/1KE2M_o6zdMu1JZjFEnv3oIxf5IxwgiiC](https://drive.google.com/drive/folders/1KE2M_o6zdMu1JZjFEnv3oIxf5IxwgiiC)
 
 [GitHub: https://github.com/undercooked-team/UnderCooked/tree/main/ENG1/SUBMITTABLES/Architecture](https://github.com/undercooked-team/UnderCooked/tree/main/ENG1/SUBMITTABLES/Architecture)
 
@@ -133,16 +127,16 @@ These classes were also not present in our initial UML, and we realised this a w
 - **Constants** simply contained some global values.
   
 ## Method Selection and Planning
-[Method Selection and Planning Google Doc](https://docs.google.com/document/d/1KpzhVRxdkBJPyYyQxW3aTuWMCYpDrK8jtEIiyoh-2Rw/edit?usp=share_link)
+[Old Method Selection and Planning Google Doc](https://docs.google.com/document/d/1KpzhVRxdkBJPyYyQxW3aTuWMCYpDrK8jtEIiyoh-2Rw/edit?usp=share_link)
 
-[Method Selection and Planning PDF]({{page.plan_pdf}})
+[Old Method Selection and Planning PDF]({{page.plan_pdf}})
 
 ## Risk Assessment and Mitigation
-[Risk Assessment and Mitigation Google Doc](https://docs.google.com/document/d/1-oQ4ajU6W9XvK9kMU9fiHc9EGryhhc9Awz3sKuWzotQ/edit?usp=share_link)
+[Old Risk Assessment and Mitigation Google Doc](https://docs.google.com/document/d/1-oQ4ajU6W9XvK9kMU9fiHc9EGryhhc9Awz3sKuWzotQ/edit?usp=share_link)
 
-[Risk Assessment and Mitigation PDF]({{page.risk_pdf}})
+[Old Risk Assessment and Mitigation PDF]({{page.risk_pdf}})
 
 ## Implementation
-[Implementation Google Doc](https://docs.google.com/document/d/1rC9LAZ9OATbIcQgagMG_clQ7LpItRECm9ADfuPLFHQc/edit?usp=share_link)
+[Old Implementation Google Doc](https://docs.google.com/document/d/1rC9LAZ9OATbIcQgagMG_clQ7LpItRECm9ADfuPLFHQc/edit?usp=share_link)
 
-[Implementation PDF]({{page.impl_pdf}})
+[Old Implementation PDF]({{page.impl_pdf}})
