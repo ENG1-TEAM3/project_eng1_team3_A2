@@ -3,7 +3,7 @@ layout: single
 permalink: /
 title: false
 github: https://github.com/
-download: https://github.com/undercooked-team/UnderCooked/releases/tag/game
+download: https://github.com/ENG1-TEAM3/project_eng1_team3_A2/releases/tag/FinalRelease
 req_pdf: https://drive.google.com/file/d/1riehAdib1IffNDNwmmPX9ugbUv2AZZnf
 arch_pdf: https://drive.google.com/file/d/1gGG0oPKWnQbTWOHgsPOo8c6Kgt7APBZx
 plan_pdf: https://drive.google.com/file/d/1HipDr3_7fABNSKuUDhcKLNDbxVc3lMcK
@@ -23,6 +23,7 @@ Below is a link to the GitHub Repository we've been developing our game in:
 Download the game from the latest Actions Workflow!
 
 > [REPOSITORY](https://github.com/ENG1-TEAM3/project_eng1_team3_A2)
+> [GAME DOWNLOAD](https://github.com/ENG1-TEAM3/project_eng1_team3_A2/releases/tag/FinalRelease)
 
 ## The Assessment 1 Team
 Details for all the team members can be found here:
