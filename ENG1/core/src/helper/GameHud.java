@@ -173,7 +173,7 @@ public class GameHud extends Hud {
         } else if (PowerUpHandler.activePowerUp() != null) {
             batch.setProjectionMatrix(o2.combined);
             batch.begin();
-            activePowerUpSprite = GameSprites.getInstance().getSprite(GameSprites.SpriteID.POWERUP, gs.getPowerUpHandler().getCurrentPowerUp(0).spritePath());
+            activePowerUpSprite = GameSprites.getInstance().getSprite(GameSprites.SpriteID.POWERUP, PowerUpHandler.activePowerUp().spritePath());
             batch.draw(activePowerUpSprite.getTexture(), Constants.V_Width / 2.0f, Constants.V_Height * .75f, 64, 64);
             batch.end();
             powerupTimerLabel.setText(String.format("%s \nuses: %d",
