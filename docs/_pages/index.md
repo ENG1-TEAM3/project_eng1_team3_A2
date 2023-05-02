@@ -22,7 +22,7 @@ All the contents for this website are on this page, the navigation bar in the he
 Below is a link to the GitHub Repository we've been developing our game in:
 Download the game from the latest Actions Workflow!
 
-> [REPOSITORY](https://github.com/ENG1-TEAM3/project_eng1_team3_A2
+> [REPOSITORY](https://github.com/ENG1-TEAM3/project_eng1_team3_A2)
 > 
 > [GAME DOWNLOAD](https://github.com/ENG1-TEAM3/project_eng1_team3_A2/releases/tag/FinalRelease)
 
