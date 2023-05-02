@@ -52,11 +52,14 @@ Details for all the team members can be found here:
 
 [Old Requirements PDF]({{page.req_pdf}})
 
+[New Requirements Google Doc](https://docs.google.com/document/d/1-HJKEJOCR_IM0aN_K3QxxInFAWp8XC4PD_JcKzK902w/edit?usp=sharing)
+
 ## Architecture:
 [Old Architecture Google Doc](https://docs.google.com/document/d/11IZyqiyvOG_iuKlP9LPBgSTnA8E4lxPNE8mAL1pA26s/edit?usp=sharing)
 
 [Old Architecture PDF]({{page.arch_pdf}})
 
+[New Architecture Google Doc](https://docs.google.com/document/d/1eo06otR7PA-EAoghAXJsZHqCGkS1ov0VhaOqTWcJh2M/edit?usp=sharing)
 
 [GitHub: https://github.com/undercooked-team/UnderCooked/tree/main/ENG1/SUBMITTABLES/Architecture](https://github.com/undercooked-team/UnderCooked/tree/main/ENG1/SUBMITTABLES/Architecture)
 
@@ -131,12 +134,18 @@ These classes were also not present in our initial UML, and we realised this a w
 
 [Old Method Selection and Planning PDF]({{page.plan_pdf}})
 
+[New Method Selection and Planning Google Doc](https://docs.google.com/document/d/1XYScbDy_PxSMypja3Jg1Hm3d2GtBGBk3C_suIqXy01o/edit?usp=sharing)
+
 ## Risk Assessment and Mitigation
 [Old Risk Assessment and Mitigation Google Doc](https://docs.google.com/document/d/1-oQ4ajU6W9XvK9kMU9fiHc9EGryhhc9Awz3sKuWzotQ/edit?usp=share_link)
 
 [Old Risk Assessment and Mitigation PDF]({{page.risk_pdf}})
 
+[New Risk Assessment and Mitigation Google Doc](https://docs.google.com/document/d/1MgaBBWbA_h-HjzRmxb95yAz0reAAhUCoePv1QKlFTK0/edit?usp=sharing)
+
 ## Implementation
 [Old Implementation Google Doc](https://docs.google.com/document/d/1rC9LAZ9OATbIcQgagMG_clQ7LpItRECm9ADfuPLFHQc/edit?usp=share_link)
 
 [Old Implementation PDF]({{page.impl_pdf}})
+
+[New Implementation Google Doc](https://docs.google.com/document/d/139JKnKS-DwHTaA5IaQHgokdYOKLWuemrWOLea4VxXTs/edit?usp=sharing)
