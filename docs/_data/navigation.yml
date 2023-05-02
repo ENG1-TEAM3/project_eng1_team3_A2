@@ -2,8 +2,6 @@
 main:
   - title: "Home"
     url: "/#home-page"
-  - title: "Download UnderCooked"
-    url: "/#download-undercooked"
   - title: "Our GitHub Repository"
     url: "/#our-github-repository"
   - title: "The Team"
