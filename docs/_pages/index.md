@@ -24,7 +24,7 @@ Download the game from the latest Actions Workflow!
 
 > [REPOSITORY](https://github.com/ENG1-TEAM3/project_eng1_team3_A2)
 > 
-> [GAME DOWNLOAD](https://github.com/ENG1-TEAM3/project_eng1_team3_A2/releases/tag/Final_Release_Hand_in)
+> [GAME DOWNLOAD](https://github.com/ENG1-TEAM3/project_eng1_team3_A2/releases/tag/Final_Release_Hand_iqn)
 
 ## The Assessment 1 Team
 Details for all the team members can be found here:

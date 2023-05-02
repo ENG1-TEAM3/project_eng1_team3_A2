@@ -86,7 +86,7 @@ public class GameHud extends Hud {
 		reputationLabel.setPosition(10, 78 * Constants.V_Height / 100.0f);
         reputationLabel.setFontScale(2);
 
-		moneyLabel = new Label("Money: £0.00", new Label.LabelStyle(btfont, Color.BLACK));
+		moneyLabel = new Label("Money: 0", new Label.LabelStyle(btfont, Color.BLACK));
 		moneyLabel.setPosition(10, 74 * Constants.V_Height / 100.0f);
         moneyLabel.setFontScale(2);
 
@@ -308,9 +308,7 @@ public class GameHud extends Hud {
      * @param amount The amount of money
      */
 	public void updateMoneyLabel(int amount) {
-		int pounds = amount / 100;
-		int pennies = amount - pounds * 100;
-		moneyLabel.setText(String.format("Money: £%d.%d", pounds, pennies));
+		moneyLabel.setText(String.format("Money: %s",amount));
 	}
 
 }
