@@ -25,8 +25,6 @@ public class Customer implements Serializable {
 	private int spawnTime, deadTime;
 	/** The station index that this customer is at */
 	private int stationIndex;
-	/** If the customer has had additional time added **/
-	public boolean hadExtraTime = false;
 
 	/**
 	 * The constructor for the {@link Customer}. <br>

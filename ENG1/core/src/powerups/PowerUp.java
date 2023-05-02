@@ -6,7 +6,7 @@ package powerups;
 public enum PowerUp {
 
 	AUTO_STATION(1, 1000, "autoStation"), DOUBLE_MONEY(1, 500, "doubleMoney"),
-	SATISFIED_CUSTOMER(1, -1, "satisfiedCustomer"), BONUS_TIME(1, -2, "bonusTime"),
+	SATISFIED_CUSTOMER(1, -1, "satisfiedCustomer"), BONUS_TIME(1, -1, "bonusTime"),
 	FASTER_COOKS(1, 500, "fasterCooks");
 
     /** Weight specifies chance of getting the powerUp compared to others, duration is how long it will last*/
