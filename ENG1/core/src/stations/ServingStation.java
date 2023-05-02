@@ -80,9 +80,11 @@ public class ServingStation extends Station {
 					PowerUpHandler.usePowerUp();
 					gameScreen.addMoney(Recipe.prices.get(customer.getRequestName()));
 					customerController.customerServed(this);
-				} else if (PowerUpHandler.activePowerUp() == PowerUp.BONUS_TIME) {
+				} else if (PowerUpHandler.activePowerUp() == PowerUp.BONUS_TIME && !customer.hadExtraTime) {
+					customer.hadExtraTime = true;
 					PowerUpHandler.usePowerUp();
-					customer.setTimings(customer.getSpawnTime(), customer.getDeadTime() + customerController.timeBetweenSpawnsSeconds());
+					customer.setTimings(customer.getSpawnTime(),
+							customer.getDeadTime() + customerController.timeBetweenSpawnsSeconds());
 					if (customerController.getTimeMultiplier() == 1) {
 						customerController.multiplyTimeBetweenServes();
 					}
