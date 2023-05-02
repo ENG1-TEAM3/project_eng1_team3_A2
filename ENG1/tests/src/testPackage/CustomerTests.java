@@ -69,24 +69,21 @@ public class CustomerTests {
         ServingStation ss1 = new ServingStation(new Rectangle(100,100,100,100), false,gs1);
         gs1.addInteractable(ss1);
 
-        assertTrue(gs1.getCustomerController().canAddCustomer());
-        assertEquals(0, gs1.getCustomerController().getCustomers().size);
+        assertTrue("This test asserts that a customer can be added to the one station",gs1.getCustomerController().canAddCustomer());
+        assertEquals("This test asserts that no customers exist",0, gs1.getCustomerController().getCustomers().size);
         gs1.getCustomerController().addCustomer(21);
-        assertEquals(1, gs1.getCustomerController().getCustomers().size);
-        assertEquals(0, gs1.getCustomerController().getCustomers().get(0).getSpawnTime());
-        assertEquals(21, gs1.getCustomerController().getCustomers().get(0).getDeadTime());
+        assertEquals("This test asserts that a customer has been added",1, gs1.getCustomerController().getCustomers().size);
+        assertEquals("This test asserts that the customer spawn time is set correctly",0, gs1.getCustomerController().getCustomers().get(0).getSpawnTime());
+        assertEquals("This test asserts that the customer leave time is set correctly",21, gs1.getCustomerController().getCustomers().get(0).getDeadTime());
         gs1.setTiming(22);
         gs1.getCustomerController().removeCustomerIfExpired(gs1.getCustomerController().getCustomers().get(0));
-        assertEquals(0, gs1.getCustomerController().getCustomers().size);
-        assertEquals(2, gs1.getReputation());
+        assertEquals("This test asserts that there are no customers",0, gs1.getCustomerController().getCustomers().size);
+        assertEquals("This test asserts that a reputation point has been lost",2, gs1.getReputation());
 
         gs1.getCustomerController().tryToSpawnCustomer(MenuScreen.difficulty.EASY, MenuScreen.mode.SCENARIO);
-        assertEquals(0, gs1.getCustomerController().getCustomers().size);
+        assertEquals("This test asserts that there are no customers",0, gs1.getCustomerController().getCustomers().size);
         gs1.setTiming(70);
         gs1.getCustomerController().tryToSpawnCustomer(MenuScreen.difficulty.EASY, MenuScreen.mode.SCENARIO);
-        assertEquals(1, gs1.getCustomerController().getCustomers().size);
-
-
+        assertEquals("This test asserts that there is a customer",1, gs1.getCustomerController().getCustomers().size);
     }
-
 }
