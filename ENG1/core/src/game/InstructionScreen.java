@@ -45,15 +45,15 @@ public class InstructionScreen extends ScreenAdapter {
         table.row();
 
         String[] instructions = new String[] {
-                String.format("Move using the WASD keys or the arrow keys. Swap the cook you are controlling by pressing %s.",Interactions.getKeyString(InputKey.InputTypes.COOK_SWAP)),
+                "",String.format("Move using the WASD keys or the Arrow Keys. Swap the cook you are controlling by pressing %s.",Interactions.getKeyString(InputKey.InputTypes.COOK_SWAP)),
                 "",
                 String.format("To use a station, press %s while facing it.", Interactions.getKeyString(InputKey.InputTypes.USE)),
                 "",
-                String.format("Take items from the Pantries (tables with ingredients on them) or a Station by pressing %s.", Interactions.getKeyString(InputKey.InputTypes.PICK_UP)),
+                String.format("Take items from the Pantries (the top tables with ingredients) or a Station by pressing %s.", Interactions.getKeyString(InputKey.InputTypes.PICK_UP)),
                 "Pantries have an infinite number of resources, and the Cook has no carry limit.",
                 "",
-                String.format("You can put an item down on a station (table) by pressing %s.", Interactions.getKeyString(InputKey.InputTypes.PUT_DOWN)),
-                "Counters can do this for any item, but preparation stations require valid ingredients.",
+                String.format("You can put an Item down on a Station (Table) by pressing %s.", Interactions.getKeyString(InputKey.InputTypes.PUT_DOWN)),
+                "Counters can do this for any Item, but preparation stations require valid ingredients.",
                 "",
                 String.format("You progress ingredient preparation by using (%s) the station when the bar is yellow.", Interactions.getKeyString(InputKey.InputTypes.USE)),
                 // // I feel the below are unnecessary and the player can figure this out themselves.
@@ -62,12 +62,12 @@ public class InstructionScreen extends ScreenAdapter {
                 // "This means if your highest bun is a bottom bun, then you'll get a top bun.",
                 // "",
                 "",
-                String.format("The bin allows you to dispose of items you no longer need. (%s or %s)",
+                String.format("The bin allows you to dispose of items you no longer need. (%s OR %s).",
                         Interactions.getKeyString(InputKey.InputTypes.USE),
                         Interactions.getKeyString(InputKey.InputTypes.PUT_DOWN)),
                 "",
-                "Each customer has a range of different foods they can request from.",
-                "You can give them their request by remaking the recipe shown on the right,",
+                "Each customer can request different meals with different ingredient combos.",
+                "Fulfil their order by remaking the recipe shown above them,",
                 String.format("and then using (%s) the serving counter while holding it.",Interactions.getKeyString(InputKey.InputTypes.USE)),
                 "",
                 String.format("Some of the recipes don't follow a specific order. You can see this by interacting with the serving counter. (%s, %s or %s)",
@@ -75,14 +75,22 @@ public class InstructionScreen extends ScreenAdapter {
                         Interactions.getKeyString(InputKey.InputTypes.PICK_UP),
                         Interactions.getKeyString(InputKey.InputTypes.PUT_DOWN)),
                 "",
-                "Your goal is to successfully give every customer the food they request, and the game will end once you do.",
+                String.format("Unlock bonus stations to aid you by pressing %s.",Interactions.getKeyString(InputKey.InputTypes.USE)),
                 "",
+                String.format("Powerups can be unlocked using %s and activated with %s, you'll randomly be given 1 out of 5 different powerups.",
+                        Interactions.getKeyString(InputKey.InputTypes.BUY_POWERUP),Interactions.getKeyString(InputKey.InputTypes.ACTIVATE_POWERUP)),
+                "","You can reroll for a new one but it will cost money.","",
                 String.format("You can pause the game by pressing %s.", Interactions.getKeyString(InputKey.InputTypes.PAUSE)),
-                ""
+                "",
+                "Your goal is to successfully serve all your customers in time and if you don't, for every customer, you'll lose a reputation point.",
+                "",
+                "If you run out of reputation points, the game will end. You win once you've served your customers and still have points.",
+                "","Have Fun!",""
         };
 
         for (String instruction : instructions) {
             Label instLabel = new Label(instruction, font);
+            instLabel.setFontScale(1.2f);
             table.add(instLabel).expandX();
             table.row();
         }
