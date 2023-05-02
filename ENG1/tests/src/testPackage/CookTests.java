@@ -6,8 +6,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
+import game.Boot;
+import game.GameScreen;
+import game.ScreenController;
 import helper.BodyHelper;
 import helper.Constants;
+import helper.MapHelper;
 import interactions.InputKey;
 import interactions.Interactions;
 import org.junit.Test;
@@ -133,6 +137,37 @@ public class CookTests {
 
 
 
+
+    @Test
+    public void testSwapCook(){
+        Boot b1 = Boot.getInstance();
+        b1.createHeadless();
+
+        MapHelper m1 = MapHelper.getInstance();
+        GameScreen gs1 = (GameScreen) b1.getScreenController().getScreen(ScreenController.ScreenID.GAME);
+        m1.setGameScreen(gs1);
+
+        Cook cook1 = gs1.getCurrentCook();
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_SWAP, Input.Keys.TAB), false, true);
+        gs1.update(0.001f, false);
+        assertNotEquals("This test asserts that the cooks swap on swap input",cook1, gs1.getCurrentCook());
+        Cook cook2 = gs1.getCurrentCook();
+        Interactions.resetKeys();
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_SWAP, Input.Keys.TAB), false, true);
+        gs1.update(0.001f, false);
+        assertNotEquals("This test asserts that the cooks swap on swap input",cook2, gs1.getCurrentCook());
+
+        Cook cook3 = gs1.getCurrentCook();
+        Interactions.resetKeys();
+        Interactions.manualAddKey(new InputKey(InputKey.InputTypes.COOK_SWAP, Input.Keys.TAB), false, true);
+        gs1.update(0.001f, false);
+        assertNotEquals("This test asserts that the cooks swap on swap input",cook3, gs1.getCurrentCook());
+        assertEquals("This test asserts that the cooks loop back round", cook1, gs1.getCurrentCook());
+
+
+
+
+    }
 
     @Test
     public void testCookDirection(){

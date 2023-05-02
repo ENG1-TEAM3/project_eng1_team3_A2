@@ -24,7 +24,9 @@ public class GameSprites {
         /** The {@link stations.Station}'s and {@link stations.Pantry}'s {@link TextureAtlas}.*/
         STATION,
         /** The {@link customers.Customer}'s {@link TextureAtlas}.*/
-        CUSTOMER
+        CUSTOMER,
+
+        POWERUP
 
     }
 
@@ -74,9 +76,11 @@ public class GameSprites {
      */
     public void createResources() {
         for (SpriteID spriteID : SpriteID.values()) {
-            TextureAtlas thisAtlas = textureAtlases.get(spriteID);
-            for (TextureAtlas.AtlasRegion spriteRegion : thisAtlas.getRegions()) {
-                spriteMap.put(spriteKey(spriteID,spriteRegion.name),thisAtlas.createSprite(spriteRegion.name));
+            if (spriteID != SpriteID.POWERUP) {
+                TextureAtlas thisAtlas = textureAtlases.get(spriteID);
+                for (TextureAtlas.AtlasRegion spriteRegion : thisAtlas.getRegions()) {
+                    spriteMap.put(spriteKey(spriteID, spriteRegion.name), thisAtlas.createSprite(spriteRegion.name));
+                }
             }
         }
         createNonAtlasResources();
@@ -175,6 +179,31 @@ public class GameSprites {
         Texture ts14 = new Texture(Gdx.files.internal("cooks/normal down2.png"));
         Sprite ns14 = new Sprite(ts14);
         spriteMap.put(spriteKey(SpriteID.FOOD, "cook"), ns14);
+
+
+
+        Texture ts15 = new Texture(Gdx.files.internal("powerups/satisfied_customer.png"));
+        Sprite ns15 = new Sprite(ts15);
+        spriteMap.put(spriteKey(SpriteID.POWERUP, "satisfiedCustomer"), ns15);
+
+        Texture ts16 = new Texture(Gdx.files.internal("powerups/bonus_time.png"));
+        Sprite ns16= new Sprite(ts16);
+        spriteMap.put(spriteKey(SpriteID.POWERUP, "bonusTime"), ns16);
+
+        Texture ts17 = new Texture(Gdx.files.internal("powerups/double_money.png"));
+        Sprite ns17 = new Sprite(ts17);
+        spriteMap.put(spriteKey(SpriteID.POWERUP, "doubleMoney"), ns17);
+
+        Texture ts18 = new Texture(Gdx.files.internal("powerups/faster_cooks.png"));
+        Sprite ns18 = new Sprite(ts18);
+        spriteMap.put(spriteKey(SpriteID.POWERUP, "fasterCooks"), ns18);
+
+        Texture ts19 = new Texture(Gdx.files.internal("powerups/auto_station.png"));
+        Sprite ns19 = new Sprite(ts19);
+        spriteMap.put(spriteKey(SpriteID.POWERUP, "autoStation"), ns19);
+
+
+
 
 
         String path = "cooks/";

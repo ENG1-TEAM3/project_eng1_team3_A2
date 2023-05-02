@@ -79,7 +79,6 @@ public class CustomerController {
 	 * Add a {@link Customer} to a {@link ServingStation}.
 	 */
 	public void addCustomer(int patience) {
-		System.out.println("adding cust inside");
 		// Get a deep copy of all the ServingStations.
 		Array<ServingStation> emptyStations = new Array<>(servingStations);
 		// Loop through and remove all the stations that have a

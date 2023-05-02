@@ -46,7 +46,7 @@ public class GameHud extends Hud {
 	/** The Hashmap that contains all recipes to be rendered. */
 	private final GameScreen gs;
 	private Array<ServingStation> servingStations;
-    private final Sprite activePowerUpSprite;
+    private Sprite activePowerUpSprite;
     private final OrthographicCamera o2 = new OrthographicCamera();
 	// /** The time, in milliseconds, of the last recipe change. */
 	// private long lastChange;
@@ -161,8 +161,7 @@ public class GameHud extends Hud {
 		if (gs.getPowerUpHandler().getCurrentPowerUps()[0] != null) {
             batch.setProjectionMatrix(o2.combined);
 			batch.begin();
-			activePowerUpSprite.setTexture(
-					new Texture(Gdx.files.internal("powerups/" + gs.getPowerUpHandler().getCurrentPowerUp(0).spritePath())));
+			activePowerUpSprite = GameSprites.getInstance().getSprite(GameSprites.SpriteID.POWERUP, gs.getPowerUpHandler().getCurrentPowerUp(0).spritePath());
 			batch.draw(activePowerUpSprite.getTexture(), Constants.V_Width / 2.0f, Constants.V_Height * .75f, 64, 64);
 			batch.end();
 			powerupTimerLabel.setText(String.format("%s : Press [%s] to activate \nPress [%s to reroll] \n(Costs %s)", gs.getPowerUpHandler().getCurrentPowerUp(0).spritePath().replace(".png", "").replace("_", " ").toUpperCase(),
@@ -174,8 +173,7 @@ public class GameHud extends Hud {
         } else if (PowerUpHandler.activePowerUp() != null) {
             batch.setProjectionMatrix(o2.combined);
             batch.begin();
-            activePowerUpSprite.setTexture(
-                    new Texture(Gdx.files.internal("powerups/" + PowerUpHandler.activePowerUp().spritePath())));
+            activePowerUpSprite = GameSprites.getInstance().getSprite(GameSprites.SpriteID.POWERUP, gs.getPowerUpHandler().getCurrentPowerUp(0).spritePath());
             batch.draw(activePowerUpSprite.getTexture(), Constants.V_Width / 2.0f, Constants.V_Height * .75f, 64, 64);
             batch.end();
             powerupTimerLabel.setText(String.format("%s \nuses: %d",

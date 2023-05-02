@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 import game.GameScreen;
+import game.GameSprites;
 import interactions.InputKey.InputTypes;
 import stations.CookInteractable;
 import stations.PreparationStation;
@@ -44,7 +45,7 @@ public class PowerUpHandler {
 
 	private final GameScreen gameScreen;
 
-    private final Sprite activePowerUpSprite;
+    private Sprite activePowerUpSprite;
 
     /**
      * The PowerUpHandler Constructor
@@ -71,7 +72,7 @@ public class PowerUpHandler {
 		}
 
 		activePowerUp = currentPowerUps[slot];
-		activePowerUpSprite.setTexture(new Texture(Gdx.files.internal("powerups/" + activePowerUp.spritePath())));
+		activePowerUpSprite = GameSprites.getInstance().getSprite(GameSprites.SpriteID.POWERUP, activePowerUp().spritePath());
 		cooldown = Math.abs(activePowerUp.duration());
 
 		currentPowerUps[slot] = null;
