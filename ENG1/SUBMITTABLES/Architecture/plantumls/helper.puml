@@ -1,7 +1,6 @@
 @startuml
 class BodyHelper{
 {static} Body createBody(float x, float y, float width, float height, boolean isStatic, World world)
-{static} boolean checkCollision(Rectangle rect1, Rectangle rect2)
 }
 class CollisionHelper{
 # GameScreen gameScreen

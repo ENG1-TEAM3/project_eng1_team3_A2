@@ -33,15 +33,4 @@ public class BodyHelper {
         shape.dispose();
         return body;
     }
-
-    /**
-     * Is rect1 overlapping with rect2?
-     * @param rect1 Rectangle 1.
-     * @param rect2 Rectangle 2.
-     * @return Boolean, stating whether the rectangles overlap (true) or not (false).
-     */
-    public static boolean checkCollision(Rectangle rect1, Rectangle rect2) {
-        return rect1.overlaps(rect2);
-    }
-
 }
