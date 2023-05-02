@@ -1,0 +1,16 @@
+@startgantt
+Project starts 2023-02-22
+[Go through last teams work] starts 2023-02-22
+[Go through last teams work] lasts 7 days
+[CI setup] starts 2023-03-01
+[CI setup] lasts 7 days
+[Testing setup] starts 2023-03-08 and lasts 7 days
+[Update documents] starts 2023-03-15 and lasts 5 days
+[Test codebase] starts 2023-03-20 and ends 2023-04-17
+[Break] starts 2023-03-20 and ends 2023-04-17
+[Write extra code] starts 2023-04-18 and ends 2023-05-02
+[Write extra tests] starts 2023-04-18 and ends 2023-05-02
+[Finish off documents + website] starts 2023-04-18 and ends 2023-05-02
+[Assessment 2 hand-in] starts 2023-05-03
+
+@endgantt

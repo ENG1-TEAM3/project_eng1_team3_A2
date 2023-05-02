@@ -77,7 +77,7 @@ public class GameHud extends Hud {
 		customersServedLabel.setPosition(10, 82 * Constants.V_Height / 100.0f);
         customersServedLabel.setFontScale(2);
 
-        Label waveProgressLabel = new Label("PROGRESS TILL NEXT WAVE", new Label.LabelStyle(btfont, Color.WHITE));
+        Label waveProgressLabel = new Label("PROGRESS UNTIL NEXT WAVE", new Label.LabelStyle(btfont, Color.WHITE));
 		waveProgressLabel.setPosition(Constants.V_Width / 12.0f - (waveProgressLabel.getWidth() / 2),
 				Constants.V_Height - Constants.V_Height / 32.0f);
         waveProgressLabel.setFontScale(2);

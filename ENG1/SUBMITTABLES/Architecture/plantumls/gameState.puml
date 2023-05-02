@@ -1,0 +1,40 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+state Start
+state MainMenu
+state LoadGame
+state StartNewGame
+state PlayingGame
+state PausedGame
+state CreditsScreen
+state ExitGame
+state GameOver
+
+Start --> MainMenu
+MainMenu --> LoadGame : User selects load game
+MainMenu --> StartNewGame : User selects start new game
+LoadGame --> MainMenu : User chooses to not load a game
+StartNewGame --> MainMenu : User chooses to not start a new game
+LoadGame --> PlayingGame : User loaded a game
+
+
+
+StartNewGame --> PlayingGame : User started a new game
+PlayingGame --> PausedGame : User paused game
+PausedGame --> PlayingGame : User unpauses game
+
+PlayingGame --> GameOver : Reputation becomes zero
+
+PausedGame --> CreditsScreen : User presses credits button on pause menu
+MainMenu --> CreditsScreen : User presses credits button on main menu
+CreditsScreen --> PausedGame : The user exits credits after having come from the pause menu
+CreditsScreen --> MainMenu : The user exits credits after having come from the main menu
+
+PausedGame --> ExitGame : The user presses the quit button on the pause menu
+MainMenu --> ExitGame: The user presses the quit button on the main menu
+
+
+
+
+@enduml

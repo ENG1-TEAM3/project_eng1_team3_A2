@@ -1,0 +1,7 @@
+@startuml
+'https://plantuml.com/state-diagram
+state WaitingForCustomer
+state SpawnCustomer
+
+
+@enduml
