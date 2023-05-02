@@ -192,6 +192,7 @@ public class GameScreen extends ScreenAdapter {
 		}
 
         // A copy is taken here as the below for loop may remove elements from the array.
+
 		Array<Customer> customersCopy = new Array<>(customerController.getCustomers());
 		for (Customer cus : customersCopy) {
 			customerController.removeCustomerIfExpired(cus);
@@ -240,7 +241,7 @@ public class GameScreen extends ScreenAdapter {
 	 * Update the {@link #camera}.
 	 */
 	private void cameraUpdate() {
-		camera.position.set(new Vector3(Constants.gameCameraOffset.x, Constants.gameCameraOffset.y, 0));
+		camera.position.set(Constants.gameCameraOffset);
 		camera.update();
 	}
 

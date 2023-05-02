@@ -3,6 +3,7 @@ package helper;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 /**
  * A class for variables that remain Constant that are needed all across the
@@ -42,7 +43,7 @@ public class Constants {
 	 * The amount to move the map camera by, given the fact the map will by default
 	 * render with its bottom left corner in the center of the screen
 	 */
-	public static final Vector2 gameCameraOffset = new Vector2(mapwidth / 2.0f,
-			mapheight / 2.0f + Constants.V_Height / 8.0f);
+	public static final Vector3 gameCameraOffset = new Vector3(mapwidth / 2.0f,
+			mapheight / 2.0f + Constants.V_Height / 8.0f, 0);
 
 }
