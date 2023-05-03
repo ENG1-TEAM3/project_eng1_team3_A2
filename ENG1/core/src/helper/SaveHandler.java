@@ -200,6 +200,7 @@ public class SaveHandler {
         long smallTimeDiff = (long) ois.readObject();
         int totalSecondsPassed = (int) ois.readObject();
         int repPointsLeft = (int) ois.readObject();
+        System.out.println("Reading rep: "+repPointsLeft);
         int money = (int) ois.readObject();
         int amountCustomersServed = (int) ois.readObject();
         int amountCustomersLeft = (int) ois.readObject();

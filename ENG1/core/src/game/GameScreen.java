@@ -606,6 +606,7 @@ public class GameScreen extends ScreenAdapter {
         this.money = moneyAmount;
         gameHud.updateMoneyLabel(moneyAmount);
         this.reputation = repPoints;
+        gameHud.updateReputationLabel(this.reputation);
         this.customerController.setCustomersLeft(customersLeft);
         this.customerController.setCustomersServed(customersServed);
         this.customerController.setTotalCustomersToServe(customersToServe);
